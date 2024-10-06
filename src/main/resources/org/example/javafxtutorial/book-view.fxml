@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1280" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.javafxtutorial.BookController">
+   <children>
+      <VBox prefHeight="720.0" prefWidth="1280.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <HBox prefHeight="86.0" prefWidth="1280.0" />
+            <SplitPane dividerPositions="0.2511737089201878" prefHeight="756.0" prefWidth="1280.0">
+              <items>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="693.0" prefWidth="347.0">
+                     <children>
+                        <VBox alignment="CENTER" layoutX="42.0" layoutY="47.0" prefHeight="336.0" prefWidth="234.0">
+                           <children>
+                              <ImageView fx:id="bookCover" fitHeight="299.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" styleClass="book-cover">
+                                 <VBox.margin>
+                                    <Insets bottom="20.0" top="5.0" />
+                                 </VBox.margin>
+                              </ImageView>
+                              <HBox alignment="CENTER">
+                                 <children>
+                                    <Button alignment="CENTER" contentDisplay="TOP" mnemonicParsing="false" prefHeight="60.0" prefWidth="200.0" text="Button" textAlignment="CENTER" />
+                                 </children>
+                              </HBox>
+                           </children>
+                        </VBox>
+                     </children>
+                  </AnchorPane>
+                  <ScrollPane prefHeight="770.0" prefWidth="954.0">
+                    <content>
+                      <AnchorPane prefHeight="737.0" prefWidth="954.0">
+                           <children>
+                              <VBox layoutX="92.0" layoutY="69.0">
+                                 <children>
+                                    <Text fx:id="bookTitle" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="title-text" text="BOOK TITLE" wrappingWidth="681.0">
+                                       <font>
+                                          <Font name="Calibri Bold" size="36.0" />
+                                       </font>
+                                    </Text>
+                                    <Text fx:id="bookAuthor" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="author-text" text="Book author" wrappingWidth="677.13671875">
+                                       <font>
+                                          <Font name="Calibri Italic" size="24.0" />
+                                       </font>
+                                       <VBox.margin>
+                                          <Insets top="10.0" />
+                                       </VBox.margin>
+                                    </Text>
+                                    <Text fx:id="bookDescription" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="description-text" text="Book description" wrappingWidth="690.13671875">
+                                       <font>
+                                          <Font size="18.0" />
+                                       </font>
+                                       <VBox.margin>
+                                          <Insets top="10.0" />
+                                       </VBox.margin>
+                                    </Text>
+                                 </children>
+                              </VBox>
+                           </children>
+                        </AnchorPane>
+                    </content>
+                  </ScrollPane>
+              </items>
+            </SplitPane>
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>
