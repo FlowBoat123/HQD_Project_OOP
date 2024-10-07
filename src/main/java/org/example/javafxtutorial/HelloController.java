@@ -20,10 +20,10 @@ public class HelloController {
     @FXML
     private void launchSearch() throws Exception {
         welcomeText.setText("Welcome to JavaFX Application!");
-        String search = searchField.getText().toLowerCase();
+        String search = searchField.getText();
         System.out.println("Search: " + search);
         ArrayList<Book> searchResult = GoogleAPI.searchBook(search);
-        if (searchResult.isEmpty()) {
+        if (searchResult == null || searchResult.isEmpty()) {
             welcomeText.setText("No results found!");
         } else {
             // Open the new window with book details
@@ -67,7 +67,7 @@ public class HelloController {
         bookStage.setScene(scene);
         bookStage.setTitle("Book View");
         bookStage.setResizable(false);
-        bookStage.initModality(Modality.APPLICATION_MODAL);  // Modal window
+        bookStage.initModality(Modality.APPLICATION_MODAL);  // window can't resize
         bookStage.show();
     }
 }
