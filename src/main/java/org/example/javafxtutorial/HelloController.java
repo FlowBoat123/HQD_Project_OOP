@@ -6,6 +6,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.BorderPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -17,6 +18,19 @@ public class HelloController {
     private Label welcomeText;
     @FXML
     private TextField searchField;
+    @FXML
+    void launchDashboard() throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("main-dashboard.fxml"));
+        DashboardController dashboardController = loader.getController();
+        BorderPane root = loader.load();
+        Scene scene = new Scene(root);
+        Stage stage = new Stage();
+        stage.setScene(scene);
+        stage.setTitle("My Library");
+        stage.setResizable(false);
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.show();
+    }
     @FXML
     private void launchSearch() throws Exception {
         welcomeText.setText("Welcome to JavaFX Application!");

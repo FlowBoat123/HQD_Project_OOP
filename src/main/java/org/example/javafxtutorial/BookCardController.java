@@ -17,7 +17,7 @@ public class BookCardController {
 
     private Book book;
 
-    private void initializeBookCard(Book book) {
+    public void initializeBookCard(Book book) {
         this.book = book;
         bookAuthor.setText(book.getAuthorsAsString());
         bookTitle.setText(book.getTitle());

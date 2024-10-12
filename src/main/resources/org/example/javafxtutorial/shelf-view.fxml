@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.String?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.RadioButton?>
@@ -7,7 +8,6 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
@@ -15,15 +15,14 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="660.0" prefWidth="1030.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.javafxtutorial.ShelfController">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="660.0" prefWidth="1030.0" styleClass="transparent-border" stylesheets="@main.css" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.javafxtutorial.ShelfController">
    <children>
-      <HBox alignment="CENTER_LEFT" prefHeight="90.0" prefWidth="1030.0" spacing="20.0" styleClass="white-background" stylesheets="@main.css">
+      <HBox alignment="CENTER_LEFT" prefHeight="90.0" prefWidth="1030.0" spacing="20.0" stylesheets="@main.css">
          <children>
-            <StackPane prefHeight="58.0" prefWidth="352.0">
+            <StackPane prefHeight="88.0" prefWidth="329.0">
                <children>
-                  <TextField prefHeight="42.0" prefWidth="399.0" visible="false" />
-                  <Label prefHeight="42.0" prefWidth="291.0" text="Current shelf">
+                  <TextField fx:id="shelfFiled" prefHeight="42.0" prefWidth="399.0" visible="false" />
+                  <Label fx:id="shelfName" alignment="CENTER" prefHeight="42.0" prefWidth="294.0" text="Current shelf">
                      <font>
                         <Font name="System Bold" size="18.0" />
                      </font>
@@ -32,10 +31,10 @@
             </StackPane>
             <VBox alignment="CENTER">
                <children>
-                  <HBox alignment="CENTER" prefHeight="40.0" prefWidth="305.0" styleClass="round-corner" stylesheets="@main.css">
+                  <HBox alignment="CENTER" prefHeight="40.0" prefWidth="396.0" styleClass="round-corner" stylesheets="@main.css">
                      <children>
-                        <TextField prefHeight="30.0" prefWidth="260.0" promptText="Search" styleClass="transparent" stylesheets="@main.css" />
-                        <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                        <TextField fx:id="searchField" prefHeight="30.0" prefWidth="330.0" promptText="Search" styleClass="transparent" stylesheets="@main.css" />
+                        <ImageView fitHeight="20.0" fitWidth="20.0" onMouseClicked="#handleSearch" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@../../../images/searchicon.png" />
                            </image>
@@ -51,25 +50,23 @@
                   </HBox>
                </children>
             </VBox>
-            <HBox alignment="CENTER" disable="true" prefHeight="58.0" prefWidth="291.0" spacing="20.0">
+            <HBox alignment="CENTER" disable="true" prefHeight="88.0" prefWidth="276.0" spacing="20.0">
                <children>
-                  <Button mnemonicParsing="false" prefHeight="32.0" prefWidth="107.0" text="Edit" />
-                  <Button layoutX="111.0" layoutY="23.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="107.0" text="Delete" />
+                  <Button mnemonicParsing="false" onAction="#handleEdit" prefHeight="32.0" prefWidth="107.0" text="Edit" />
+                  <Button layoutX="111.0" layoutY="23.0" mnemonicParsing="false" onAction="#handleDelete" prefHeight="32.0" prefWidth="107.0" text="Delete" />
                </children>
             </HBox>
          </children>
+         <styleClass>
+            <String fx:value="white-background" />
+            <String fx:value="gray-border" />
+            <String fx:value="border-bottom" />
+         </styleClass>
       </HBox>
-      <ScrollPane prefHeight="570.0" prefWidth="1030.0">
+      <ScrollPane prefHeight="570.0" prefWidth="1030.0" styleClass="white-background" stylesheets="@main.css">
          <content>
-            <GridPane prefHeight="670.0" prefWidth="1017.0">
-              <columnConstraints>
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-              </columnConstraints>
+            <GridPane fx:id="bookContainer" styleClass="white-background" stylesheets="@main.css">
               <rowConstraints>
-                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
             </GridPane>

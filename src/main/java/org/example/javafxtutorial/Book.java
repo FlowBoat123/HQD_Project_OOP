@@ -59,8 +59,8 @@ public class Book {
         return coverImgUrl;
     }
     public void setCoverImgUrl(String coverImgUrl) {
-        if (coverImgUrl != null) {
-
+        if (coverImgUrl == null || coverImgUrl.isEmpty()) {
+            this.coverImgUrl = "https://via.placeholder.com/180x240";
         }
         this.coverImgUrl = coverImgUrl;
     }
