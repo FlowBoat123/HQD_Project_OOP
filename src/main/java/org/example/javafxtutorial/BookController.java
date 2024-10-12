@@ -7,6 +7,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.text.Text;
 
+import java.util.Scanner;
 
 
 public class BookController {
@@ -22,10 +23,15 @@ public class BookController {
 
     @FXML
     private Label bookTitle;
+
+    @FXML
+    private Label genreLabel;
+
     public void initializeBookView(Book book) {
         bookTitle.setText(book.getTitle());
         bookAuthor.setText(book.getAuthorsAsString());
         bookDescription.setText(book.getDescription());
+        genreLabel.setText(book.getGenresAsString());
         bookCover.setFitWidth(200);
         bookCover.setFitHeight(300);
         bookCover.setPreserveRatio(true);

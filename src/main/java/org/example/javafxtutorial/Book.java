@@ -109,5 +109,18 @@ public class Book {
         }
         genres.add(genre);
     }
-
+    public String getGenresAsString(){
+        StringBuilder genresString = new StringBuilder();
+        if (genres == null) {
+            return "Genres: Unknown";
+        }
+        for (int i = 0; i<genres.size(); i++){
+            if (i==0) {
+                genresString.append("Genres: ").append(genres.get(i));
+            } else {
+                genresString.append(", ").append(genres.get(i));
+            }
+        }
+        return genresString.toString();
+    }
 }

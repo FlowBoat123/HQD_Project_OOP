@@ -22,7 +22,7 @@ public class HelloController {
         welcomeText.setText("Welcome to JavaFX Application!");
         String search = searchField.getText();
         System.out.println("Search: " + search);
-        ArrayList<Book> searchResult = GoogleAPI.searchBook(search);
+        ArrayList<Book> searchResult = GoogleAPI.searchBook(search, "name");
         if (searchResult == null || searchResult.isEmpty()) {
             welcomeText.setText("No results found!");
         } else {

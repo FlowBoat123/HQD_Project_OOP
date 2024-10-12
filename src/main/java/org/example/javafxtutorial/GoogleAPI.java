@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 
 import com.google.gson.Gson;
@@ -14,6 +15,10 @@ import com.google.gson.JsonElement;
 public class GoogleAPI {
     private static final String GOOGLE_BOOKS_URL = "https://www.googleapis.com/books/v1/volumes?q=";
     private static final String MY_API_KEY = "AIzaSyAxz15rEaspqhv_sPHwlLqSAsv4w1z0lUo";
+    private static final String BY_ISBN = "isbn";
+    private static final String BY_NAME = "name";
+    private static final String BY_AUTHOR = "author";
+
     private static String generateBookSearchURLbyName(String query) {
         return GOOGLE_BOOKS_URL + query;
     }
@@ -21,18 +26,14 @@ public class GoogleAPI {
     private static String generateBookSearchURLbyISBN(String ISBN) {
         return GOOGLE_BOOKS_URL + "isbn:" + ISBN;
     }
+    private static String generateBookSearchURLbyAuthor(String author) {
+        return GOOGLE_BOOKS_URL + "inauthor:" + author;
+    }
 
-    private static JsonObject getHttpMethod(String searchQuery) throws Exception {
+    private static JsonObject getHttpMethod(String searchQuery, String searchMethod) throws Exception {
         searchQuery = searchQuery.replaceAll("\\s", "+");
         System.out.println(searchQuery);
-        URI url;
-        if (searchQuery.isEmpty()) {
-            throw new IllegalArgumentException("Search query cannot empty");
-        } else if (ISBNValidator.isValidISBN(searchQuery)) {
-            url = new URI(generateBookSearchURLbyISBN(searchQuery));
-        } else {
-            url = new URI(generateBookSearchURLbyName(searchQuery));
-        }
+        URI url = getUri(searchQuery, searchMethod);
         System.out.println(url);
         HttpURLConnection connection = (HttpURLConnection) url.toURL().openConnection();
         connection.setRequestMethod("GET");
@@ -45,15 +46,36 @@ public class GoogleAPI {
         reader.close();
         return responseJson;
     }
-    public static ArrayList<Book> searchBook(String searchQuery) throws Exception {
-        JsonObject responseJson = getHttpMethod(searchQuery);
+
+    private static URI getUri(String searchQuery, String searchMethod) throws URISyntaxException {
+        URI url;
+        if (searchQuery.isEmpty()) {
+            throw new IllegalArgumentException("Search query cannot empty");
+        }
+        if (searchMethod.isEmpty()) {
+            throw new IllegalArgumentException("Search method invalid");
+        }
+        if (searchMethod.equals(BY_ISBN)) {
+            url = new URI(generateBookSearchURLbyISBN(searchQuery));
+        } else if (searchMethod.equals(BY_AUTHOR)) {
+            url = new URI(generateBookSearchURLbyAuthor(searchQuery));
+        } else {
+            url = new URI(generateBookSearchURLbyName(searchQuery));
+        }
+        return url;
+    }
+
+    public static ArrayList<Book> searchBook(String searchQuery, String searchMethod) throws Exception {
+        JsonObject responseJson = getHttpMethod(searchQuery, searchMethod);
         if (!responseJson.has("items")){
             return null;
         }
         ArrayList<Book> searchResult = new ArrayList<>();
         JsonArray items = responseJson.getAsJsonArray("items");
         for (JsonElement item : items) {
-            searchResult.add(parseBookFromJSON(item));
+            if (item.getAsJsonObject().getAsJsonObject("volumeInfo").has("imageLinks")) {
+                searchResult.add(parseBookFromJSON(item));
+            }
         }
         return searchResult;
     }
@@ -97,8 +119,5 @@ public class GoogleAPI {
         book.setIsbn_13(isbn13);
         book.setCoverImgUrl(coverImageUrl);
         return book;
-    }
-    public static void main(String[] args) throws Exception {
-        System.out.println(searchBook("harrypotterand"));
     }
 }
