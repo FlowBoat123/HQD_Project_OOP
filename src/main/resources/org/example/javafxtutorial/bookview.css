@@ -40,3 +40,10 @@
 .genres {
     -fx-font-weight: bold;
 }
+.combo-box {
+    -fx-background-color: #fff;
+    -fx-border-color: #554f4f;
+    -fx-border-radius: 5;
+    -fx-background-radius: 5;
+    -fx-font-size: 16px;
+}

@@ -6,16 +6,11 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.layout.AnchorPane;
-
 import java.io.IOException;
 
 public class DashboardController {
     @FXML
     private AnchorPane mainView;
-    @FXML
-    void handleAddShelf() {
-        System.out.println("Add Shelf");
-    }
 
     @FXML
     void launchShelfView(ActionEvent event) {
@@ -33,4 +28,7 @@ public class DashboardController {
             e.printStackTrace();
         }
     }
+
+
+
 }
