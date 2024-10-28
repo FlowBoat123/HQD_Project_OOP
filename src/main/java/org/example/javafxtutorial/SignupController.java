@@ -3,7 +3,6 @@ package org.example.javafxtutorial;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
@@ -39,11 +38,8 @@ public class SignupController {
             return;
         }
 
-        if (insertUser(username, password)) {
-            signupStatusLabel.setText("Sign-up successful! :3");
-        } else {
-            signupStatusLabel.setText("Sign-up failed! Username may already existed.");
-        }
+        // Call the method to run the insertion task
+        runInsertUserTask(username, password);
 
     }
 
@@ -60,6 +56,30 @@ public class SignupController {
             e.printStackTrace();
             return false;
         }
+    }
+    public void runInsertUserTask(String username, String password) {
+        // Create the task
+        InsertUserTask task = new InsertUserTask(username, password);
+
+        // Handle task completion and result
+        task.setOnSucceeded(event -> {
+            Boolean result = task.getValue();
+            if (result) {
+                System.out.println("User inserted successfully.");
+                // Optionally update UI here (e.g., show success message)
+            } else {
+                System.out.println("User insertion failed.");
+                // Optionally update UI here (e.g., show error message)
+            }
+        });
+
+        task.setOnFailed(event -> {
+            System.out.println("Task failed.");
+            // Optionally update UI here (e.g., show failure message)
+        });
+
+        // Run the task in a background thread
+        new Thread(task).start();
     }
 
     public void handleBackToLogin(ActionEvent actionEvent) {

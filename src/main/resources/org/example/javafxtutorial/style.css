@@ -1,0 +1,15 @@
+.button {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+}
+
+.button:hover {
+    -fx-background-color: lightgray;
+}
+
+.button-active {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-border-width: 0 0 2px 0; /* Only bottom border */
+    -fx-border-color: blue; /* Customize the underline color */
+}

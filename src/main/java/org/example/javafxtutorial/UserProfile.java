@@ -7,7 +7,11 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.shape.Circle;
+import javafx.stage.FileChooser;
 
+import java.io.File;
 import java.util.Objects;
 
 public class UserProfile {
@@ -46,6 +50,67 @@ public class UserProfile {
 
     @FXML
     private Button editProfileButton;
+
+    @FXML
+    private Button changeProfileImageButton;
+
+    @FXML
+    private AnchorPane scene1;
+
+    @FXML
+    private AnchorPane scene2;
+
+    @FXML
+    private AnchorPane scene3;
+
+    @FXML
+    private Button button1;
+    @FXML
+    private Button button2;
+    @FXML
+    private Button button3;
+
+    @FXML
+    public void showScene1(ActionEvent event) {
+        scene1.setVisible(true);
+        scene2.setVisible(false);
+        scene3.setVisible(false);
+        button1.getStyleClass().add("button-active");
+        button2.getStyleClass().remove("button-active");
+        button3.getStyleClass().remove("button-active");
+    }
+
+    @FXML
+    public void showScene2(ActionEvent event) {
+        scene1.setVisible(false);
+        scene2.setVisible(true);
+        scene3.setVisible(false);
+        button1.getStyleClass().remove("button-active");
+        button2.getStyleClass().add("button-active");
+        button3.getStyleClass().remove("button-active");
+    }
+
+    @FXML
+    public void showScene3(ActionEvent event) {
+        scene1.setVisible(false);
+        scene2.setVisible(false);
+        scene3.setVisible(true);
+        button1.getStyleClass().remove("button-active");
+        button2.getStyleClass().remove("button-active");
+        button3.getStyleClass().add("button-active");
+    }
+
+    @FXML
+    public void handleChangeProfileImage(ActionEvent event) {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Image Files", "*.png", "*.jpg", "*.jpeg"));
+        File selectedFile = fileChooser.showOpenDialog(changeProfileImageButton.getScene().getWindow());
+
+        if (selectedFile != null) {
+            Image newImage = new Image(selectedFile.toURI().toString());
+            profileImage.setImage(newImage);
+        }
+    }
 
     private boolean isEditing = false;
 
@@ -93,12 +158,24 @@ public class UserProfile {
         bioLabel.setVisible(!enable);
         emailLabel.setVisible(!enable);
         websiteLabel.setVisible(!enable);
+
+        // Show or hide the Change Image button based on editing mode
+        changeProfileImageButton.setVisible(enable);
     }
 
     public void initialize() {
         // Set profile picture
-        Image image = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/6.jpg")));
+        Image image = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/bg3.jpg")));
         profileImage.setImage(image);
+
+        // Clip the ImageView to a circle
+        double radius = Math.min(profileImage.getFitWidth(), profileImage.getFitHeight()) / 2;
+        Circle clip = new Circle(radius, radius, radius);
+        profileImage.setClip(clip);
+
+        // Ensure the clip is centered correctly
+        profileImage.setX((profileImage.getFitWidth() - radius * 2) / 2);
+        profileImage.setY((profileImage.getFitHeight() - radius * 2) / 2);
 
         // Set user details (for example, hardcoded or loaded from a database)
         usernameField.setText("Hien dep trai");

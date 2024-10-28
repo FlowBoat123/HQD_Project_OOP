@@ -13,7 +13,7 @@ public class UserTest extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
         Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/org/example/javafxtutorial/user_profile.fxml")));
-        primaryStage.setTitle("Login Interface");
+        primaryStage.setTitle("Library Management");
         primaryStage.setScene(new Scene(root));
         primaryStage.show();
     }
