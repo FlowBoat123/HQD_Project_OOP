@@ -41,7 +41,7 @@ public class HelloController {
             welcomeText.setText("No results found!");
         } else {
             // Open the new window with book details
-            openBookView(searchResult.get(0));  // Display the first book result
+            openBookView(searchResult.getFirst());  // Display the first book result
         }
 
 //        AnchorPane root = loader.load();
