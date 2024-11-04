@@ -1,4 +1,4 @@
-package org.example.javafxtutorial;
+package controller;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -9,11 +9,9 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.text.Text;
 import javafx.util.Duration;
-
-import java.io.IOException;
-import java.util.Scanner;
+import org.example.javafxtutorial.Book;
+import org.example.javafxtutorial.LibraryService;
 
 
 public class BookController {

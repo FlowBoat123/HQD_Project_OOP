@@ -1,4 +1,4 @@
-package org.example.javafxtutorial;
+package controller;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -6,9 +6,12 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.layout.AnchorPane;
+import org.example.javafxtutorial.Shelf;
+import org.example.javafxtutorial.ShelfController;
+
 import java.io.IOException;
 
-public class DashboardController {
+public class UserDashboardController {
     @FXML
     private AnchorPane mainView;
 

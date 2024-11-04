@@ -8,4 +8,7 @@ module org.example.javafxtutorial {
 
     opens org.example.javafxtutorial to javafx.fxml;
     exports org.example.javafxtutorial;
+
+    opens controller to javafx.fxml;
+    exports controller;
 }
