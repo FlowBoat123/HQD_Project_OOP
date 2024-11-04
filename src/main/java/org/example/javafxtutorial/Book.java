@@ -4,16 +4,29 @@ import java.util.ArrayList;
 import java.util.Objects;
 
 public class Book {
+    public static final int READING = 0;
+    public static final int PLAN_TO_READ = 1;
+    public static final int ON_HOLD = 2;
+    public static final int COMPLETED = 3;
+
     private String title;
     private ArrayList<String> authors = null;
-    private String publisher;
     private String description;
     private ArrayList<String> genres = null;
     private String isbn_10;
     private String isbn_13;
     private String coverImgUrl;
+    private int status;
 
     public Book() {}
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
 
     public String getIsbn_10() {
         return isbn_10;
@@ -37,14 +50,6 @@ public class Book {
 
     public void setTitle(String title) {
         this.title = title;
-    }
-
-    public String getPublisher() {
-        return publisher;
-    }
-
-    public void setPublisher(String publisher) {
-        this.publisher = publisher;
     }
 
     public String getDescription() {
@@ -122,5 +127,23 @@ public class Book {
             }
         }
         return genresString.toString();
+    }
+    public void setAuthorsFromString(String authorsString){
+        if (authorsString == null || authorsString.isEmpty()) {
+            return;
+        }
+        String[] authorsArray = authorsString.split(", ");
+        for (String author : authorsArray) {
+            addAuthor(author);
+        }
+    }
+    public void setGenresFromString(String genresString){
+        if (genresString == null || genresString.isEmpty()) {
+            return;
+        }
+        String[] genresArray = genresString.split(", ");
+        for (String genre : genresArray) {
+            addGenre(genre);
+        }
     }
 }

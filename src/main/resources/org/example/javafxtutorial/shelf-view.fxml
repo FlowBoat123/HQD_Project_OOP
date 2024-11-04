@@ -5,12 +5,12 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
@@ -21,7 +21,6 @@
          <children>
             <StackPane prefHeight="88.0" prefWidth="329.0">
                <children>
-                  <TextField fx:id="shelfFiled" prefHeight="42.0" prefWidth="399.0" visible="false" />
                   <Label fx:id="shelfName" alignment="CENTER" prefHeight="42.0" prefWidth="294.0" text="Current shelf">
                      <font>
                         <Font name="System Bold" size="18.0" />
@@ -65,11 +64,15 @@
       </HBox>
       <ScrollPane prefHeight="570.0" prefWidth="1030.0" styleClass="white-background" stylesheets="@main.css">
          <content>
-            <GridPane fx:id="bookContainer" styleClass="white-background" stylesheets="@main.css">
-              <rowConstraints>
-                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-              </rowConstraints>
-            </GridPane>
+            <TableView prefHeight="565.0" prefWidth="1026.0">
+              <columns>
+                <TableColumn fx:id="bookTitleCol" prefWidth="408.0" text="Title" />
+                <TableColumn fx:id="bookAuthorsCol" minWidth="0.0" prefWidth="187.0" text="Authors" />
+                  <TableColumn fx:id="bookGenresCol" prefWidth="177.0" text="Genres" />
+                  <TableColumn fx:id="bookIsbn10Col" maxWidth="131.0" minWidth="-1.0" prefWidth="116.0" text="ISBN-10" />
+                  <TableColumn fx:id="bookIsbn13Col" minWidth="0.0" prefWidth="137.0" text="ISBN-13" />
+              </columns>
+            </TableView>
          </content>
       </ScrollPane>
    </children>

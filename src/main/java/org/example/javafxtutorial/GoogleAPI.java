@@ -113,7 +113,6 @@ public class GoogleAPI {
                 book.addGenre(genre.getAsString());
             }
         }
-        book.setPublisher(itemJson.has("publisher") ? itemJson.get("publisher").getAsString() : null);
         book.setDescription(itemJson.has("description") ? itemJson.get("description").getAsString() : null);
         book.setIsbn_10(isbn10);
         book.setIsbn_13(isbn13);

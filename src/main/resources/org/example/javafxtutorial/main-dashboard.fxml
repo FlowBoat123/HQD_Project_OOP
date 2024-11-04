@@ -51,7 +51,7 @@
    <left>
       <VBox prefHeight="660.0" prefWidth="250.0" style="-fx-background-color: #F8F8F9;" stylesheets="@main.css" BorderPane.alignment="CENTER">
          <children>
-            <VBox alignment="CENTER" layoutX="10.0" layoutY="10.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="211.0" prefWidth="250.0" spacing="10.0" stylesheets="@main.css">
+            <VBox alignment="CENTER" layoutX="10.0" layoutY="10.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="167.0" prefWidth="250.0" spacing="10.0" stylesheets="@main.css">
                <children>
                   <HBox alignment="CENTER" spacing="10.0">
                      <children>
@@ -93,19 +93,7 @@
                         </Button>
                      </children>
                   </HBox>
-                  <HBox alignment="CENTER" layoutX="20.0" layoutY="114.0" prefHeight="41.0" prefWidth="230.0">
-                     <children>
-                        <Button alignment="BASELINE_LEFT" mnemonicParsing="false" prefHeight="30.0" prefWidth="200.0" stylesheets="@main.css" text="Add your own">
-                           <font>
-                              <Font name="Calibri" size="16.0" />
-                           </font>
-                           <styleClass>
-                              <String fx:value="transparent-button" />
-                              <String fx:value="padding-left" />
-                           </styleClass>
-                        </Button>
-                     </children>
-                  </HBox>
+                  <HBox alignment="CENTER" layoutX="20.0" layoutY="114.0" prefHeight="41.0" prefWidth="230.0" />
                   <Separator maxWidth="-Infinity" prefHeight="5.0" prefWidth="168.0" />
                </children>
                <padding>
@@ -160,6 +148,32 @@
                   <HBox alignment="CENTER" layoutX="20.0" layoutY="114.0" prefHeight="41.0" prefWidth="230.0">
                      <children>
                         <Button alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#launchShelfView" prefHeight="30.0" prefWidth="200.0" stylesheets="@main.css" text="Plan To Read">
+                           <font>
+                              <Font name="Calibri" size="16.0" />
+                           </font>
+                           <styleClass>
+                              <String fx:value="transparent-button" />
+                              <String fx:value="padding-left" />
+                           </styleClass>
+                        </Button>
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER" layoutX="20.0" layoutY="165.0" prefHeight="41.0" prefWidth="230.0">
+                     <children>
+                        <Button alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#launchShelfView" prefHeight="30.0" prefWidth="200.0" stylesheets="@main.css" text="On Hold">
+                           <font>
+                              <Font name="Calibri" size="16.0" />
+                           </font>
+                           <styleClass>
+                              <String fx:value="transparent-button" />
+                              <String fx:value="padding-left" />
+                           </styleClass>
+                        </Button>
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER" layoutX="20.0" layoutY="216.0" prefHeight="41.0" prefWidth="230.0">
+                     <children>
+                        <Button alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#launchShelfView" prefHeight="30.0" prefWidth="200.0" stylesheets="@main.css" text="Completed">
                            <font>
                               <Font name="Calibri" size="16.0" />
                            </font>
