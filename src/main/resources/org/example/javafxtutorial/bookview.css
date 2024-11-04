@@ -47,3 +47,7 @@
     -fx-background-radius: 5;
     -fx-font-size: 16px;
 }
+.pop-up {
+    -fx-text-fill: green;
+    -fx-font-size: 16px;
+}

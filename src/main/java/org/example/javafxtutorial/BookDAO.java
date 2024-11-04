@@ -7,7 +7,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-public class BookDAO implements DAO<Book>{
+public class BookDAO implements DAO<Book> {
 
     private DataSource dataSource;
 
@@ -37,10 +37,12 @@ public class BookDAO implements DAO<Book>{
 
     @Override
     public void delete(Book book, String username) {
-        String query = "DELETE FROM books WHERE title = ?";
+        String query = "DELETE FROM books WHERE isbn_10 = ? OR isbn_13 = ? AND username = ?";
         try (Connection connection = dataSource.getConnection();
              PreparedStatement statement = connection.prepareStatement(query)) {
-            statement.setString(1, book.getTitle());
+            statement.setString(1, book.getIsbn_10());
+            statement.setString(2, book.getIsbn_13());
+            statement.setString(3, username);
             statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -50,6 +52,20 @@ public class BookDAO implements DAO<Book>{
     @Override
     public void update(Book book, String username) {
 
+    }
+
+    public void updateStatus(Book book, String username, int status) {
+        String query = "UPDATE books SET status = ? WHERE isbn_10 = ? OR isbn_13 = ? AND username = ?";
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setInt(1, status);
+            statement.setString(2, book.getIsbn_10());
+            statement.setString(3, book.getIsbn_13());
+            statement.setString(4, username);
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override

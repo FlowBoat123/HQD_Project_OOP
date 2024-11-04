@@ -110,7 +110,7 @@ public class LibraryService {
                         completedBooks.add(book);
                         break;
                 }
-                bookDAO.update(book, userSession.getUsername());
+                bookDAO.updateStatus(book, userSession.getUsername(), status);
                 break;
             }
         }

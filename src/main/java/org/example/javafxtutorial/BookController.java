@@ -1,5 +1,7 @@
 package org.example.javafxtutorial;
 
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -8,6 +10,7 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.text.Text;
+import javafx.util.Duration;
 
 import java.io.IOException;
 import java.util.Scanner;
@@ -29,6 +32,9 @@ public class BookController {
 
     @FXML
     private Label genreLabel;
+
+    @FXML
+    private Label notificationLabel;
 
     @FXML
     private ComboBox<String> bookStatus;
@@ -85,9 +91,11 @@ public class BookController {
             book.setStatus(currStatus);
             LibraryService.getInstance().addBook(book);
             updateBtn.setText("Update");
+            showNotification("Add book to " + bookStatus.getValue());
         } else {
             book.setStatus(currStatus);
-            System.out.println("update");
+            LibraryService.getInstance().updateBookStatus(book.getTitle(), currStatus);
+            showNotification("Book status updated to " + bookStatus.getValue());
         }
         initStatus = currStatus;
     }
@@ -111,6 +119,15 @@ public class BookController {
                 updateBtn.setText("Add to Library");
                 break;
         }
+    }
+
+    private void showNotification(String message) {
+        notificationLabel.setText(message);
+        notificationLabel.setVisible(true);
+        Timeline timeline = new Timeline(new KeyFrame(
+                Duration.millis(2000),
+                ae -> notificationLabel.setVisible(false)));
+        timeline.play();
     }
 
 }

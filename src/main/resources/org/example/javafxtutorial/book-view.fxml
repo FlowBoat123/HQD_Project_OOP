@@ -43,6 +43,11 @@
                                           </Button>
                                        </children>
                                     </VBox>
+                                    <Label fx:id="notificationLabel" prefHeight="29.0" prefWidth="230.0" text="Label" visible="false">
+                                       <VBox.margin>
+                                          <Insets top="10.0" />
+                                       </VBox.margin>
+                                    </Label>
                                  </children>
                               </VBox>
                            </children>
