@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="org.example.javafxtutorial.SignupController">
+    <!--SignUp UI-->
+    <VBox alignment="CENTER" layoutX="198.0" layoutY="27.0" prefHeight="315.0" prefWidth="204.0" spacing="10"
+          xmlns:fx="http://javafx.com/fxml/1">
+        <Label style="-fx-font-size: 24px; -fx-font-weight: bold;" text="Sign Up"/>
+        <Label text="Username:"/>
+        <TextField fx:id="signupUsernameField"/>
+        <Label text="Password:"/>
+        <PasswordField fx:id="signupPasswordField"/>
+        <Label text="Confirm Password:"/>
+        <PasswordField fx:id="signupConfirmPasswordField"/>
+        <Button onAction="#handleSignUp" text="Sign Up"/>
+        <Button onAction="#handleBackToLogin" text="Back To Login"/>
+    </VBox>
+    <Label fx:id="signupStatusLabel" layoutX="172.0" layoutY="342.0" prefHeight="18.0" prefWidth="256.0"
+           AnchorPane.leftAnchor="172.0" AnchorPane.rightAnchor="172.8" AnchorPane.topAnchor="342.0"/>
+</AnchorPane>

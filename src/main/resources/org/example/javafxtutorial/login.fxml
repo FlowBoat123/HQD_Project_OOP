@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.shape.Rectangle?>
+
+<HBox xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.javafxtutorial.LoginController">
+
+    <!-- Image on the left side -->
+    <AnchorPane prefHeight="440.0" prefWidth="300.0">
+        <ImageView fx:id="logoImageView" fitHeight="214.0" fitWidth="250.0" layoutX="25.0" layoutY="161.0" preserveRatio="true" />
+    </AnchorPane>
+
+    <!-- Rectangle and Login System on the right side -->
+    <AnchorPane prefHeight="440.0" prefWidth="414.0">
+        <!-- Rectangle surrounding the login system -->
+        <Rectangle arcHeight="20.0" arcWidth="20.0"
+                   height="320.0"
+                   layoutX="22.0" layoutY="60.0"
+                   style="-fx-fill: white; -fx-stroke: lightgray; -fx-stroke-width: 1;" width="350.0" />
+
+        <!-- Username Field -->
+        <Label layoutX="54.0" layoutY="89.0" text="Tên đăng nhập:" />
+        <TextField fx:id="usernameField" layoutX="52.0" layoutY="107.0" prefWidth="290.0" />
+
+        <!-- Password Field -->
+        <Label layoutX="54.0" layoutY="160.0" text="Mật khẩu:" />
+        <PasswordField fx:id="passwordField" layoutX="52.0" layoutY="178.0" prefWidth="290.0" />
+
+        <!-- Login Button -->
+        <Button layoutX="52.0" layoutY="255.0" onAction="#handleLogin" prefWidth="290.0" style="-fx-background-color: #1877f2; -fx-text-fill: white;" text="Đăng nhập" AnchorPane.topAnchor="255.0" />
+
+        <!-- Create New Account Button -->
+        <Button layoutX="52.0" layoutY="310.0" onAction="#handleSignUp" prefWidth="290.0" style="-fx-background-color: #42b72a; -fx-text-fill: white;" text="Tạo tài khoản mới" />
+
+        <!-- Status Label -->
+        <Label fx:id="statusLabel" layoutX="100.0" layoutY="227.0" AnchorPane.leftAnchor="100.0" AnchorPane.rightAnchor="100.80000000000001" AnchorPane.topAnchor="227.0" />
+    </AnchorPane>
+
+</HBox>
