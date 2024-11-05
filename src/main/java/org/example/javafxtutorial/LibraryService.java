@@ -1,120 +1,45 @@
 package org.example.javafxtutorial;
 
+import database.LibraryDAO;
+import logic.Book;
+import database.BookDAO;
+
 import java.util.ArrayList;
 
 public class LibraryService {
-    private static LibraryService instance;
+
+    private LibraryDAO libraryDAO;
     private UserSession userSession;
-    private ArrayList<Book> allBooks;
-    private ArrayList<Book> readingBooks;
-    private ArrayList<Book> planToReadBooks;
-    private ArrayList<Book> onHoldBooks;
-    private ArrayList<Book> completedBooks;
-    private BookDAO bookDAO;
+    private ArrayList<Book> books;
 
-    private LibraryService() {
-        userSession = UserSession.getInstance();
-        bookDAO = new BookDAO();
-        allBooks = bookDAO.getAll(userSession.getUsername());
-        readingBooks = new ArrayList<>();
-        planToReadBooks = new ArrayList<>();
-        onHoldBooks = new ArrayList<>();
-        completedBooks = new ArrayList<>();
-        for (Book book : allBooks) {
-            switch (book.getStatus()) {
-                case Book.READING:
-                    readingBooks.add(book);
-                    break;
-                case Book.PLAN_TO_READ:
-                    planToReadBooks.add(book);
-                    break;
-                case Book.ON_HOLD:
-                    onHoldBooks.add(book);
-                    break;
-                case Book.COMPLETED:
-                    completedBooks.add(book);
-                    break;
-            }
+    public LibraryService() {
+        this.libraryDAO = new LibraryDAO();
+        this.userSession = UserSession.getInstance();
+        this.books = libraryDAO.getAll();
+    }
+
+    public boolean checkIfBookIsInLibrary(Book book) {
+        return books.contains(book);
+    }
+
+    void addCopiesToLibrary(Book book, int numberOfCopies) {
+        if (!checkIfBookIsInLibrary(book)) {
+            book.setQuantity(numberOfCopies);
+            book.setBorrowedCopies(0);
+            libraryDAO.add(book);
+            books.add(book);
+        } else {
+            Book existingBook = books.get(books.indexOf(book));
+            existingBook.setQuantity(existingBook.getQuantity() + numberOfCopies);
+            libraryDAO.update(existingBook);
         }
     }
 
-    public static synchronized LibraryService getInstance() {
-        if (instance == null) {
-            instance = new LibraryService();
-        }
-        return instance;
-    }
-
-    public void addBook(Book book) {
-        allBooks.add(book);
-        switch (book.getStatus()) {
-            case Book.READING:
-                readingBooks.add(book);
-                break;
-            case Book.PLAN_TO_READ:
-                planToReadBooks.add(book);
-                break;
-            case Book.ON_HOLD:
-                onHoldBooks.add(book);
-                break;
-            case Book.COMPLETED:
-                completedBooks.add(book);
-                break;
-        }
-        bookDAO.save(book, userSession.getUsername());
-    }
-
-    public void removeBook(Book book) {
-        allBooks.remove(book);
-        switch (book.getStatus()) {
-            case Book.READING:
-                readingBooks.remove(book);
-                break;
-            case Book.PLAN_TO_READ:
-                planToReadBooks.remove(book);
-                break;
-            case Book.ON_HOLD:
-                onHoldBooks.remove(book);
-                break;
-            case Book.COMPLETED:
-                completedBooks.remove(book);
-                break;
-        }
-        bookDAO.delete(book, userSession.getUsername());
-    }
-
-    public int checkIfBookExists(Book book) {
-        for(Book b : allBooks) {
-            if(b.getTitle().equals(book.getTitle())) {
-                return b.getStatus();
-            }
-        }
-        return -1;
-    }
-
-    public void updateBookStatus(String title, int status) {
-        for(Book book : allBooks) {
-            if(book.getTitle().equals(title)) {
-                book.setStatus(status);
-                switch (status) {
-                    case Book.READING:
-                        readingBooks.add(book);
-                        break;
-                    case Book.PLAN_TO_READ:
-                        planToReadBooks.add(book);
-                        break;
-                    case Book.ON_HOLD:
-                        onHoldBooks.add(book);
-                        break;
-                    case Book.COMPLETED:
-                        completedBooks.add(book);
-                        break;
-                }
-                bookDAO.updateStatus(book, userSession.getUsername(), status);
-                break;
-            }
+    void removeCopiesFromLibrary(Book book) {
+        if (checkIfBookIsInLibrary(book)) {
+            Book existingBook = books.get(books.indexOf(book));
+            existingBook.setQuantity(0);
+            libraryDAO.update(existingBook);
         }
     }
-
-
 }

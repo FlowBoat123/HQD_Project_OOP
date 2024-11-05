@@ -1,6 +1,5 @@
 package org.example.javafxtutorial;
 
-import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URI;
@@ -11,15 +10,16 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
+import logic.Book;
 
 public class GoogleAPI {
     private static final String GOOGLE_BOOKS_URL = "https://www.googleapis.com/books/v1/volumes?q=";
     private static final String MY_API_KEY = "AIzaSyAxz15rEaspqhv_sPHwlLqSAsv4w1z0lUo";
     private static final String BY_ISBN = "isbn";
-    private static final String BY_NAME = "name";
+    private static final String BY_TITLE = "title";
     private static final String BY_AUTHOR = "author";
 
-    private static String generateBookSearchURLbyName(String query) {
+    private static String generateBookSearchURLbyTitle(String query) {
         return GOOGLE_BOOKS_URL + query;
     }
 
@@ -60,7 +60,7 @@ public class GoogleAPI {
         } else if (searchMethod.equals(BY_AUTHOR)) {
             url = new URI(generateBookSearchURLbyAuthor(searchQuery));
         } else {
-            url = new URI(generateBookSearchURLbyName(searchQuery));
+            url = new URI(generateBookSearchURLbyTitle(searchQuery));
         }
         return url;
     }
@@ -73,7 +73,8 @@ public class GoogleAPI {
         ArrayList<Book> searchResult = new ArrayList<>();
         JsonArray items = responseJson.getAsJsonArray("items");
         for (JsonElement item : items) {
-            if (item.getAsJsonObject().getAsJsonObject("volumeInfo").has("imageLinks")) {
+            JsonObject volumeInfo = item.getAsJsonObject().getAsJsonObject("volumeInfo");
+            if (volumeInfo.has("imageLinks") && volumeInfo.has("industryIdentifiers")) {
                 searchResult.add(parseBookFromJSON(item));
             }
         }

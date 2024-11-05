@@ -1,4 +1,7 @@
-package org.example.javafxtutorial;
+package database;
+
+import logic.Book;
+import org.example.javafxtutorial.UserSession;
 
 import javax.sql.DataSource;
 import java.sql.Connection;
@@ -10,13 +13,34 @@ import java.util.ArrayList;
 public class BookDAO implements DAO<Book> {
 
     private DataSource dataSource;
+    private UserSession userSession;
 
     public BookDAO() {
         this.dataSource = DataSourceFactory.getDataSource();
+        this.userSession = UserSession.getInstance();
     }
 
     @Override
-    public void save(Book book, String username) {
+    public void add(Book book) {
+
+    }
+
+    @Override
+    public void delete(Book book) {
+
+    }
+
+    @Override
+    public void update(Book book) {
+
+    }
+
+    @Override
+    public ArrayList<Book> getAll() {
+        return null;
+    }
+
+    public void add(Book book, String username) {
         String query = "INSERT INTO books (title, authors, description, genres, isbn_10, isbn_13, cover_url, status, username) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
         try (Connection connection = dataSource.getConnection()) {
             PreparedStatement statement = connection.prepareStatement(query);
@@ -35,7 +59,7 @@ public class BookDAO implements DAO<Book> {
         }
     }
 
-    @Override
+
     public void delete(Book book, String username) {
         String query = "DELETE FROM books WHERE isbn_10 = ? OR isbn_13 = ? AND username = ?";
         try (Connection connection = dataSource.getConnection();
@@ -49,7 +73,7 @@ public class BookDAO implements DAO<Book> {
         }
     }
 
-    @Override
+
     public void update(Book book, String username) {
 
     }
@@ -68,7 +92,6 @@ public class BookDAO implements DAO<Book> {
         }
     }
 
-    @Override
     public ArrayList<Book> getAll(String username) {
         String query = "SELECT * FROM books WHERE username = ?";
         ArrayList<Book> books = new ArrayList<>();

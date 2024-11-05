@@ -11,4 +11,8 @@ module org.example.javafxtutorial {
 
     opens controller to javafx.fxml;
     exports controller;
+    exports database;
+    opens database to javafx.fxml;
+    exports logic;
+    opens logic to javafx.fxml;
 }

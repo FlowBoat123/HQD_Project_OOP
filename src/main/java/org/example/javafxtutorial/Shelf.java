@@ -1,5 +1,7 @@
 package org.example.javafxtutorial;
 
+import logic.Book;
+
 import java.util.ArrayList;
 
 public class Shelf {

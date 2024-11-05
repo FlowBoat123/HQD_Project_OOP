@@ -27,6 +27,7 @@ public class AdminDashboardController {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/example/javafxtutorial/api.fxml"));
             Node content = loader.load();
             GoogleAPIController apiController = loader.getController();
+            apiController.setMainView(mainView);
             mainView.getChildren().setAll(content);
             clickedButton.requestFocus();
         } catch (IOException e) {
@@ -49,7 +50,7 @@ public class AdminDashboardController {
             LibraryViewController libraryViewController = loader.getController();
             mainView.getChildren().setAll(content);
             clickedButton.requestFocus();
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }

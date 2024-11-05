@@ -18,6 +18,9 @@ public class UserSession {
         return username;
     }
 
+    boolean isAdmin(){
+        return username.equals("admin");
+    }
     public void setUsername(String username) {
         this.username = username;
     }

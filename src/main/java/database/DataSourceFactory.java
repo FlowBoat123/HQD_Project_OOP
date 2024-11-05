@@ -1,4 +1,4 @@
-package org.example.javafxtutorial;
+package database;
 
 import com.zaxxer.hikari.HikariDataSource;
 
@@ -9,14 +9,10 @@ public class DataSourceFactory {
 
     static {
         dataSource = new HikariDataSource();
-        dataSource.setJdbcUrl("jdbc:mysql://mysql-3417d26-vnu-7971.b.aivencloud.com:11871/library_management?useSSL=true");
-        dataSource.setUsername("avnadmin");
-        dataSource.setPassword("AVNS_KwvYFp4CEP2D-pRqfYd");
+        dataSource.setJdbcUrl("jdbc:sqlite:data.sqlite");
     }
 
     public static DataSource getDataSource() {
         return dataSource;
     }
-
-
 }

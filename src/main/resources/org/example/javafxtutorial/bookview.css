@@ -19,13 +19,16 @@
     -fx-font-family: 'Calibri';
     -fx-text-fill: #212529;
 }
+
 .label-wrap {
     -fx-wrap-text: true;
     -fx-max-width: 700px;
 }
+
 .label {
     -fx-wrap-text: true;
 }
+
 .button {
     -fx-background-color: #28a745;
     -fx-text-fill: white;
@@ -34,12 +37,15 @@
     -fx-padding: 5 15;
     -fx-background-radius: 5;
 }
+
 .button:hover {
     -fx-background-color: #218838;
 }
+
 .genres {
     -fx-font-weight: bold;
 }
+
 .combo-box {
     -fx-background-color: #fff;
     -fx-border-color: #554f4f;
@@ -47,7 +53,95 @@
     -fx-background-radius: 5;
     -fx-font-size: 16px;
 }
+
 .pop-up {
     -fx-text-fill: green;
     -fx-font-size: 16px;
+}
+
+/* Additional styles to match the dashboard theme */
+.white-background {
+    -fx-background-color: #ffffff;
+}
+
+.transparent {
+    -fx-background-color: rgba(0, 0, 0, 0);
+}
+
+.round-corner {
+    -fx-border-radius: 50;
+    -fx-border-color: #d7d7d7;
+}
+
+.padding-left {
+    -fx-padding: 0 0 0 25;
+}
+
+.transparent-button {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-text-fill: black;
+    -fx-font-size: 16px;
+}
+
+.transparent-button:hover {
+    -fx-background-color: #1188F6;
+    -fx-text-fill: #ffffff;
+    -fx-font-size: 16px;
+}
+
+.transparent-button:focused {
+    -fx-background-color: #1188F6;
+    -fx-text-fill: #ffffff;
+    -fx-font-size: 16px;
+}
+
+.transparent:hover {
+    -fx-background-color: gray;
+}
+
+.gray-border {
+    -fx-border-color: #ededef;
+}
+
+.border-bottom {
+    -fx-border-width: 0 0 1 0;
+}
+
+.transparent-border {
+    -fx-border-color: transparent;
+}
+
+.green-button {
+    -fx-background-color: #28a745;
+    -fx-text-fill: white;
+    -fx-font-family: 'Calibri';
+    -fx-font-weight: bold;
+    -fx-font-size: 16px;
+    -fx-background-radius: 5;
+}
+
+.green-button:hover {
+    -fx-background-color: #218838;
+}
+
+.red-button {
+    -fx-background-color: #dd283d;
+    -fx-text-fill: white;
+    -fx-font-family: 'Calibri';
+    -fx-font-weight: bold;
+    -fx-font-size: 16px;
+    -fx-background-radius: 5;
+}
+
+.red-button:hover {
+    -fx-background-color: #87313d;
+}
+
+.scroll-pane {
+    -fx-background-color: transparent;
+}
+
+.text-field:hover {
+    -fx-background-color: transparent;
 }

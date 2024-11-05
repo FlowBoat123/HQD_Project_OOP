@@ -4,14 +4,19 @@ import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
+
 import javafx.scene.control.Label;
+import javafx.scene.control.Spinner;
+import javafx.scene.control.SpinnerValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
 import javafx.util.Duration;
-import org.example.javafxtutorial.Book;
-import org.example.javafxtutorial.LibraryService;
+import logic.Book;
+
 
 
 public class BookController {
@@ -35,17 +40,17 @@ public class BookController {
     private Label notificationLabel;
 
     @FXML
-    private ComboBox<String> bookStatus;
+    private Spinner<Integer> numberPicker;
 
-    @FXML
-    private Button updateBtn;
-    int initStatus = -1;
-    int currStatus = -1;
+    private AnchorPane mainView;
     Book book;
 
-    public void initializeBookView(Book book) {
+    public void initializeBookViewForAdmin(Book book) {
+        SpinnerValueFactory<Integer> valueFactory =
+                new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 100, 1);
+        valueFactory.setValue(book.getQuantity());
+        numberPicker.setValueFactory(valueFactory);
         this.book = book;
-        bookStatus.getItems().addAll("None", "Reading", "Plan to Read", "On Hold", "Completed");
         bookTitle.setText(book.getTitle());
         bookAuthor.setText(book.getAuthorsAsString());
         bookDescription.setText(book.getDescription());
@@ -54,69 +59,38 @@ public class BookController {
         bookCover.setFitHeight(300);
         bookCover.setPreserveRatio(true);
         bookCover.setSmooth(true);
-        initStatus = LibraryService.getInstance().checkIfBookExists(book);
         if(book.getCoverImgUrl() != null) {
             bookCover.setImage(new Image(book.getCoverImgUrl(), true));
         }
-        setInitStatus();
-    }
-    @FXML
-    void changeCurrentBookStatus(ActionEvent event) {
-        String selectedStatus = bookStatus.getValue();
-        switch (selectedStatus) {
-            case "Reading":
-                currStatus = Book.READING;
-                break;
-            case "Plan to Read":
-                currStatus = Book.PLAN_TO_READ;
-                break;
-            case "On Hold":
-                currStatus = Book.ON_HOLD;
-                break;
-            case "Completed":
-                currStatus = Book.COMPLETED;
-                break;
-            default:
-                currStatus = -1;
-                break;
-        }
-        System.out.println(currStatus);
-    }
-    @FXML
-    void updateBookStatus(ActionEvent event) {
-        if (currStatus == initStatus) return;
-        if (initStatus == -1) {
-            book.setStatus(currStatus);
-            LibraryService.getInstance().addBook(book);
-            updateBtn.setText("Update");
-            showNotification("Add book to " + bookStatus.getValue());
-        } else {
-            book.setStatus(currStatus);
-            LibraryService.getInstance().updateBookStatus(book.getTitle(), currStatus);
-            showNotification("Book status updated to " + bookStatus.getValue());
-        }
-        initStatus = currStatus;
     }
 
-    private void setInitStatus() {
-        switch (initStatus) {
-            case Book.READING:
-                bookStatus.setValue("Reading");
-                break;
-            case Book.PLAN_TO_READ:
-                bookStatus.setValue("Plan to Read");
-                break;
-            case Book.ON_HOLD:
-                bookStatus.setValue("On Hold");
-                break;
-            case Book.COMPLETED:
-                bookStatus.setValue("Completed");
-                break;
-            default:
-                bookStatus.setValue("None");
-                updateBtn.setText("Add to Library");
-                break;
+    @FXML
+    void handleUpdateBook(ActionEvent event) {
+
+    }
+
+    public void setMainView(AnchorPane mainView) {
+        this.mainView = mainView;
+    }
+
+    @FXML
+    private void handleGoBack() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/example/javafxtutorial/api.fxml"));
+            Node content = loader.load();
+            GoogleAPIController apiController = loader.getController();
+            apiController.setMainView(mainView);
+            if (mainView != null) {
+                mainView.getChildren().setAll(content);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
+    }
+
+    @FXML
+    void handleRemoveAll(ActionEvent event) {
+
     }
 
     private void showNotification(String message) {

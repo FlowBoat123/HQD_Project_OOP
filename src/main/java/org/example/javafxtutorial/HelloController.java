@@ -2,7 +2,6 @@ package org.example.javafxtutorial;
 
 import controller.AdminDashboardController;
 import controller.BookController;
-import controller.UserDashboardController;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -12,6 +11,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import logic.Book;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -62,29 +62,6 @@ public class HelloController {
         //bookController.initializeBookView(searchResult.getFirst());
     }
     private void openBookView(Book book) throws Exception {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("book-view.fxml"));
-        AnchorPane root = loader.load();
 
-        // Check if the FXML loaded correctly
-        if (root == null) {
-            System.out.println("Error loading book-view.fxml");
-            return;
-        }
-
-        // Get the controller for the book view
-        BookController bookController = loader.getController();
-
-        // Pass the book data to the controller to initialize the view
-        bookController.initializeBookView(book);
-
-        // Setup and show the new scene
-        Scene scene = new Scene(root);
-        scene.getStylesheets().add(getClass().getResource("bookview.css").toExternalForm());
-        Stage bookStage = new Stage();
-        bookStage.setScene(scene);
-        bookStage.setTitle("Book View");
-        bookStage.setResizable(false);
-        bookStage.initModality(Modality.APPLICATION_MODAL);  // window can't resize
-        bookStage.show();
     }
 }

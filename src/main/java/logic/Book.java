@@ -1,4 +1,4 @@
-package org.example.javafxtutorial;
+package logic;
 
 import java.util.ArrayList;
 import java.util.Objects;
@@ -17,6 +17,8 @@ public class Book {
     private String isbn_13;
     private String coverImgUrl;
     private int status;
+    private int quantity;
+    private int borrowedCopies;
 
     public Book() {}
 
@@ -48,6 +50,22 @@ public class Book {
         return title;
     }
 
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
+
+    public int getBorrowedCopies() {
+        return borrowedCopies;
+    }
+
+    public void setBorrowedCopies(int borrowedCopies) {
+        this.borrowedCopies = borrowedCopies;
+    }
+
     public void setTitle(String title) {
         this.title = title;
     }
@@ -74,7 +92,7 @@ public class Book {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Book book = (Book) o;
-        return Objects.equals(isbn_10, book.isbn_10) && Objects.equals(isbn_13, book.isbn_13);
+        return Objects.equals(isbn_10, book.isbn_10) || Objects.equals(title, book.title);
     }
     public ArrayList<String> getAuthors() {
         return authors;
@@ -117,11 +135,11 @@ public class Book {
     public String getGenresAsString(){
         StringBuilder genresString = new StringBuilder();
         if (genres == null) {
-            return "Genres: Unknown";
+            return "Unknown";
         }
         for (int i = 0; i<genres.size(); i++){
             if (i==0) {
-                genresString.append("Genres: ").append(genres.get(i));
+                genresString.append(genres.get(i));
             } else {
                 genresString.append(", ").append(genres.get(i));
             }
