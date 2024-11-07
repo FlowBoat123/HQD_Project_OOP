@@ -39,15 +39,15 @@
       </HBox>
       <ScrollPane prefHeight="570.0" prefWidth="1030.0" styleClass="white-background" stylesheets="@main.css">
          <content>
-            <TableView prefHeight="565.0" prefWidth="1024.0">
+            <TableView fx:id="library" prefHeight="565.0" prefWidth="1024.0">
                <columns>
-                  <TableColumn fx:id="bookTitleCol" editable="false" prefWidth="348.0" resizable="false" sortable="false" text="Title" />
-                  <TableColumn fx:id="bookAuthorsCol" editable="false" minWidth="0.0" prefWidth="148.0" resizable="false" sortable="false" text="Authors" />
-                  <TableColumn fx:id="bookGenresCol" editable="false" prefWidth="116.0" resizable="false" sortable="false" text="Genres" />
-                  <TableColumn fx:id="bookIsbn10Col" editable="false" maxWidth="328.0" minWidth="-1.0" prefWidth="119.0" resizable="false" sortable="false" text="ISBN-10" />
-                  <TableColumn fx:id="bookIsbn13Col" editable="false" minWidth="0.0" prefWidth="143.0" resizable="false" sortable="false" text="ISBN-13" />
-                  <TableColumn editable="false" prefWidth="57.0" resizable="false" sortable="false" text="Quantity" />
-                  <TableColumn prefWidth="92.0" text="BorrowedCopy" />
+                  <TableColumn fx:id="bookTitleCol" editable="false" prefWidth="348.0" resizable="false" text="Title" />
+                  <TableColumn fx:id="bookAuthorsCol" editable="false" minWidth="0.0" prefWidth="148.0" resizable="false" text="Authors" />
+                  <TableColumn fx:id="bookGenresCol" editable="false" prefWidth="116.0" resizable="false" text="Genres" />
+                  <TableColumn fx:id="bookIsbn10Col" editable="false" maxWidth="328.0" minWidth="-1.0" prefWidth="119.0" resizable="false" text="ISBN-10" />
+                  <TableColumn fx:id="bookIsbn13Col" editable="false" minWidth="0.0" prefWidth="143.0" resizable="false" text="ISBN-13" />
+                  <TableColumn fx:id="quantityCol" editable="false" prefWidth="57.0" resizable="false" text="Quantity" />
+                  <TableColumn fx:id="borrowedCopiesCol" prefWidth="92.0" text="BorrowedCopy" />
                </columns>
             </TableView>
          </content>

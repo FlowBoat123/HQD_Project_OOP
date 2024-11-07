@@ -7,6 +7,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.layout.AnchorPane;
+import org.example.javafxtutorial.LibraryService;
 import org.example.javafxtutorial.Shelf;
 import org.example.javafxtutorial.ShelfController;
 
@@ -14,7 +15,9 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class AdminDashboardController {
+public class AdminDashboardController implements Initializable{
+
+    private LibraryService libraryService;
 
     @FXML
     private AnchorPane mainView;
@@ -29,6 +32,7 @@ public class AdminDashboardController {
             GoogleAPIController apiController = loader.getController();
             apiController.setMainView(mainView);
             mainView.getChildren().setAll(content);
+            apiController.setLibraryService(libraryService);
             clickedButton.requestFocus();
         } catch (IOException e) {
             e.printStackTrace();
@@ -48,6 +52,8 @@ public class AdminDashboardController {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/example/javafxtutorial/lib-view.fxml"));
             Node content = loader.load();
             LibraryViewController libraryViewController = loader.getController();
+            libraryViewController.setLibraryService(libraryService);
+            libraryViewController.initializeLibraryView();
             mainView.getChildren().setAll(content);
             clickedButton.requestFocus();
         } catch (Exception e) {
@@ -60,4 +66,8 @@ public class AdminDashboardController {
 
     }
 
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        libraryService = new LibraryService();
+    }
 }

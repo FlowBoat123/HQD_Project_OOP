@@ -9,7 +9,7 @@ public class DataSourceFactory {
 
     static {
         dataSource = new HikariDataSource();
-        dataSource.setJdbcUrl("jdbc:sqlite:data.sqlite");
+        dataSource.setJdbcUrl("jdbc:sqlite:src\\main\\java\\database\\data.sqlite");
     }
 
     public static DataSource getDataSource() {

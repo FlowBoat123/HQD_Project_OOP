@@ -11,8 +11,10 @@ public class Book {
 
     private String title;
     private ArrayList<String> authors = null;
+    private String authorString;
     private String description;
     private ArrayList<String> genres = null;
+    private String genreString;
     private String isbn_10;
     private String isbn_13;
     private String coverImgUrl;
@@ -87,6 +89,17 @@ public class Book {
         }
         this.coverImgUrl = coverImgUrl;
     }
+
+    public String getAuthorString() {
+        this.authorString = getAuthorsAsString();
+        return authorString;
+    }
+
+    public String getGenreString() {
+        this.genreString = getGenresAsString();
+        return genreString;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -163,5 +176,21 @@ public class Book {
         for (String genre : genresArray) {
             addGenre(genre);
         }
+    }
+
+    @Override
+    public String toString() {
+        return "Book{" +
+                "title='" + title + '\'' +
+                ", authors=" + authors +
+                ", description='" + description + '\'' +
+                ", genres=" + genres +
+                ", isbn_10='" + isbn_10 + '\'' +
+                ", isbn_13='" + isbn_13 + '\'' +
+                ", coverImgUrl='" + coverImgUrl + '\'' +
+                ", status=" + status +
+                ", quantity=" + quantity +
+                ", borrowedCopies=" + borrowedCopies +
+                '}';
     }
 }

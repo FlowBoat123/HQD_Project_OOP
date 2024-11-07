@@ -14,6 +14,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import logic.Book;
 import org.example.javafxtutorial.GoogleAPI;
+import org.example.javafxtutorial.LibraryService;
 
 import java.net.URL;
 import java.util.ArrayList;
@@ -34,6 +35,10 @@ public class GoogleAPIController implements Initializable {
     private RadioButton searchMethodTitle;
 
     private ToggleGroup searchMethodGroup;
+
+    private LibraryService libraryService;
+
+
     public void setMainView(AnchorPane mainView) {
         this.mainView = mainView;
     }
@@ -50,11 +55,16 @@ public class GoogleAPIController implements Initializable {
         }
     }
 
+    public void setLibraryService(LibraryService libraryService) {
+        this.libraryService = libraryService;
+    }
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         searchMethodGroup = new ToggleGroup();
         searchMethodISBN.setToggleGroup(searchMethodGroup);
         searchMethodTitle.setToggleGroup(searchMethodGroup);
+
     }
 
     private void launchBookView(Book book) throws Exception {
@@ -67,6 +77,8 @@ public class GoogleAPIController implements Initializable {
         BookController bookController = loader.getController();
 
         bookController.initializeBookViewForAdmin(book);
+
+        bookController.setLibraryService(libraryService);
 //        Scene scene = new Scene((AnchorPane) content);
 //        scene.getStylesheets().add(getClass().getResource("/org/example/javafxtutorial/bookview.css").toExternalForm());
 //        Stage bookStage = new Stage();

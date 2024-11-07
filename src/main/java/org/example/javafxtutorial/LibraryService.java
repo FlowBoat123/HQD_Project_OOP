@@ -22,7 +22,7 @@ public class LibraryService {
         return books.contains(book);
     }
 
-    void addCopiesToLibrary(Book book, int numberOfCopies) {
+    public void addCopiesToLibrary(Book book, int numberOfCopies) {
         if (!checkIfBookIsInLibrary(book)) {
             book.setQuantity(numberOfCopies);
             book.setBorrowedCopies(0);
@@ -33,13 +33,25 @@ public class LibraryService {
             existingBook.setQuantity(existingBook.getQuantity() + numberOfCopies);
             libraryDAO.update(existingBook);
         }
+        printBooks();
     }
 
-    void removeCopiesFromLibrary(Book book) {
+    public void removeCopiesFromLibrary(Book book) {
         if (checkIfBookIsInLibrary(book)) {
             Book existingBook = books.get(books.indexOf(book));
             existingBook.setQuantity(0);
             libraryDAO.update(existingBook);
         }
+        printBooks();
     }
+    public void printBooks() {
+        for (Book book : books) {
+            System.out.println(book);
+        }
+    }
+
+    public ArrayList<Book> getBooks() {
+        return books;
+    }
+
 }

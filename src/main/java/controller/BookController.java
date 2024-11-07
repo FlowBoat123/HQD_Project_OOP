@@ -16,7 +16,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.util.Duration;
 import logic.Book;
-
+import org.example.javafxtutorial.LibraryService;
 
 
 public class BookController {
@@ -44,6 +44,7 @@ public class BookController {
 
     private AnchorPane mainView;
     Book book;
+    private LibraryService libraryService;
 
     public void initializeBookViewForAdmin(Book book) {
         SpinnerValueFactory<Integer> valueFactory =
@@ -66,7 +67,8 @@ public class BookController {
 
     @FXML
     void handleUpdateBook(ActionEvent event) {
-
+        libraryService.addCopiesToLibrary(book, numberPicker.getValue());
+        showNotification("Added successfully!");
     }
 
     public void setMainView(AnchorPane mainView) {
@@ -80,6 +82,7 @@ public class BookController {
             Node content = loader.load();
             GoogleAPIController apiController = loader.getController();
             apiController.setMainView(mainView);
+            apiController.setLibraryService(libraryService);
             if (mainView != null) {
                 mainView.getChildren().setAll(content);
             }
@@ -90,7 +93,8 @@ public class BookController {
 
     @FXML
     void handleRemoveAll(ActionEvent event) {
-
+        libraryService.removeCopiesFromLibrary(book);
+        showNotification("Removed all copies successfully!");
     }
 
     private void showNotification(String message) {
@@ -102,4 +106,7 @@ public class BookController {
         timeline.play();
     }
 
+    public void setLibraryService(LibraryService libraryService) {
+        this.libraryService = libraryService;
+    }
 }
