@@ -6,6 +6,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 
 import javafx.scene.control.Label;
@@ -14,9 +15,12 @@ import javafx.scene.control.SpinnerValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.BorderPane;
 import javafx.util.Duration;
 import logic.Book;
 import org.example.javafxtutorial.LibraryService;
+
+import java.util.function.Consumer;
 
 
 public class BookController {
@@ -42,14 +46,19 @@ public class BookController {
     @FXML
     private Spinner<Integer> numberPicker;
 
+    @FXML
+    private ImageView returnBtn;
+
     private AnchorPane mainView;
+    private Node previousContent;
+    private Consumer<Void> refreshLibraryViewCallback;
     Book book;
+
     private LibraryService libraryService;
 
     public void initializeBookViewForAdmin(Book book) {
         SpinnerValueFactory<Integer> valueFactory =
                 new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 100, 1);
-        valueFactory.setValue(book.getQuantity());
         numberPicker.setValueFactory(valueFactory);
         this.book = book;
         bookTitle.setText(book.getTitle());
@@ -71,23 +80,18 @@ public class BookController {
         showNotification("Added successfully!");
     }
 
-    public void setMainView(AnchorPane mainView) {
+    public void setMainView(AnchorPane mainView, Node previousContent) {
         this.mainView = mainView;
+        this.previousContent = previousContent;
     }
 
     @FXML
     private void handleGoBack() {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/example/javafxtutorial/api.fxml"));
-            Node content = loader.load();
-            GoogleAPIController apiController = loader.getController();
-            apiController.setMainView(mainView);
-            apiController.setLibraryService(libraryService);
-            if (mainView != null) {
-                mainView.getChildren().setAll(content);
+        if (mainView != null && previousContent != null) {
+            mainView.getChildren().setAll(previousContent);
+            if (refreshLibraryViewCallback != null) {
+                refreshLibraryViewCallback.accept(null);
             }
-        } catch (Exception e) {
-            e.printStackTrace();
         }
     }
 
@@ -108,5 +112,9 @@ public class BookController {
 
     public void setLibraryService(LibraryService libraryService) {
         this.libraryService = libraryService;
+    }
+
+    public void setRefreshLibraryViewCallback(Consumer<Void> refreshLibraryViewCallback) {
+        this.refreshLibraryViewCallback = refreshLibraryViewCallback;
     }
 }
