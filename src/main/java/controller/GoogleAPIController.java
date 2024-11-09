@@ -88,8 +88,8 @@ public class GoogleAPIController implements Initializable {
 //        bookStage.initModality(Modality.APPLICATION_MODAL);  // window can't resize
 //        bookStage.show();
         if (mainView != null) {
+            bookController.setMainView(mainView, mainView.getChildren().getFirst());
             mainView.getChildren().setAll(content);
-            bookController.setMainView(mainView);
         }
     }
 }

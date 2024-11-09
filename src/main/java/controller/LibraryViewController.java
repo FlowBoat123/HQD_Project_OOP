@@ -5,16 +5,24 @@ import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.AnchorPane;
 import logic.Book;
 import org.example.javafxtutorial.LibraryService;
+
+import java.io.IOException;
 
 public class LibraryViewController {
 
     private LibraryService libraryService;
+
+    private AnchorPane mainView;
 
     @FXML
     private TableView<Book> library;
@@ -55,7 +63,17 @@ public class LibraryViewController {
         quantityCol.setCellValueFactory(new PropertyValueFactory<>("quantity"));
         borrowedCopiesCol.setCellValueFactory(new PropertyValueFactory<>("borrowedCopies"));
 
-        library.setItems(books);
+        library.setRowFactory(bookTableView -> {
+            TableRow<Book> row = new TableRow<>();
+            row.setOnMouseClicked(event -> {
+                if (event.getClickCount() == 2 && (!row.isEmpty())) {
+                    Book rowData = row.getItem();
+                    launchBookView(rowData);
+                }
+            });
+            return row;
+        });
+//        library.setItems(books);
 
         FilteredList<Book> filteredData = new FilteredList<>(books, b -> true);
 
@@ -92,6 +110,24 @@ public class LibraryViewController {
         library.setItems(sortedData);
     }
 
+    public void launchBookView(Book book) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/example/javafxtutorial/book-view.fxml"));
+            Node content = loader.load();
+            BookController bookController = loader.getController();
+            bookController.setMainView(mainView, mainView.getChildren().getFirst());
+            bookController.setRefreshLibraryViewCallback(v -> initializeLibraryView());
+            mainView.getChildren().setAll(content);
+            bookController.initializeBookViewForAdmin(book);
+            bookController.setLibraryService(libraryService);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void setMainView(AnchorPane mainView) {
+        this.mainView = mainView;
+    }
     public void setLibraryService(LibraryService libraryService) {
         this.libraryService = libraryService;
     }
