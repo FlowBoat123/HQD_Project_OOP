@@ -1,4 +1,4 @@
-package org.example.javafxtutorial;
+package controller;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -7,13 +7,18 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
+import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import org.example.javafxtutorial.DatabaseConnection;
+import org.example.javafxtutorial.InsertUserTask;
 
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 public class SignupController {
     @FXML
@@ -28,10 +33,25 @@ public class SignupController {
     @FXML
     public PasswordField signupConfirmPasswordField;
 
+    @FXML
+    private UserFormController userFormController;
+
+    @FXML
+    private ProgressIndicator loadingIndicator;
+
+    public void setUserFormController(UserFormController userFormController) {
+        this.userFormController = userFormController;
+    }
+
     public void handleSignUp(ActionEvent actionEvent) {
         String username = signupUsernameField.getText();
         String password = signupPasswordField.getText();
         String confirmPassword = signupConfirmPasswordField.getText();
+
+        if (username.isEmpty() || password.isEmpty() || confirmPassword.isEmpty()) {
+            signupStatusLabel.setText("All fields are required.");
+            return;
+        }
 
         if (!password.equals(confirmPassword)) {
             signupStatusLabel.setText("Password do not match!");
@@ -39,42 +59,37 @@ public class SignupController {
         }
 
         // Call the method to run the insertion task
-        runInsertUserTask(username, password);
-
+        runInsertUserTask(username, password, new Timestamp(System.currentTimeMillis()).toLocalDateTime(), "","","");
     }
 
-    private boolean insertUser(String username, String password) {
-        String query = "INSERT INTO users (username, password) VALUE (?, ?)";
-
-        try (Connection conn = DatabaseConnection.getConnection()) {
-            try (PreparedStatement stmt = conn.prepareStatement(query)) {
-                stmt.setString(1, username);
-                stmt.setString(2, password);
-                return stmt.executeUpdate() > 0; // return true if a row was inserted
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return false;
-        }
-    }
-    public void runInsertUserTask(String username, String password) {
+    public void runInsertUserTask(String username, String password, LocalDateTime creationTime, String bio, String email, String website) {
         // Create the task
-        InsertUserTask task = new InsertUserTask(username, password);
+        InsertUserTask task = new InsertUserTask(username, password, creationTime,
+                                                bio, email, website);
 
+        task.setOnRunning(event -> loadingIndicator.setVisible(true)); // progress bar
         // Handle task completion and result
         task.setOnSucceeded(event -> {
+            loadingIndicator.setVisible(false);
             Boolean result = task.getValue();
             if (result) {
                 System.out.println("User inserted successfully.");
+                signupStatusLabel.setText("User inserted successfully.");
                 // Optionally update UI here (e.g., show success message)
+                if (userFormController != null) {
+                    userFormController.refreshTable();
+                }
             } else {
                 System.out.println("User insertion failed.");
+                signupStatusLabel.setText("User insertion failed. Username already exists");
                 // Optionally update UI here (e.g., show error message)
             }
         });
 
         task.setOnFailed(event -> {
+            loadingIndicator.setVisible(false);
             System.out.println("Task failed.");
+            signupStatusLabel.setText("Task failed.");
             // Optionally update UI here (e.g., show failure message)
         });
 

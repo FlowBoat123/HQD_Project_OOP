@@ -4,6 +4,7 @@ module org.example.javafxtutorial {
     requires com.google.gson;
     requires com.zaxxer.hikari;
     requires java.sql;
+    requires java.desktop;
 
 
     opens org.example.javafxtutorial to javafx.fxml;

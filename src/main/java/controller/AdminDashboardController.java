@@ -36,8 +36,19 @@ public class AdminDashboardController {
 
     @FXML
     void launchAddUser(ActionEvent event) {
-
+        Object source = event.getSource();
+        Button clickedButton = (Button) source;
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/example/javafxtutorial/signup.fxml"));
+            Node content = loader.load();
+            SignupController signUpController = loader.getController();
+            mainView.getChildren().setAll(content);
+            clickedButton.requestFocus();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
+
 
     @FXML
     void launchLibView(ActionEvent event) {
@@ -56,7 +67,18 @@ public class AdminDashboardController {
 
     @FXML
     void launchUserInfo(ActionEvent event) {
-
+        Object source = event.getSource();
+        Button clickedButton = (Button) source;
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/example/javafxtutorial/user-form.fxml"));
+            Node content = loader.load();
+            UserFormController userInfoController = loader.getController();
+            mainView.getChildren().setAll(content);
+            clickedButton.requestFocus();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
+
 
 }

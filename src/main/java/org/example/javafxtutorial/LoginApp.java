@@ -13,7 +13,7 @@ public class LoginApp extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        Image icon = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/icon.png")));
+        Image icon = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/Avatar/icon.png")));
         primaryStage.getIcons().add(icon);
         Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/org/example/javafxtutorial/login.fxml")));
         primaryStage.setTitle("Library Management");

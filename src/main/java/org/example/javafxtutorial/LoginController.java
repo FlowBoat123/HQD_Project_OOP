@@ -3,6 +3,7 @@ package org.example.javafxtutorial;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
@@ -13,6 +14,10 @@ import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.Objects;
 
 public class LoginController {
@@ -34,20 +39,52 @@ public class LoginController {
         logoImageView.setImage(image);
     }
 
-    private final User user = new User("john_doe", "password123".toCharArray());
-
     @FXML
-    public void handleLogin() {
+    private void handleLogin(javafx.event.ActionEvent event) {
         String username = usernameField.getText();
         char[] password = passwordField.getText().toCharArray();
+        String passwordStr = new String(password);
 
-        if (user.authenticate(username, password)) {
-            statusLabel.setText("Login successful!");
-        } else {
-            statusLabel.setText("Invalid username or password.");
+        Connection connection = DatabaseConnection.getConnection();
+        if (connection == null) {
+            statusLabel.setText("Failed to connect to the database");
+            return;
         }
 
-        user.clearPassword();
+        String query = "SELECT * FROM users WHERE username = ? AND password = ?";
+
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setString(1, username);
+            preparedStatement.setString(2, passwordStr);
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            if (resultSet.next()) {
+                // UserDashBoard
+                if (!username.equals("admin") && !password.equals("admin")) {
+                    Parent userDashboard = FXMLLoader.load(getClass().getResource("UserDashboard.fxml"));
+                    Scene adminDashboardScene = new Scene(userDashboard);
+
+                    Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                    window.setScene(adminDashboardScene);
+                    window.show();
+                } else {
+                    // Login successful, redirect to Admin Dashboard
+                    Parent adminDashboard = FXMLLoader.load(getClass().getResource("AdminDashBoard.fxml"));
+                    Scene adminDashboardScene = new Scene(adminDashboard);
+
+                    Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                    window.setScene(adminDashboardScene);
+                    window.show();
+                }
+            } else {
+                // Login failed, show error message
+                statusLabel.setText("Invalid username or password");
+            }
+
+        } catch (SQLException | IOException e) {
+            e.printStackTrace();
+            statusLabel.setText("Failed to login");
+        }
     }
 
     public void handleSignUp(ActionEvent actionEvent) {
