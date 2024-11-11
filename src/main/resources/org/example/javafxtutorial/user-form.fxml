@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ProgressIndicator?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="556.0" prefWidth="954.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.UserFormController">
+    <Button fx:id="masterTrashButton" layoutX="827.0" layoutY="22.0" prefHeight="37.0" prefWidth="92.0" text="Delete user">
+        <font>
+            <Font size="14.0" />
+        </font>
+    </Button>
+    <TableView fx:id="userTable" layoutX="34.0" layoutY="98.0" prefHeight="360.0" prefWidth="886.0">
+        <columns>
+            <TableColumn fx:id="usernameColumn" prefWidth="135.99999618530273" text="Username" />
+            <TableColumn fx:id="passwordColumn" prefWidth="140.80003356933594" text="Password" />
+            <TableColumn fx:id="creationTimeColumn" prefWidth="131.20001220703125" text="Creation Time" />
+            <TableColumn fx:id="bioColumn" prefWidth="131.199951171875" text="Bio" />
+            <TableColumn fx:id="emailColumn" prefWidth="128.0" text="Email" />
+            <TableColumn fx:id="websiteColumn" prefWidth="133.60003662109375" text="Website" />
+            <TableColumn fx:id="deleteColumn" prefWidth="88.7999267578125" text="Action" />
+        </columns>
+    </TableView>
+    <ProgressIndicator fx:id="loadingIndicator" layoutX="451.0" layoutY="22.0" visible="false" />
+</AnchorPane>
