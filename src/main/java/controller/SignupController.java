@@ -59,13 +59,13 @@ public class SignupController {
         }
 
         // Call the method to run the insertion task
-        runInsertUserTask(username, password, new Timestamp(System.currentTimeMillis()).toLocalDateTime(), "","","");
+        runInsertUserTask(username, password, new Timestamp(System.currentTimeMillis()).toLocalDateTime(), "", "", "");
     }
 
     public void runInsertUserTask(String username, String password, LocalDateTime creationTime, String bio, String email, String website) {
         // Create the task
         InsertUserTask task = new InsertUserTask(username, password, creationTime,
-                                                bio, email, website);
+                bio, email, website);
 
         task.setOnRunning(event -> loadingIndicator.setVisible(true)); // progress bar
         // Handle task completion and result
@@ -73,8 +73,9 @@ public class SignupController {
             loadingIndicator.setVisible(false);
             Boolean result = task.getValue();
             if (result) {
-                System.out.println("User inserted successfully.");
-                signupStatusLabel.setText("User inserted successfully.");
+                int userId = task.getGeneratedId();
+                System.out.println("User inserted successfully with ID: " + userId);
+                signupStatusLabel.setText("User inserted successfully with ID: " + userId);
                 // Optionally update UI here (e.g., show success message)
                 if (userFormController != null) {
                     userFormController.refreshTable();

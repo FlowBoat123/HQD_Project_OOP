@@ -47,6 +47,15 @@ public class UserFormController {
     private TableColumn<User, LocalDateTime> creationTimeColumn;
 
     @FXML
+    private TableColumn<User, String> bioColumn;
+
+    @FXML
+    private TableColumn<User, String> emailColumn;
+
+    @FXML
+    private TableColumn<User, String> websiteColumn;
+
+    @FXML
     private TableColumn<User, Void> deleteColumn;
 
     @FXML
@@ -64,6 +73,9 @@ public class UserFormController {
         usernameColumn.setCellValueFactory(new PropertyValueFactory<>("username"));
         passwordColumn.setCellValueFactory(new PropertyValueFactory<>("password"));
         creationTimeColumn.setCellValueFactory(new PropertyValueFactory<>("creationTime"));
+        bioColumn.setCellValueFactory(new PropertyValueFactory<>("bio"));
+        emailColumn.setCellValueFactory(new PropertyValueFactory<>("email"));
+        websiteColumn.setCellValueFactory(new PropertyValueFactory<>("website"));
 
         loadUserData();
 
@@ -163,7 +175,7 @@ public class UserFormController {
             @Override
             protected ObservableList<User> call() {
                 ObservableList<User> tempData = FXCollections.observableArrayList();
-                String query = "SELECT username, password, creation_time FROM users";
+                String query = "SELECT username, password, creation_time, bio, email, website FROM users";
 
                 try (Connection connection = DatabaseConnection.getConnection();
                      PreparedStatement preparedStatement = connection.prepareStatement(query);
@@ -173,7 +185,10 @@ public class UserFormController {
                         String username = resultSet.getString("username");
                         String password = resultSet.getString("password");
                         LocalDateTime creationTime = resultSet.getTimestamp("creation_time").toLocalDateTime();
-                        tempData.add(new User(username, password, creationTime));
+                        String bio = resultSet.getString("bio");
+                        String email = resultSet.getString("email");
+                        String website = resultSet.getString("website");
+                        tempData.add(new User(username, password, creationTime, bio, email, website));
                     }
 
                 } catch (SQLException e) {

@@ -217,14 +217,14 @@ public class UserProfileController {
     private void updateUserDatabase(User user) {
         try (Connection connection = DatabaseConnection.getConnection()) {
             if (connection != null) {
-                String updateQuery = "UPDATE users SET username = ?, bio = ?, email = ?, website = ? WHERE creation_time = ?";
+                String updateQuery = "UPDATE users SET username = ?, bio = ?, email = ?, website = ? WHERE id = ?";
                 try (PreparedStatement preparedStatement = connection.prepareStatement(updateQuery)) {
                     preparedStatement.setString(1, user.getUsername());
                     preparedStatement.setString(2, user.getBio());
                     preparedStatement.setString(3, user.getEmail());
                     preparedStatement.setString(4, user.getWebsite());
                     java.sql.Timestamp creationTime = java.sql.Timestamp.valueOf(user.getCreationTime());
-                    preparedStatement.setTimestamp(5, creationTime);
+                    preparedStatement.setInt(5, user.getID());
                     System.out.println(user.getUsername());
 
                     preparedStatement.executeUpdate();

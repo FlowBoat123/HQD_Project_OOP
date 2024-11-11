@@ -4,6 +4,7 @@ import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
 public class User {
+    private int ID;
     private String username;
     private String password;
     private LocalDateTime creationTime;
@@ -16,6 +17,7 @@ public class User {
 
     // Default constructor with hardcoded values
     public User() {
+        this.ID = 1010;
         this.username = "FlowBoat123";
         this.password = "123";
         this.creationTime = LocalDateTime.of(2024, 5, 11, 0, 0);
@@ -45,7 +47,24 @@ public class User {
         this.followingCount = followingCount;
     }
 
+    public User(String username, String password, LocalDateTime creationTime, String bio, String email, String website) {
+        this.username = username;
+        this.password = password;
+        this.creationTime = creationTime;
+        this.bio = bio;
+        this.email = email;
+        this.website = website;
+    }
+
     // Getters and Setters for all fields
+
+    public int getID() {
+        return ID;
+    }
+
+    public void setID(int id) {
+        this.ID = id;
+    }
 
     public String getUsername() {
         return username;
