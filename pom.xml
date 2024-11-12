@@ -23,18 +23,18 @@
         <dependency>
             <groupId>ch.qos.logback</groupId>
             <artifactId>logback-classic</artifactId>
-            <version>1.4.12</version> <!-- Phiên bản phù hợp -->
+            <version>1.4.12</version>
         </dependency>
 
         <dependency>
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-controls</artifactId>
-            <version>23</version>
+            <version>23.0.1</version>
         </dependency>
         <dependency>
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-fxml</artifactId>
-            <version>23</version>
+            <version>23.0.1</version>
         </dependency>
 
         <dependency>

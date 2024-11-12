@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.VBox?>
@@ -15,11 +16,11 @@
       </ImageView>
       <VBox prefHeight="90.0" prefWidth="180.0" spacing="5.0">
          <children>
-            <Label fx:id="bookTitle" alignment="TOP_LEFT" prefHeight="40.0" prefWidth="180.0" text="Label">
+            <Button fx:id="bookTitleButton" alignment="TOP_LEFT" prefHeight="40.0" prefWidth="180.0" text="Label" onAction="#handleBookTitleButtonClick">
                <font>
                   <Font name="Calibri Bold" size="18.0" />
                </font>
-            </Label>
+            </Button>
             <Label fx:id="bookAuthor" prefHeight="30.0" prefWidth="180.0" text="Label">
                <font>
                   <Font name="Calibri" size="12.0" />

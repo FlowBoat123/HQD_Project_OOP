@@ -58,6 +58,7 @@ public class UserDashboardController implements Initializable {
             Node content = loader.load();
             BrowseViewController browseViewController = loader.getController();
             browseViewController.setLibraryService(libraryService);
+            browseViewController.setMainView(mainView);
             browseViewController.initializeBrowseView();
             mainView.getChildren().setAll(content);
         } catch (IOException e) {
