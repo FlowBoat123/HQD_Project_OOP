@@ -51,7 +51,7 @@ public class BookDAO implements DAO<Book> {
             statement.setString(5, book.getIsbn_10());
             statement.setString(6, book.getIsbn_13());
             statement.setString(7, book.getCoverImgUrl());
-            statement.setInt(8, book.getStatus());
+            statement.setString(8, book.getStatus());
             statement.setString(9, username);
             statement.executeUpdate();
         } catch (Exception e) {
@@ -108,7 +108,7 @@ public class BookDAO implements DAO<Book> {
                 book.setIsbn_10(resultSet.getString("isbn_10"));
                 book.setIsbn_13(resultSet.getString("isbn_13"));
                 book.setCoverImgUrl(resultSet.getString("cover_url"));
-                book.setStatus(resultSet.getInt("status"));
+                book.setStatus(resultSet.getString("status"));
                 books.add(book);
             }
         } catch (SQLException e) {

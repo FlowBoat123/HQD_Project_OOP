@@ -1,26 +1,21 @@
 package controller;
 
 import java.net.URL;
-import java.util.List;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.GridPane;
-import org.example.javafxtutorial.BookCardController;
+import javafx.scene.layout.StackPane;
 import org.example.javafxtutorial.BrowseViewController;
 import org.example.javafxtutorial.LibraryService;
 import org.example.javafxtutorial.Shelf;
 import org.example.javafxtutorial.ShelfController;
 
 import java.io.IOException;
-import logic.Book;
-import database.BookDAO;
 
 public class UserDashboardController implements Initializable {
 
@@ -32,7 +27,7 @@ public class UserDashboardController implements Initializable {
     }
 
     @FXML
-    private AnchorPane mainView;
+    private StackPane mainView;
 
     @FXML
     void launchShelfView(ActionEvent event) {

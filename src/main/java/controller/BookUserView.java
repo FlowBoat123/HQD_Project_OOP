@@ -8,11 +8,9 @@ import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.SpinnerValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.StackPane;
 import javafx.util.Duration;
 import logic.Book;
 import org.example.javafxtutorial.LibraryService;
@@ -40,7 +38,7 @@ public class BookUserView {
   @FXML
   private Button readButton;
 
-  private AnchorPane mainView;
+  private StackPane mainView;
   private Node previousContent;
   private Consumer<Void> refreshLibraryViewCallback;
   Book book;
@@ -49,15 +47,17 @@ public class BookUserView {
 
   public void initializeBookViewForUser(Book book) {
     this.book = book;
+    book.setStatus("Unread");
     bookTitle.setText(book.getTitle());
     bookAuthor.setText(book.getAuthorsAsString());
     bookDescription.setText(book.getDescription());
     genreLabel.setText(book.getGenresAsString());
     bookCover.setFitWidth(200);
     bookCover.setFitHeight(300);
+    readButton.setText(book.getStatus());
     bookCover.setPreserveRatio(true);
     bookCover.setSmooth(true);
-    if(book.getCoverImgUrl() != null) {
+    if (book.getCoverImgUrl() != null) {
       bookCover.setImage(new Image(book.getCoverImgUrl(), true));
     }
   }
@@ -65,7 +65,7 @@ public class BookUserView {
   @FXML
   private void handleGoBack() {
     if (mainView != null && previousContent != null) {
-      mainView.getChildren().setAll(previousContent);
+      mainView.getChildren().remove(mainView.getChildren().size() - 1);
       if (refreshLibraryViewCallback != null) {
         refreshLibraryViewCallback.accept(null);
       }
@@ -94,8 +94,7 @@ public class BookUserView {
     this.refreshLibraryViewCallback = refreshLibraryViewCallback;
   }
 
-
-  public void setMainView(AnchorPane mainView, Node previousContent) {
+  public void setMainView(StackPane mainView, Node previousContent) {
     this.mainView = mainView;
     this.previousContent = previousContent;
   }

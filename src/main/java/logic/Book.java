@@ -18,17 +18,17 @@ public class Book {
     private String isbn_10;
     private String isbn_13;
     private String coverImgUrl;
-    private int status;
+    private String status;
     private int quantity;
     private int borrowedCopies;
 
     public Book() {}
 
-    public int getStatus() {
+    public String getStatus() {
         return status;
     }
 
-    public void setStatus(int status) {
+    public void setStatus(String status) {
         this.status = status;
     }
 
