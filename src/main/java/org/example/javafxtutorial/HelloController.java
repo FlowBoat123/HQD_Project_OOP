@@ -2,6 +2,7 @@ package org.example.javafxtutorial;
 
 import controller.AdminDashboardController;
 import controller.BookController;
+import controller.UserDashboardController;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -23,8 +24,8 @@ public class HelloController {
     private TextField searchField;
     @FXML
     void launchDashboard() throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("AdminDashboard.fxml"));
-        AdminDashboardController adminDashboardController = loader.getController();
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("UserDashboard.fxml"));
+        UserDashboardController userDashboardController = loader.getController();
         BorderPane root = loader.load();
         Scene scene = new Scene(root);
         Stage stage = new Stage();

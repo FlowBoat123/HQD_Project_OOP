@@ -33,7 +33,7 @@
                   </Label>
                   <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../../../images/icon.png" />
+                        <Image url="@../../../images/usericon.png" />
                      </image>
                   </ImageView>
                </children>
@@ -82,7 +82,7 @@
                   </HBox>
                   <HBox alignment="CENTER" layoutX="20.0" layoutY="63.0" prefHeight="30.0" prefWidth="200.0">
                      <children>
-                        <Button alignment="BASELINE_LEFT" mnemonicParsing="false" prefHeight="30.0" prefWidth="200.0" stylesheets="@main.css" text="Browse">
+                        <Button alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#launchBrowse" prefHeight="30.0" prefWidth="200.0" stylesheets="@main.css" text="Browse">
                            <font>
                               <Font name="Calibri" size="16.0" />
                            </font>

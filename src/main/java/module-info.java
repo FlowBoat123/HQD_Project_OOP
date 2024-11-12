@@ -1,4 +1,5 @@
 module org.example.javafxtutorial {
+    requires org.slf4j;
     requires javafx.controls;
     requires javafx.fxml;
     requires com.google.gson;

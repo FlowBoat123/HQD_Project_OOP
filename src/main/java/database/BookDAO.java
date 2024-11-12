@@ -117,4 +117,22 @@ public class BookDAO implements DAO<Book> {
         return books;
     }
 
+    public ArrayList<Book> getAllBooks() {
+        String query = "SELECT * FROM library";
+        ArrayList<Book> books = new ArrayList<>();
+        try (Connection connection = dataSource.getConnection();
+            PreparedStatement statement = connection.prepareStatement(query)) {
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                Book book = new Book();
+                book.setTitle(resultSet.getString("title"));
+                book.setAuthorsFromString(resultSet.getString("authors"));
+                book.setCoverImgUrl(resultSet.getString("cover_url"));
+                books.add(book);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return books;
+    }
 }

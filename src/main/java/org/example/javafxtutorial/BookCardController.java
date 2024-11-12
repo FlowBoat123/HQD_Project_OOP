@@ -8,22 +8,17 @@ import logic.Book;
 
 public class BookCardController {
     @FXML
-    private Label bookAuthor;
-
+    private ImageView coverImg;
     @FXML
     private Label bookTitle;
-
     @FXML
-    private ImageView coverImg;
+    private Label bookAuthor;
 
-    private Book book;
-
-    public void initializeBookCard(Book book) {
-        this.book = book;
-        bookAuthor.setText(book.getAuthorsAsString());
-        bookTitle.setText(book.getTitle());
-        if (coverImg != null) {
-            coverImg.setImage(new Image(book.getCoverImgUrl(), true));
+    public void setBook(Book book) {
+        if (book.getCoverImgUrl() != null && !book.getCoverImgUrl().isEmpty()) {
+            coverImg.setImage(new Image(book.getCoverImgUrl()));
         }
+        bookTitle.setText(book.getTitle());
+        bookAuthor.setText(book.getAuthorsAsString());
     }
 }
