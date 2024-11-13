@@ -67,13 +67,6 @@ public class BrowseViewController {
       Node content = loader.load();
       BookUserView bookUserView = loader.getController();
       bookUserView.setMainView(mainView, mainView.getChildren().get(0));
-      bookUserView.setRefreshLibraryViewCallback(v -> {
-        try {
-          initializeBrowseView();
-        } catch (IOException e) {
-          throw new RuntimeException(e);
-        }
-      });
       mainView.getChildren().add(content);
       bookUserView.initializeBookViewForUser(book);
       bookUserView.setLibraryService(libraryService);

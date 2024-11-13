@@ -66,9 +66,6 @@ public class BookUserView {
   private void handleGoBack() {
     if (mainView != null && previousContent != null) {
       mainView.getChildren().remove(mainView.getChildren().size() - 1);
-      if (refreshLibraryViewCallback != null) {
-        refreshLibraryViewCallback.accept(null);
-      }
     }
   }
 
@@ -88,10 +85,6 @@ public class BookUserView {
 
   public void setLibraryService(LibraryService libraryService) {
     this.libraryService = libraryService;
-  }
-
-  public void setRefreshLibraryViewCallback(Consumer<Void> refreshLibraryViewCallback) {
-    this.refreshLibraryViewCallback = refreshLibraryViewCallback;
   }
 
   public void setMainView(StackPane mainView, Node previousContent) {
