@@ -16,7 +16,7 @@
       </ImageView>
       <VBox prefHeight="90.0" prefWidth="180.0" spacing="5.0">
          <children>
-            <Button fx:id="bookTitleButton" alignment="TOP_LEFT" prefHeight="40.0" prefWidth="180.0" text="Label" onAction="#handleBookTitleButtonClick">
+            <Button fx:id="bookTitleButton" alignment="TOP_LEFT" onAction="#handleBookTitleButtonClick" prefHeight="40.0" prefWidth="180.0" text="Label">
                <font>
                   <Font name="Calibri Bold" size="18.0" />
                </font>

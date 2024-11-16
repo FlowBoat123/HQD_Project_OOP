@@ -47,7 +47,7 @@ public class BookUserView {
 
   public void initializeBookViewForUser(Book book) {
     this.book = book;
-    book.setStatus("Unread");
+    book.setStatus("Unread");//khi init check status
     bookTitle.setText(book.getTitle());
     bookAuthor.setText(book.getAuthorsAsString());
     bookDescription.setText(book.getDescription());
@@ -66,12 +66,21 @@ public class BookUserView {
   private void handleGoBack() {
     if (mainView != null && previousContent != null) {
       mainView.getChildren().remove(mainView.getChildren().size() - 1);
+     /*
+      if (refreshLibraryViewCallback != null) {
+        refreshLibraryViewCallback.accept(null);
+      }
+      */
     }
   }
 
   @FXML
   void handleUpdateBook(ActionEvent event) {
-    readButton.setText("On Hold");
+    if(1+1 == 2){
+      showNotification("This item is currently out of stock.");
+    } else {
+      readButton.setText("On Hold");
+    }
   }
 
   private void showNotification(String message) {
@@ -85,6 +94,10 @@ public class BookUserView {
 
   public void setLibraryService(LibraryService libraryService) {
     this.libraryService = libraryService;
+  }
+
+  public void setRefreshLibraryViewCallback(Consumer<Void> refreshLibraryViewCallback) {
+    this.refreshLibraryViewCallback = refreshLibraryViewCallback;
   }
 
   public void setMainView(StackPane mainView, Node previousContent) {

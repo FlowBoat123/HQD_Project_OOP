@@ -51,7 +51,7 @@
                                        <children>
                                           <HBox alignment="CENTER" prefHeight="48.0" prefWidth="335.0" spacing="10.0">
                                              <children>
-                                                <Button fx:id="readButton" text="Unread" onAction="#handleUpdateBook" prefHeight="40.0" prefWidth="163.0" styleClass="green-button" stylesheets="@main.css">
+                                                <Button fx:id="readButton" onAction="#handleUpdateBook" prefHeight="40.0" prefWidth="163.0" styleClass="green-button" stylesheets="@main.css" text="Unread">
                                                    <font>
                                                       <Font name="Calibri" size="16.0" />
                                                    </font>
@@ -60,7 +60,7 @@
                                           </HBox>
                                        </children>
                                     </VBox>
-                                    <Label fx:id="notificationLabel" prefHeight="29.0" prefWidth="230.0" text="Label" visible="false" />
+                                    <Label fx:id="notificationLabel" alignment="CENTER" contentDisplay="CENTER" prefHeight="29.0" prefWidth="230.0" text="Label" textFill="#f50c0c" visible="false" />
                                  </children>
                               </VBox>
                            </children>

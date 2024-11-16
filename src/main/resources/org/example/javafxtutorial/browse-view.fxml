@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import java.lang.String?>
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
@@ -20,12 +21,16 @@
           <children>
             <HBox alignment="CENTER" prefHeight="40.0" prefWidth="451.0" styleClass="round-corner" stylesheets="@main.css">
               <children>
-                <TextField fx:id="searchField" prefHeight="64.0" prefWidth="413.0" promptText="Search" styleClass="transparent" stylesheets="@main.css" />
-                <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
-                  <image>
-                    <Image url="@../../../images/searchicon.png" />
-                  </image>
-                </ImageView>
+                <TextField fx:id="searchField" prefHeight="38.0" prefWidth="390.0" promptText="Search" styleClass="transparent" stylesheets="@main.css" text="Search by name, author, genres or isbn code" />
+                <Button fx:id="searchButton" prefHeight="64.0" prefWidth="38.0" styleClass="transparent" stylesheets="@main.css">
+                  <graphic>
+                    <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                      <image>
+                        <Image url="@../../../images/searchicon.png" />
+                      </image>
+                    </ImageView>
+                  </graphic>
+                </Button>
               </children>
             </HBox>
           </children>
