@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="660.0" prefWidth="1030.0" styleClass="transparent-border" stylesheets="@main.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.javafxtutorial.BrowseViewController">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="660.0" prefWidth="1030.0" styleClass="transparent-border" stylesheets="@main.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.javafxtutorial.BrowseUserViewController">
   <children>
     <HBox alignment="CENTER_LEFT" prefHeight="90.0" prefWidth="1030.0" spacing="20.0" stylesheets="@main.css">
       <children>
@@ -21,7 +21,7 @@
           <children>
             <HBox alignment="CENTER" prefHeight="40.0" prefWidth="451.0" styleClass="round-corner" stylesheets="@main.css">
               <children>
-                <TextField fx:id="searchField" prefHeight="38.0" prefWidth="390.0" promptText="Search" styleClass="transparent" stylesheets="@main.css" text="Search by name, author, genres or isbn code" />
+                <TextField fx:id="searchField" prefHeight="38.0" prefWidth="390.0" promptText="Search" styleClass="transparent" stylesheets="@main.css" />
                 <Button fx:id="searchButton" prefHeight="64.0" prefWidth="38.0" styleClass="transparent" stylesheets="@main.css">
                   <graphic>
                     <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">

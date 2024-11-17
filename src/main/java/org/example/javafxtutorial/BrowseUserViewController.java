@@ -1,26 +1,21 @@
 package org.example.javafxtutorial;
 
 import controller.BookUserView;
-import javafx.collections.transformation.FilteredList;
-import javafx.collections.transformation.SortedList;
+import controller.UserViewController;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import logic.Book;
 
 import java.io.IOException;
 import java.util.List;
 
-public class BrowseViewController {
-
-  private LibraryService libraryService;
+public class BrowseUserViewController extends UserViewController {
 
   @FXML
   private TextField searchField;
@@ -31,9 +26,8 @@ public class BrowseViewController {
   @FXML
   private GridPane bookGridPane;
 
-  private StackPane mainView;
-
-  public void initializeBrowseView() throws IOException {
+  @Override
+  public void init() {
     try {
       List<Book> books = libraryService.getBooks();
 
@@ -60,6 +54,7 @@ public class BrowseViewController {
     }
   }
 
+  @Override
   public void launchBookView(Book book) {
     try {
       FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/example/javafxtutorial/BookUserview.fxml"));
@@ -72,14 +67,6 @@ public class BrowseViewController {
     } catch (IOException e) {
       e.printStackTrace();
     }
-  }
-
-  public void setLibraryService(LibraryService libraryService) {
-    this.libraryService = libraryService;
-  }
-
-  public void setMainView(StackPane mainView) {
-    this.mainView = mainView;
   }
 
   @FXML

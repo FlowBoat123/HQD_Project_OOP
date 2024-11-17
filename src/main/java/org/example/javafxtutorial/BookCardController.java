@@ -1,5 +1,6 @@
 package org.example.javafxtutorial;
 
+import controller.UserViewController;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -16,21 +17,22 @@ public class BookCardController {
     private Label bookAuthor;
 
     private Book book;
-    private BrowseViewController browseViewController;
+    private UserViewController userViewController;
 
-    public void setBook(Book book, BrowseViewController browseViewController) {
+    public void setBook(Book book, UserViewController userViewController) {
         this.book = book;
-        this.browseViewController = browseViewController;
+        this.userViewController = userViewController;
 
         if (book.getCoverImgUrl() != null && !book.getCoverImgUrl().isEmpty()) {
             coverImg.setImage(new Image(book.getCoverImgUrl()));
         }
+
         bookTitleButton.setText(book.getTitle());
         bookAuthor.setText(book.getAuthorsAsString());
     }
 
     @FXML
     private void handleBookTitleButtonClick() {
-        browseViewController.launchBookView(book);
+        userViewController.launchBookView(book);
     }
 }
