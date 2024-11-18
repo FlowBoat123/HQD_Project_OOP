@@ -1,6 +1,7 @@
 package org.example.javafxtutorial;
 
 import controller.UserViewController;
+import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -23,12 +24,31 @@ public class BookCardController {
         this.book = book;
         this.userViewController = userViewController;
 
-        if (book.getCoverImgUrl() != null && !book.getCoverImgUrl().isEmpty()) {
-            coverImg.setImage(new Image(book.getCoverImgUrl()));
-        }
-
         bookTitleButton.setText(book.getTitle());
         bookAuthor.setText(book.getAuthorsAsString());
+
+        if (book.getCoverImgUrl() != null && !book.getCoverImgUrl().isEmpty()) {
+            loadImageAsync(book.getCoverImgUrl());
+        }
+    }
+
+    private void loadImageAsync(String imageUrl) {
+        Task<Image> loadImageTask = new Task<>() {
+            @Override
+            protected Image call() throws Exception {
+                return new Image(imageUrl);
+            }
+        };
+
+        loadImageTask.setOnSucceeded(event -> {
+            coverImg.setImage(loadImageTask.getValue());
+        });
+
+        loadImageTask.setOnFailed(event -> {
+            loadImageTask.getException().printStackTrace();
+        });
+
+        new Thread(loadImageTask).start();
     }
 
     @FXML
