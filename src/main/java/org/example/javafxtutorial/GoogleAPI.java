@@ -74,7 +74,7 @@ public class GoogleAPI {
         JsonArray items = responseJson.getAsJsonArray("items");
         for (JsonElement item : items) {
             JsonObject volumeInfo = item.getAsJsonObject().getAsJsonObject("volumeInfo");
-            if (volumeInfo.has("imageLinks") && volumeInfo.has("industryIdentifiers")) {
+            if (volumeInfo.has("imageLinks")) {
                 searchResult.add(parseBookFromJSON(item));
             }
         }

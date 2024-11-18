@@ -86,4 +86,18 @@ public class LibraryDAO implements DAO<Book>{
         return books;
 
     }
+
+    public void updateBorrowedCopies(Book book) {
+        // Update the quantity of the book
+        String query = "UPDATE library SET borrowedCopies = ? WHERE isbn_10 = ?";
+        try {
+            Connection connection = dataSource.getConnection();
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setInt(1, book.getBorrowedCopies());
+            statement.setString(2, book.getIsbn_10());
+            statement.executeUpdate();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }
