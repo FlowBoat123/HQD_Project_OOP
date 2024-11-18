@@ -2,7 +2,7 @@ package org.example.javafxtutorial;
 
 public class UserSession {
     private static UserSession instance;
-    private String username;
+    private int userID;
 
     private UserSession() {
     }
@@ -14,14 +14,15 @@ public class UserSession {
         return instance;
     }
 
-    public String getUsername() {
-        return username;
+    public int getUserID() {
+        return userID;
     }
 
     boolean isAdmin(){
-        return username.equals("admin");
+        return userID == 1;
     }
-    public void setUsername(String username) {
-        this.username = username;
+
+    public void setUserID(int userID) {
+        this.userID = userID;
     }
 }
