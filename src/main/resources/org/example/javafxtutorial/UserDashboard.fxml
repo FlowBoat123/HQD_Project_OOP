@@ -169,6 +169,9 @@
       </VBox>
    </left>
    <center>
-      <StackPane fx:id="mainView" style="-fx-background-color: #FFFFFF;" BorderPane.alignment="CENTER" />
+      <StackPane fx:id="mainView" style="-fx-background-color: #FFFFFF;" BorderPane.alignment="CENTER">
+         <!-- Add the Loading Label here -->
+         <Label fx:id="loadingLabel" text="Loading..." visible="false" style="-fx-font-size: 20; -fx-text-fill: #555555;" StackPane.alignment="CENTER" />
+      </StackPane>
    </center>
 </BorderPane>
