@@ -21,7 +21,7 @@
           <children>
             <HBox alignment="CENTER" prefHeight="40.0" prefWidth="451.0" styleClass="round-corner" stylesheets="@main.css">
               <children>
-                <TextField fx:id="searchField" prefHeight="38.0" prefWidth="390.0" promptText="Search" styleClass="transparent" stylesheets="@main.css" />
+                <TextField fx:id="searchField" prefHeight="38.0" prefWidth="390.0" promptText="Title / Author / ISBN" styleClass="transparent" stylesheets="@main.css" />
                 <Button fx:id="searchButton" prefHeight="64.0" prefWidth="38.0" styleClass="transparent" stylesheets="@main.css">
                   <graphic>
                     <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
