@@ -1,4 +1,4 @@
-package org.example.javafxtutorial;
+package controller;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -12,6 +12,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
+import org.example.javafxtutorial.DatabaseConnection;
 
 import java.io.IOException;
 import java.sql.Connection;
@@ -61,7 +62,7 @@ public class LoginController {
             if (resultSet.next()) {
                 // UserDashBoard
                 if (!username.equals("admin") && !password.equals("admin")) {
-                    Parent userDashboard = FXMLLoader.load(getClass().getResource("UserDashboard.fxml"));
+                    Parent userDashboard = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/org/example/javafxtutorial/UserDashboard.fxml")));
                     Scene adminDashboardScene = new Scene(userDashboard);
 
                     Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -69,7 +70,7 @@ public class LoginController {
                     window.show();
                 } else {
                     // Login successful, redirect to Admin Dashboard
-                    Parent adminDashboard = FXMLLoader.load(getClass().getResource("AdminDashBoard.fxml"));
+                    Parent adminDashboard = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/org/example/javafxtutorial/AdminDashboard.fxml")));
                     Scene adminDashboardScene = new Scene(adminDashboard);
 
                     Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();

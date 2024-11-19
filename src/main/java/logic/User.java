@@ -1,6 +1,5 @@
-package org.example.javafxtutorial;
+package logic;
 
-import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
 public class User {
@@ -10,12 +9,29 @@ public class User {
     private LocalDateTime creationTime;
     private String bio;
     private String email;
+
+
     private String website;
+    private String details;
+    private String avatar;
     private int repoCount;
     private int followerCount;
     private int followingCount;
 
-    // Default constructor with hardcoded values
+    public User(int ID, String username, String password, LocalDateTime creationTime, String bio, String email, String website, int repoCount, int followerCount, int followingCount) {
+        this.ID = ID;
+        this.username = username;
+        this.password = password;
+        this.creationTime = creationTime;
+        this.bio = bio;
+        this.email = email;
+        this.website = website;
+        this.repoCount = repoCount;
+        this.followerCount = followerCount;
+        this.followingCount = followingCount;
+    }
+
+
     public User() {
         this.ID = 1010;
         this.username = "FlowBoat123";
@@ -56,7 +72,34 @@ public class User {
         this.website = website;
     }
 
+    public User(int ID, String username, String password, LocalDateTime creationTime, String bio, String email, String website, String details, String avatar) {
+        this.ID = ID;
+        this.username = username;
+        this.password = password;
+        this.creationTime = creationTime;
+        this.bio = bio;
+        this.email = email;
+        this.website = website;
+        this.details = details;
+        this.avatar = avatar;
+    }
+
     // Getters and Setters for all fields
+    public String getDetails() {
+        return details;
+    }
+
+    public void setDetails(String details) {
+        this.details = details;
+    }
+
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
+    }
 
     public int getID() {
         return ID;

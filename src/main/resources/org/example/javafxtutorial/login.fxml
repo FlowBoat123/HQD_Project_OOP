@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.shape.Rectangle?>
 
-<HBox xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.javafxtutorial.LoginController">
+<HBox xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.LoginController">
 
     <!-- Image on the left side -->
     <AnchorPane prefHeight="440.0" prefWidth="300.0">

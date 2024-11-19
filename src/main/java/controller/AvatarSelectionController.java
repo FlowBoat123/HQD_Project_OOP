@@ -6,7 +6,6 @@ import javafx.scene.layout.HBox;
 import javafx.scene.image.Image;
 import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
-import org.example.javafxtutorial.UserProfileController;
 
 public class AvatarSelectionController {
 
@@ -17,6 +16,7 @@ public class AvatarSelectionController {
     private ImageView imageView1, imageView2, imageView3, imageView4, imageView5, imageView6, imageView7, imageView8;
 
     private Image selectedImage;
+    private String selectedImagePath;
     private Stage stage;
     private UserProfileController userProfileController;
 
@@ -35,10 +35,9 @@ public class AvatarSelectionController {
         };
 
         for (int i = 0; i < imageViews.length; i++) {
-            String path = null;
+            final String path = imagePaths[i]; // Declare as final inside the loop
             try {
-                ImageView imageView = imageViews[i];
-                path = imagePaths[i];
+                final ImageView imageView = imageViews[i]; // Declare as final inside the loop
 
                 imageView.setImage(new Image(getClass().getResourceAsStream(path)));
                 imageView.setFitHeight(130);
@@ -50,7 +49,7 @@ public class AvatarSelectionController {
                 Circle clip = new Circle(65, 65, 65); // centerX, centerY, radius
                 imageView.setClip(clip);
 
-                imageView.setOnMouseClicked(event -> selectAvatar(imageView));
+                imageView.setOnMouseClicked(event -> selectAvatar(imageView, path));
 
             } catch (Exception e) {
                 e.printStackTrace();
@@ -59,13 +58,15 @@ public class AvatarSelectionController {
         }
     }
 
+
     public void setStageAndController(Stage stage, UserProfileController userProfileController) {
         this.stage = stage;
         this.userProfileController = userProfileController;
     }
 
-    private void selectAvatar(ImageView imageView) {
+    private void selectAvatar(ImageView imageView, String path) {
         selectedImage = imageView.getImage();
+        selectedImagePath = path; // Store the path of the selected image
         System.out.println("Avatar selected: " + selectedImage.getUrl());
 
         if (userProfileController != null) {
@@ -80,5 +81,9 @@ public class AvatarSelectionController {
 
     public Image getSelectedImage() {
         return selectedImage;
+    }
+
+    public String getSelectedImagePath() {
+        return selectedImagePath;
     }
 }

@@ -13,7 +13,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.Rectangle?>
 
-<AnchorPane prefHeight="601.0" prefWidth="840.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.javafxtutorial.UserProfileController">
+<AnchorPane prefHeight="601.0" prefWidth="840.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.UserProfileController">
     <VBox layoutX="-0.5" layoutY="0.5">
         <StackPane prefHeight="44.0" prefWidth="943.0">
             <Rectangle height="74.0" style="-fx-fill: white; -fx-stroke: lightgray; -fx-stroke-width: 1;" width="942.0" />

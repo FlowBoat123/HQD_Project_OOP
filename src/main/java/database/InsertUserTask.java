@@ -1,6 +1,8 @@
-package org.example.javafxtutorial;
+package database;
 
 import javafx.concurrent.Task;
+import org.example.javafxtutorial.DatabaseConnection;
+import logic.User;
 
 import java.sql.*;
 import java.time.LocalDateTime;

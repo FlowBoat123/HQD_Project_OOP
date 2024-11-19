@@ -1,6 +1,6 @@
 package controller;
 
-import javafx.application.Platform;
+import database.UserDAO;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.concurrent.Task;
@@ -20,8 +20,7 @@ import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 import org.example.javafxtutorial.DatabaseConnection;
-import org.example.javafxtutorial.User;
-import org.example.javafxtutorial.UserProfileController;
+import logic.User;
 
 import java.io.IOException;
 import java.sql.Connection;
@@ -29,8 +28,11 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.Objects;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 
 public class UserFormController {
 
@@ -111,7 +113,7 @@ public class UserFormController {
                     private final Button trashButton = new Button();
 
                     {
-                        ImageView trashIcon = new ImageView(new Image(getClass().getResourceAsStream("/images/trash.png")));
+                        ImageView trashIcon = new ImageView(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/trash.png"))));
                         trashIcon.setFitHeight(20);
                         trashIcon.setFitWidth(20);
                         trashButton.setGraphic(trashIcon);
@@ -175,24 +177,14 @@ public class UserFormController {
             @Override
             protected ObservableList<User> call() {
                 ObservableList<User> tempData = FXCollections.observableArrayList();
-                String query = "SELECT username, password, creation_time, bio, email, website FROM users";
+                UserDAO userDAO = new UserDAO();
 
-                try (Connection connection = DatabaseConnection.getConnection();
-                     PreparedStatement preparedStatement = connection.prepareStatement(query);
-                     ResultSet resultSet = preparedStatement.executeQuery()) {
-
-                    while (resultSet.next()) {
-                        String username = resultSet.getString("username");
-                        String password = resultSet.getString("password");
-                        LocalDateTime creationTime = resultSet.getTimestamp("creation_time").toLocalDateTime();
-                        String bio = resultSet.getString("bio");
-                        String email = resultSet.getString("email");
-                        String website = resultSet.getString("website");
-                        tempData.add(new User(username, password, creationTime, bio, email, website));
-                    }
-
-                } catch (SQLException e) {
+                try {
+                    List<User> userList = userDAO.getAll();
+                    tempData.addAll(userList);
+                } catch (Exception e) {
                     e.printStackTrace();
+                    throw new RuntimeException("Failed to load user data", e);
                 }
 
                 return tempData;
@@ -241,5 +233,12 @@ public class UserFormController {
     @FXML
     public void stop() {
         executorService.shutdown();
+        try {
+            if (!executorService.awaitTermination(60, TimeUnit.SECONDS)) {
+                executorService.shutdownNow();
+            }
+        } catch (InterruptedException e) {
+            executorService.shutdownNow();
+        }
     }
 }

@@ -1,5 +1,6 @@
 package controller;
 
+import database.UserDAO;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -10,15 +11,13 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-import org.example.javafxtutorial.DatabaseConnection;
-import org.example.javafxtutorial.InsertUserTask;
+import logic.User;
 
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class SignupController {
     @FXML
@@ -39,8 +38,29 @@ public class SignupController {
     @FXML
     private ProgressIndicator loadingIndicator;
 
+    private UserDAO userDAO = new UserDAO();
+    private ExecutorService executorService = Executors.newFixedThreadPool(1);
+
     public void setUserFormController(UserFormController userFormController) {
         this.userFormController = userFormController;
+    }
+
+    public void signupUser(User user) {
+        // Show the progress indicator and update the status label
+        loadingIndicator.setVisible(true);
+        signupStatusLabel.setText("Signing up...");
+
+        // Run the add user task in a separate thread
+        Runnable task = () -> {
+            userDAO.add(user);
+
+            // Update the UI after the task is done
+            javafx.application.Platform.runLater(() -> {
+                loadingIndicator.setVisible(false);
+                signupStatusLabel.setText("Signup completed!");
+            });
+        };
+        executorService.submit(task);
     }
 
     public void handleSignUp(ActionEvent actionEvent) {
@@ -54,48 +74,12 @@ public class SignupController {
         }
 
         if (!password.equals(confirmPassword)) {
-            signupStatusLabel.setText("Password do not match!");
+            signupStatusLabel.setText("Passwords do not match!");
             return;
         }
 
         // Call the method to run the insertion task
-        runInsertUserTask(username, password, new Timestamp(System.currentTimeMillis()).toLocalDateTime(), "", "", "");
-    }
-
-    public void runInsertUserTask(String username, String password, LocalDateTime creationTime, String bio, String email, String website) {
-        // Create the task
-        InsertUserTask task = new InsertUserTask(username, password, creationTime,
-                bio, email, website);
-
-        task.setOnRunning(event -> loadingIndicator.setVisible(true)); // progress bar
-        // Handle task completion and result
-        task.setOnSucceeded(event -> {
-            loadingIndicator.setVisible(false);
-            Boolean result = task.getValue();
-            if (result) {
-                int userId = task.getGeneratedId();
-                System.out.println("User inserted successfully with ID: " + userId);
-                signupStatusLabel.setText("User inserted successfully with ID: " + userId);
-                // Optionally update UI here (e.g., show success message)
-                if (userFormController != null) {
-                    userFormController.refreshTable();
-                }
-            } else {
-                System.out.println("User insertion failed.");
-                signupStatusLabel.setText("User insertion failed. Username already exists");
-                // Optionally update UI here (e.g., show error message)
-            }
-        });
-
-        task.setOnFailed(event -> {
-            loadingIndicator.setVisible(false);
-            System.out.println("Task failed.");
-            signupStatusLabel.setText("Task failed.");
-            // Optionally update UI here (e.g., show failure message)
-        });
-
-        // Run the task in a background thread
-        new Thread(task).start();
+        signupUser(new User(username, password, new Timestamp(System.currentTimeMillis()).toLocalDateTime()));
     }
 
     public void handleBackToLogin(ActionEvent actionEvent) {
@@ -108,5 +92,9 @@ public class SignupController {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public void shutdown() {
+        executorService.shutdown();
     }
 }

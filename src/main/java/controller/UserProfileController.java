@@ -1,6 +1,7 @@
-package org.example.javafxtutorial;
+package controller;
 
-import controller.AvatarSelectionController;
+import database.UserDAO;
+import database.UserDatabaseTask;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -14,19 +15,16 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.shape.Circle;
-import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import logic.User;
 
-import java.io.File;
 import java.io.InputStream;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.time.LocalDateTime;
 import java.util.Objects;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 
 public class UserProfileController {
 
@@ -88,17 +86,20 @@ public class UserProfileController {
 
     private User user;
 
-    private ExecutorService executorService = Executors.newFixedThreadPool(1);
+    private final ExecutorService executorService = Executors.newFixedThreadPool(1);
 
     public void setUser(User user) {
         this.user = user;
         updateUIWithUserData();
     }
 
+    // new Image(Objects.<InputStream>requireNonNull(getClass().getResourceAsStream("/Avatar/icon_2.png")))
     private void updateUIWithUserData() {
         if (user != null) {
             // Set the profile image, assuming you have logic to retrieve the user's image
-            Image image = new Image(Objects.<InputStream>requireNonNull(getClass().getResourceAsStream("/Avatar/icon.png")));
+            String Image_path = user.getAvatar();
+            if (Image_path == null) Image_path = "/Avatar/icon_2.png";
+            Image image = new Image(Objects.<InputStream>requireNonNull(getClass().getResourceAsStream(Image_path)));
             profileImage.setImage(image);
 
             // Clip the ImageView to a circle
@@ -158,7 +159,7 @@ public class UserProfileController {
     @FXML
     private void handleChangeProfileImage(ActionEvent event) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("avatar-selection.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/example/javafxtutorial/avatar-selection.fxml"));
             Parent root = loader.load();
             AvatarSelectionController controller = loader.getController();
             Stage dialogStage = new Stage();
@@ -167,9 +168,12 @@ public class UserProfileController {
             dialogStage.setScene(new Scene(root));
             controller.setStageAndController(dialogStage, this);
             dialogStage.showAndWait();
+            String selectedImagePath = controller.getSelectedImagePath();
             Image selectedImage = controller.getSelectedImage();
-            if (selectedImage != null) {
+            if (selectedImagePath != null) {
                 profileImage.setImage(selectedImage);
+                user.setAvatar(selectedImagePath);
+                System.out.println(selectedImagePath);
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -215,29 +219,25 @@ public class UserProfileController {
     }
 
     private void updateUserDatabase(User user) {
-        try (Connection connection = DatabaseConnection.getConnection()) {
-            if (connection != null) {
-                String updateQuery = "UPDATE users SET username = ?, bio = ?, email = ?, website = ? WHERE id = ?";
-                try (PreparedStatement preparedStatement = connection.prepareStatement(updateQuery)) {
-                    preparedStatement.setString(1, user.getUsername());
-                    preparedStatement.setString(2, user.getBio());
-                    preparedStatement.setString(3, user.getEmail());
-                    preparedStatement.setString(4, user.getWebsite());
-                    java.sql.Timestamp creationTime = java.sql.Timestamp.valueOf(user.getCreationTime());
-                    preparedStatement.setInt(5, user.getID());
-                    System.out.println(user.getUsername());
-
-                    preparedStatement.executeUpdate();
-                    System.out.println("User data updated successfully");
-                }
-            } else {
-                System.out.println("Failed to establish database connection.");
+        Runnable task = () -> {
+            try {
+                UserDAO userDAO = new UserDAO();
+                userDAO.update(user);
+                javafx.application.Platform.runLater(() -> {
+                    // Code to update the UI after successful update (if needed)
+                    System.out.println("User updated successfully!");
+                });
+            } catch (Exception e) {
+                e.printStackTrace();
+                javafx.application.Platform.runLater(() -> {
+                    // Code to handle the error in the UI (if needed)
+                    System.out.println("Failed to update user: " + e.getMessage());
+                });
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
-            System.out.println("Failed to update user data");
-        }
+        };
+        executorService.submit(task);
     }
+
 
     private void toggleEditing(boolean enable) {
         // Show or hide TextFields based on editing mode
@@ -265,7 +265,7 @@ public class UserProfileController {
     @FXML
     public void handleImageClick(javafx.scene.input.MouseEvent mouseEvent) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("AdminDashboard.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/example/javafxtutorial/AdminDashboard.fxml"));
             Parent root = loader.load();
             Stage stage = (Stage) ((ImageView) mouseEvent.getSource()).getScene().getWindow();
             stage.setScene(new Scene(root));
@@ -278,5 +278,16 @@ public class UserProfileController {
     public void setAvatar(Image avatar) {
         profileImage.setImage(avatar);
     }
-    @FXML public void stop() { executorService.shutdown(); }
+
+    @FXML
+    public void stop() {
+        executorService.shutdown();
+        try {
+            if (!executorService.awaitTermination(60, TimeUnit.SECONDS)) {
+                executorService.shutdownNow();
+            }
+        } catch (InterruptedException e) {
+            executorService.shutdownNow();
+        }
+    }
 }
