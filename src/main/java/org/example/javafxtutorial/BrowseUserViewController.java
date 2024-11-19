@@ -62,8 +62,8 @@ public class BrowseUserViewController extends UserViewController {
       BookUserView bookUserView = loader.getController();
       bookUserView.setMainView(mainView, mainView.getChildren().get(0));
       mainView.getChildren().add(content);
-      bookUserView.initializeBookViewForUser(book);
       bookUserView.setLibraryService(libraryService);
+      bookUserView.initializeBookViewForUser(book);
     } catch (IOException e) {
       e.printStackTrace();
     }

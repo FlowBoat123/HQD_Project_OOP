@@ -87,13 +87,13 @@ public class LibraryViewController {
 
                 if (book.getTitle().toLowerCase().contains(lowerCaseFilter)) {
                     return true;
-                } else if (book.getAuthorsAsString().toLowerCase().contains(lowerCaseFilter)) {
+                } else if (book.getAuthorsAsString()!= null && book.getAuthorsAsString().toLowerCase().contains(lowerCaseFilter)) {
                     return true;
-                } else if (book.getGenresAsString().toLowerCase().contains(lowerCaseFilter)) {
+                } else if (book.getGenresAsString()!= null && book.getGenresAsString().toLowerCase().contains(lowerCaseFilter)) {
                     return true;
-                } else if (book.getIsbn_10().toLowerCase().contains(lowerCaseFilter)) {
+                } else if (book.getIsbn_10()!= null && book.getIsbn_10().toLowerCase().contains(lowerCaseFilter)) {
                     return true;
-                } else if (book.getIsbn_13().toLowerCase().contains(lowerCaseFilter)) {
+                } else if (book.getIsbn_10()!= null && book.getIsbn_13().toLowerCase().contains(lowerCaseFilter)) {
                     return true;
                 } else if (String.valueOf(book.getQuantity()).contains(lowerCaseFilter)) {
                     return true;
