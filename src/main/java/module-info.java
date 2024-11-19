@@ -5,15 +5,19 @@ module org.example.javafxtutorial {
     requires com.google.gson;
     requires com.zaxxer.hikari;
     requires java.sql;
-  requires java.desktop;
+    requires java.desktop;
+    requires org.xerial.sqlitejdbc;
+
 
   opens org.example.javafxtutorial to javafx.fxml;
     exports org.example.javafxtutorial;
 
     opens controller to javafx.fxml;
     exports controller;
+
     exports database;
     opens database to javafx.fxml;
+
     exports logic;
     opens logic to javafx.fxml;
 }

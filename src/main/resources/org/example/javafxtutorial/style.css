@@ -3,6 +3,12 @@
     -fx-border-color: transparent;
 }
 
+.edit-button {
+    -fx-background-color: lightblue;
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+}
+
 .button:hover {
     -fx-background-color: lightgray;
 }

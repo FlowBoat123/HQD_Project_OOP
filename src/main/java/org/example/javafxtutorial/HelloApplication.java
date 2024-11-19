@@ -1,6 +1,7 @@
 package org.example.javafxtutorial;
 
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
@@ -16,6 +17,8 @@ public class HelloApplication extends Application {
         UserSession.getInstance().setUserID(2);
         stage.setScene(scene);
         stage.show();
+
+        Platform.setImplicitExit(true);
     }
 
     public static void main(String[] args) {
