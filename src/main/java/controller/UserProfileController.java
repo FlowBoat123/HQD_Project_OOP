@@ -10,6 +10,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -98,6 +99,7 @@ public class UserProfileController {
         if (user != null) {
             // Set the profile image, assuming you have logic to retrieve the user's image
             String Image_path = user.getAvatar();
+            System.out.println(Image_path);
             if (Image_path == null) Image_path = "/Avatar/icon_2.png";
             Image image = new Image(Objects.<InputStream>requireNonNull(getClass().getResourceAsStream(Image_path)));
             profileImage.setImage(image);
@@ -221,6 +223,7 @@ public class UserProfileController {
     private void updateUserDatabase(User user) {
         Runnable task = () -> {
             try {
+                System.out.println(user.getAvatar());
                 UserDAO userDAO = new UserDAO();
                 userDAO.update(user);
                 javafx.application.Platform.runLater(() -> {
@@ -289,5 +292,28 @@ public class UserProfileController {
         } catch (InterruptedException e) {
             executorService.shutdownNow();
         }
+    }
+
+    @FXML
+    private TextArea bioTextArea;
+
+    @FXML
+    private Button editBioButton;
+
+    boolean isEditingDetail = false;
+
+    @FXML
+    private void handleEditBio() {
+        if (isEditingDetail) {
+            // Save changes
+            bioTextArea.setEditable(false);
+            editBioButton.setText("Edit");
+            // Additional logic to save the changes can be added here
+        } else {
+            // Enable editing
+            bioTextArea.setEditable(true);
+            editBioButton.setText("Save");
+        }
+        isEditingDetail = !isEditingDetail;
     }
 }

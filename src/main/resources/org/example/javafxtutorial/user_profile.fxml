@@ -12,6 +12,7 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
 
 <AnchorPane prefHeight="601.0" prefWidth="840.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.UserProfileController">
     <VBox layoutX="-0.5" layoutY="0.5">
@@ -19,29 +20,48 @@
             <Rectangle height="74.0" style="-fx-fill: white; -fx-stroke: lightgray; -fx-stroke-width: 1;" width="942.0" />
             <VBox prefHeight="93.0" prefWidth="906.0">
                 <HBox prefHeight="48.0" prefWidth="906.0">
-               <ImageView fx:id="imageView" fitHeight="43.0" fitWidth="53.0" onMouseClicked="#handleImageClick" pickOnBounds="true" preserveRatio="true">
-                  <image>
-                     <Image url="@../../../images/back.png" />
-                  </image>
-               </ImageView>
+                    <ImageView fx:id="imageView" fitHeight="43.0" fitWidth="114.0" onMouseClicked="#handleImageClick" pickOnBounds="true" preserveRatio="true">
+                        <image>
+                            <Image url="@../../../images/back.png" />
+                        </image>
+                    </ImageView>
                 </HBox>
                 <HBox focusTraversable="true" prefHeight="66.0" prefWidth="943.0">
-                    <Button fx:id="button1" mnemonicParsing="false" onAction="#showScene1" prefHeight="43.0" prefWidth="75.0" text="1" />
-                    <Button fx:id="button2" mnemonicParsing="false" onAction="#showScene2" prefHeight="43.0" prefWidth="75.0" text="2" />
-                    <Button fx:id="button3" mnemonicParsing="false" onAction="#showScene3" prefHeight="43.0" prefWidth="75.0" text="3" />
+                    <Button fx:id="button1" mnemonicParsing="false" onAction="#showScene1" prefHeight="34.0" prefWidth="130.0" text="Trang cá nhân">
+                        <font>
+                            <Font size="15.0" />
+                        </font>
+                    </Button>
+                    <Button fx:id="button2" mnemonicParsing="false" onAction="#showScene2" prefHeight="32.0" prefWidth="135.0" text="Sách đang đọc">
+                        <font>
+                            <Font size="15.0" />
+                        </font>
+                    </Button>
+                    <Button fx:id="button3" mnemonicParsing="false" onAction="#showScene3" prefHeight="34.0" prefWidth="131.0" text="Đã đọc xong">
+                        <font>
+                            <Font size="15.0" />
+                        </font>
+                    </Button>
                 </HBox>
             </VBox>
         </StackPane>
     </VBox>
     <StackPane layoutX="0.0" layoutY="74.0">
+        <AnchorPane fx:id="scene2" visible="false">
+            <!-- Scene 2 content -->
+
+        </AnchorPane>
+        <AnchorPane fx:id="scene3" visible="false">
+            <!-- Scene 3 content -->
+        </AnchorPane>
         <AnchorPane fx:id="scene1" prefHeight="600.0" prefWidth="940.0" visible="true">
             <!-- Scene 1 content -->
             <VBox alignment="TOP_CENTER" layoutX="32.0" layoutY="141.0" spacing="20.0" />
 
-                     <!-- Edit Profile Button -->
-            <Button fx:id="editProfileButton" layoutX="169.0" layoutY="463.0" onAction="#handleEditProfile"
-                    style="-fx-background-color: lightblue; -fx-font-size: 14px;" text="Edit Profile" />
-            <TextArea layoutX="421.0" layoutY="47.0" prefHeight="239.0" prefWidth="482.0" text="- 👋 Hi, I’m @FlowBoat123&#10;" />
+            <!-- Edit Profile Button -->
+            <Button fx:id="editProfileButton" layoutX="169.0" layoutY="463.0" onAction="#handleEditProfile" style="-fx-background-color: lightblue; -fx-font-size: 14px;" text="Edit Profile" />
+            <TextArea fx:id="bioTextArea" editable="false" layoutX="421.0" layoutY="47.0" prefHeight="287.0" prefWidth="482.0" text="- 👋 Hi, I’m @FlowBoat123&#10;-✌️ Literally ryan gosling" />
+
             <StackPane layoutX="33.0" layoutY="47.0">
                 <Rectangle arcHeight="20.0" arcWidth="20.0" height="391.0" style="-fx-fill: white; -fx-stroke: lightgray; -fx-stroke-width: 1;" width="359.0" />
                 <VBox alignment="CENTER" prefWidth="360.0" spacing="5.0">
@@ -56,21 +76,20 @@
                             </image>
                         </ImageView>
                         <!-- Change Profile Image Button -->
-                        <Button fx:id="changeProfileImageButton" onAction="#handleChangeProfileImage" style="-fx-background-color: lightblue; -fx-font-size: 14px;" text="Change Image"/>
+                        <Button fx:id="changeProfileImageButton" onAction="#handleChangeProfileImage" style="-fx-background-color: lightblue; -fx-font-size: 14px;" text="Change Image" />
                     </VBox>
 
-                             <!-- Username and Bio -->
+                    <!-- Username and Bio -->
                     <StackPane>
                         <Label fx:id="usernameLabel" style="-fx-font-size: 20px; -fx-font-weight: bold;" text="John Doe" />
                         <TextField fx:id="usernameField" style="-fx-font-size: 20px; -fx-font-weight: bold;" visible="false" />
                     </StackPane>
-
-                             <StackPane>
+                    <StackPane>
                         <Label fx:id="bioLabel" style="-fx-font-size: 14px;" text="Open-source enthusiast, loves coding." />
                         <TextField fx:id="bioField" style="-fx-font-size: 14px;" visible="false" />
                     </StackPane>
 
-                             <!-- Stats Section -->
+                    <!-- Stats Section -->
                     <HBox alignment="CENTER" spacing="30.0">
                         <VBox alignment="CENTER">
                             <Label fx:id="repoCountLabel" style="-fx-font-size: 18px;" text="0" />
@@ -86,7 +105,7 @@
                         </VBox>
                     </HBox>
 
-                             <!-- Contact Information -->
+                    <!-- Contact Information -->
                     <VBox alignment="CENTER" prefHeight="52.0" prefWidth="116.0" spacing="10.0">
                         <StackPane>
                             <Label fx:id="emailLabel" text="Email: johndoe@example.com" />
@@ -99,13 +118,12 @@
                     </VBox>
                 </VBox>
             </StackPane>
-        </AnchorPane>
-        <AnchorPane fx:id="scene2" visible="false">
-            <!-- Scene 2 content -->
-            
-        </AnchorPane>
-        <AnchorPane fx:id="scene3" visible="false">
-            <!-- Scene 3 content -->
+            <Label layoutX="421.0" layoutY="361.0" prefHeight="45.0" prefWidth="150.0" text="Thể loại ưa thích" textAlignment="CENTER">
+                <font>
+                    <Font size="20.0" />
+                </font>
+            </Label>
+             <Button fx:id="editBioButton" layoutX="860.0" layoutY="47.0" onAction="#handleEditBio" prefHeight="26.0" prefWidth="43.0" style="-fx-background-color: lightblue;" text="Edit" />
         </AnchorPane>
     </StackPane>
 </AnchorPane>
