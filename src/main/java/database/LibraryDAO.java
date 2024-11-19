@@ -84,7 +84,6 @@ public class LibraryDAO implements DAO<Book>{
             e.printStackTrace();
         }
         return books;
-
     }
 
     public void updateBorrowedCopies(Book book) {

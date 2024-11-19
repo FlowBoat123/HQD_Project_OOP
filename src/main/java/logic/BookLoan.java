@@ -1,14 +1,18 @@
 package logic;
 
 import java.util.Date;
+import java.util.Objects;
 
 public class BookLoan {
+    public static final int NOT_BORROWED = 0;
+    public static final int WAITING = 1;
+    public static final int READING = 2;
+    public static final int COMPLETED = 3;
     private Book book;
     private int userID;
     private Date loanDate;
     private Date returnDate;
     private int loanID;
-
     public BookLoan(int loanID, Book book, int userID, Date loanDate, Date returnDate) {
         this.loanID = loanID;
         this.book = book;
@@ -59,6 +63,24 @@ public class BookLoan {
 
     public void setReturnDate(Date returnDate) {
         this.returnDate = returnDate;
+    }
+
+    public int getLoanStatus() {
+        if (returnDate != null && loanDate != null) {
+            return COMPLETED;
+        } else if (returnDate == null && loanDate != null) {
+            return READING;
+        } else {
+            return WAITING;
+        }
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        BookLoan loan = (BookLoan) o;
+        return userID == loan.userID  && Objects.equals(book, loan.book) ;
     }
 
 }

@@ -7,14 +7,14 @@
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.UserDashboardController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.UserDashboardController">
    <top>
       <HBox alignment="CENTER_LEFT" prefHeight="60.0" prefWidth="1280.0" style="-fx-background-color: #F4F4F4;" stylesheets="@main.css" BorderPane.alignment="CENTER">
          <children>
@@ -33,7 +33,7 @@
                   </Label>
                   <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../../../images/icon.png" />
+                        <Image url="@../../../images/usericon.png" />
                      </image>
                   </ImageView>
                </children>
@@ -60,7 +60,7 @@
                               <Image url="@../../../images/bookicon.png" />
                            </image>
                         </ImageView>
-                        <Label prefHeight="33.0" prefWidth="173.0" text="Add books">
+                        <Label prefHeight="33.0" prefWidth="173.0" text="Book Review">
                            <font>
                               <Font name="Calibri Bold" size="18.0" />
                            </font>
@@ -69,7 +69,7 @@
                   </HBox>
                   <HBox alignment="CENTER" prefHeight="41.0" prefWidth="230.0">
                      <children>
-                        <Button alignment="BASELINE_LEFT" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="30.0" prefWidth="200.0" stylesheets="@main.css" text="Recommendation">
+                        <Button alignment="BASELINE_LEFT" contentDisplay="CENTER" mnemonicParsing="false" onAction="#launchRecommendation" prefHeight="30.0" prefWidth="200.0" stylesheets="@main.css" text="Recommendation">
                            <font>
                               <Font name="Calibri" size="16.0" />
                            </font>
@@ -82,7 +82,7 @@
                   </HBox>
                   <HBox alignment="CENTER" layoutX="20.0" layoutY="63.0" prefHeight="30.0" prefWidth="200.0">
                      <children>
-                        <Button alignment="BASELINE_LEFT" mnemonicParsing="false" prefHeight="30.0" prefWidth="200.0" stylesheets="@main.css" text="Browse">
+                        <Button alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#launchBrowse" prefHeight="30.0" prefWidth="200.0" stylesheets="@main.css" text="Browse">
                            <font>
                               <Font name="Calibri" size="16.0" />
                            </font>
@@ -147,32 +147,6 @@
                   </HBox>
                   <HBox alignment="CENTER" layoutX="20.0" layoutY="114.0" prefHeight="41.0" prefWidth="230.0">
                      <children>
-                        <Button alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#launchShelfView" prefHeight="30.0" prefWidth="200.0" stylesheets="@main.css" text="Plan To Read">
-                           <font>
-                              <Font name="Calibri" size="16.0" />
-                           </font>
-                           <styleClass>
-                              <String fx:value="transparent-button" />
-                              <String fx:value="padding-left" />
-                           </styleClass>
-                        </Button>
-                     </children>
-                  </HBox>
-                  <HBox alignment="CENTER" layoutX="20.0" layoutY="165.0" prefHeight="41.0" prefWidth="230.0">
-                     <children>
-                        <Button alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#launchShelfView" prefHeight="30.0" prefWidth="200.0" stylesheets="@main.css" text="On Hold">
-                           <font>
-                              <Font name="Calibri" size="16.0" />
-                           </font>
-                           <styleClass>
-                              <String fx:value="transparent-button" />
-                              <String fx:value="padding-left" />
-                           </styleClass>
-                        </Button>
-                     </children>
-                  </HBox>
-                  <HBox alignment="CENTER" layoutX="20.0" layoutY="216.0" prefHeight="41.0" prefWidth="230.0">
-                     <children>
                         <Button alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#launchShelfView" prefHeight="30.0" prefWidth="200.0" stylesheets="@main.css" text="Completed">
                            <font>
                               <Font name="Calibri" size="16.0" />
@@ -184,6 +158,8 @@
                         </Button>
                      </children>
                   </HBox>
+                  <HBox alignment="CENTER" layoutX="20.0" layoutY="165.0" prefHeight="41.0" prefWidth="230.0" />
+                  <HBox alignment="CENTER" layoutX="20.0" layoutY="216.0" prefHeight="41.0" prefWidth="230.0" />
                </children>
                <padding>
                   <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
@@ -193,6 +169,9 @@
       </VBox>
    </left>
    <center>
-      <AnchorPane fx:id="mainView" style="-fx-background-color: #FFFFFF;" BorderPane.alignment="CENTER" />
+      <StackPane fx:id="mainView" style="-fx-background-color: #FFFFFF;" BorderPane.alignment="CENTER">
+         <!-- Add the Loading Label here -->
+         <Label fx:id="loadingLabel" text="Loading..." visible="false" style="-fx-font-size: 20; -fx-text-fill: #555555;" StackPane.alignment="CENTER" />
+      </StackPane>
    </center>
 </BorderPane>

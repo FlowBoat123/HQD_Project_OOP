@@ -1,0 +1,26 @@
+.white-background{
+    -fx-background-color: #fff;
+}
+.transparent {
+    -fx-background-color: rgba(0, 0, 0, 0);
+}
+
+.selected{
+  -fx-background-color: #F3F3F3
+}
+
+.mouse-moved:hover{
+  -fx-background-color: #87CEEB;
+}
+
+.shadow{
+  -fx-effect: dropShadow(three-pass-box, rgba(0,0,0,0), 10, 0 , 0 , 10);
+}
+
+.button {
+    -fx-alignment: center-left;
+}
+
+.recom-card-hbox {
+    -fx-background-color: #ADD8E6;
+}

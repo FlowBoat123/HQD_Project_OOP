@@ -29,8 +29,16 @@ public class BookLoanDAO implements DAO<BookLoan> {
             statement.setString(1, bookLoan.getBook().getIsbn_13());
             statement.setInt(2, bookLoan.getUserID());
             SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-            statement.setString(3, dateFormat.format(bookLoan.getLoanDate()));
-            statement.setString(4, dateFormat.format(bookLoan.getReturnDate()));
+            if (bookLoan.getLoanDate() != null) {
+                statement.setString(3, dateFormat.format(bookLoan.getLoanDate()));
+            } else {
+                statement.setString(3, null);
+            }
+            if (bookLoan.getReturnDate() != null) {
+                statement.setString(4, dateFormat.format(bookLoan.getReturnDate()));
+            } else {
+                statement.setString(4, null);
+            }
             statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();

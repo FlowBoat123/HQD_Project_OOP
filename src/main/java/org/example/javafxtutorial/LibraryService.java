@@ -22,8 +22,10 @@ public class LibraryService {
         this.userSession = UserSession.getInstance();
         this.books = libraryDAO.getAll();
         if (userSession.isAdmin()) {
+            System.out.println("Admin");
             bookLoans = bookLoanDAO.getAll();
         } else {
+            System.out.println("User");
             bookLoans = bookLoanDAO.getUserLoan(userSession.getUserID());
         }
     }
@@ -68,26 +70,51 @@ public class LibraryService {
         return bookLoans;
     }
 
-    public void borrowBook(Book book) {
+    public boolean borrowBook(Book book) {
         BookLoan bookLoan = new BookLoan();
         if (book.getBorrowedCopies() < book.getQuantity()) {
             book.setBorrowedCopies(book.getBorrowedCopies() + 1);
             bookLoan.setBook(book);
+            System.out.println(userSession.getUserID());
             bookLoan.setUserID(userSession.getUserID());
             bookLoan.setLoanDate(new Date());
             bookLoan.setReturnDate(null);
             libraryDAO.updateBorrowedCopies(book);
             bookLoanDAO.add(bookLoan);
             bookLoans.add(bookLoan);
+            System.out.println("Loan book successfully");
+            return true;
+        } else {
+            bookLoan.setBook(book);
+            bookLoan.setUserID(userSession.getUserID());
+            bookLoan.setLoanDate(null);
+            bookLoan.setReturnDate(null);
+            bookLoanDAO.add(bookLoan);
+            bookLoans.add(bookLoan);
+            System.out.println("Add to waiting list");
+            return false;
         }
     }
 
-    public void returnBook(BookLoan bookLoan) {
-        Book book = bookLoan.getBook();
-        book.setBorrowedCopies(book.getBorrowedCopies() - 1);
-        libraryDAO.updateBorrowedCopies(book);
-        bookLoan.setReturnDate(new Date());
-        bookLoanDAO.delete(bookLoan);
-        bookLoans.remove(bookLoan);
+    public void returnBook(Book book) {
+        for (BookLoan bookLoan : bookLoans) {
+            if (bookLoan.getBook().equals(book)) {
+                book.setBorrowedCopies(book.getBorrowedCopies() - 1);
+                libraryDAO.updateBorrowedCopies(book);
+                bookLoan.setReturnDate(new Date());
+                bookLoanDAO.update(bookLoan);
+                System.out.println("Book returned successfully");
+                break;
+            }
+        }
+    }
+
+    public int getLoanStatus(Book book) {
+        for(BookLoan bookLoan : bookLoans) {
+            if (bookLoan.getBook().equals(book)) {
+                return bookLoan.getLoanStatus();
+            }
+        }
+        return BookLoan.NOT_BORROWED;
     }
 }
