@@ -40,6 +40,10 @@ public class BookLoanDAO implements DAO<BookLoan> {
                 statement.setString(4, null);
             }
             statement.executeUpdate();
+            ResultSet generatedKeys = statement.getGeneratedKeys();
+            if (generatedKeys.next()) {
+                bookLoan.setLoanID(generatedKeys.getInt(1));
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -87,6 +91,7 @@ public class BookLoanDAO implements DAO<BookLoan> {
             while (resultSet.next()) {
                 Book loanedBook = new Book();
                 BookLoan loan = new BookLoan();
+                System.out.println("loanid:" + resultSet.getInt("loanID"));
                 loan.setLoanID(resultSet.getInt("loanID"));
                 loanedBook.setTitle(resultSet.getString("title"));
                 loanedBook.setAuthorsFromString(resultSet.getString("authors"));
@@ -160,4 +165,6 @@ public class BookLoanDAO implements DAO<BookLoan> {
         }
         return bookLoans;
     }
+
+
 }

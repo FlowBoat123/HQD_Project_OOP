@@ -8,9 +8,8 @@ import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.layout.AnchorPane;
 import org.example.javafxtutorial.LibraryService;
-import org.example.javafxtutorial.Shelf;
-import org.example.javafxtutorial.ShelfController;
 
+import java.awt.event.MouseEvent;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -18,6 +17,8 @@ import java.util.ResourceBundle;
 public class AdminDashboardController implements Initializable{
 
     private LibraryService libraryService;
+
+    private Button currentlyFocusedButton;
 
     @FXML
     private AnchorPane mainView;
@@ -33,7 +34,7 @@ public class AdminDashboardController implements Initializable{
             apiController.setMainView(mainView);
             mainView.getChildren().setAll(content);
             apiController.setLibraryService(libraryService);
-            clickedButton.requestFocus();
+            updateFocus(clickedButton);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -41,7 +42,9 @@ public class AdminDashboardController implements Initializable{
 
     @FXML
     void launchAddUser(ActionEvent event) {
-
+        Object source = event.getSource();
+        Button clickedButton = (Button) source;
+        updateFocus(clickedButton);
     }
 
     @FXML
@@ -56,7 +59,7 @@ public class AdminDashboardController implements Initializable{
             libraryViewController.setMainView(mainView);
             libraryViewController.initializeLibraryView();
             mainView.getChildren().setAll(content);
-            clickedButton.requestFocus();
+            updateFocus(clickedButton);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -64,11 +67,24 @@ public class AdminDashboardController implements Initializable{
 
     @FXML
     void launchUserInfo(ActionEvent event) {
-
+        Object source = event.getSource();
+        Button clickedButton = (Button) source;
+        updateFocus(clickedButton);
     }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         libraryService = new LibraryService();
+    }
+
+    private void updateFocus(Button clickedButton) {
+        if (currentlyFocusedButton != null) {
+            currentlyFocusedButton.getStyleClass().remove("focused-button");
+            currentlyFocusedButton.getStyleClass().add("transparent-button");
+        }
+        clickedButton.requestFocus();
+        clickedButton.getStyleClass().remove("transparent-button");
+        clickedButton.getStyleClass().add("focused-button");
+        currentlyFocusedButton = clickedButton;
     }
 }

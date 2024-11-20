@@ -97,8 +97,14 @@ public class BookController {
 
     @FXML
     void handleRemoveAll(ActionEvent event) {
-        libraryService.removeCopiesFromLibrary(book);
-        showNotification("Removed all copies successfully!");
+        if (book == null) {
+            showNotification("Book not found!");
+        } else if (book.getBorrowedCopies() > 0) {
+            showNotification("Cannot remove copies, some are borrowed!");
+        } else {
+            libraryService.removeCopiesFromLibrary(book);
+            showNotification("Removed all copies successfully!");
+        }
     }
 
     private void showNotification(String message) {

@@ -22,7 +22,7 @@
     -fx-text-fill: #ffffff;
     -fx-font-size: 16px;
 }
-.transparent-button:focused {
+.focused-button {
     -fx-background-color: #1188F6;
     -fx-text-fill: #ffffff;
     -fx-font-size: 16px;
@@ -69,3 +69,6 @@
 .text-field:hover {
     -fx-background-color: transparent;
 }
+
+
+

@@ -4,11 +4,11 @@ import java.util.function.Consumer;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
@@ -43,16 +43,14 @@ public class BookUserView {
     private int loanStatus;
     private StackPane mainView;
     private Node previousContent;
-    private Consumer<Void> refreshLibraryViewCallback;
     Book book;
 
     private LibraryService libraryService;
 
     public void initializeBookViewForUser(Book book) {
         this.book = book;
-        loanStatus = libraryService.getLoanStatus(book); // check loan status
-        book.setStatus("Unread");//khi init check status
-        updateLoanStatus();
+        // check loan status
+        this.updateLoanStatus();
         bookTitle.setText(book.getTitle());
         bookAuthor.setText(book.getAuthorsAsString());
         bookDescription.setText(book.getDescription());
@@ -77,10 +75,12 @@ public class BookUserView {
     @FXML
     void handleUpdateBook(ActionEvent event) {
         if (loanStatus == BookLoan.NOT_BORROWED) {
-            borrowBook();
-            showNotification("Book borrowed successfully");
+            this.borrowBook();
         } else if (loanStatus == BookLoan.READING) {
-
+            this.returnBook();
+            showNotification("Book returned successfully");
+        } else {
+            showNotification("Book is not available");
         }
     }
 
@@ -97,54 +97,69 @@ public class BookUserView {
         this.libraryService = libraryService;
     }
 
-    public void setRefreshLibraryViewCallback(Consumer<Void> refreshLibraryViewCallback) {
-        this.refreshLibraryViewCallback = refreshLibraryViewCallback;
-    }
-
     public void setMainView(StackPane mainView, Node previousContent) {
         this.mainView = mainView;
         this.previousContent = previousContent;
     }
 
     public void updateLoanStatus() {
-        switch (loanStatus) {
-            case BookLoan.NOT_BORROWED:
-                readButton.setText("Borrow");
-                break;
-            case BookLoan.READING:
-                readButton.setText("Return");
-                break;
-            case BookLoan.WAITING:
-                readButton.setText("Waiting");
-                break;
-            case BookLoan.COMPLETED:
-                readButton.setText("Completed");
-                break;
-            default:
-                readButton.setText("Unavailable");
-                break;
-        }
-    }
+        loanStatus = libraryService.getLoanStatus(book);
+        Platform.runLater(() -> {
+            switch (loanStatus) {
+                case BookLoan.NOT_BORROWED:
+                    System.out.println("Not borrowed");
+                    readButton.setText("Borrow");
+                    break;
+                case BookLoan.READING:
+                    System.out.println("Reading");
+                    readButton.setText("Return");
+                    break;
+                case BookLoan.WAITING:
+                    System.out.println("Waiting");
+                    readButton.setText("Waiting");
+                    break;
+                case BookLoan.COMPLETED:
+                    System.out.println("Completed");
+                    readButton.setText("Completed");
+                    break;
+                default:
+                    System.out.println("Unavailable");
+                    readButton.setText("Unavailable");
+                    break;
+            }
+    });
+}
 
     //Borrow book
     public void borrowBook() {
         if (libraryService.borrowBook(book)) {
             loanStatus = BookLoan.READING;
-            book.setStatus("Reading");
-            showNotification("Book borrowed successfully");
-            updateLoanStatus();
+            showLoanConditionDialog("Reading", "Book borrowed successfully");
         } else {
             loanStatus = BookLoan.WAITING;
-            showNotification("Book is not available");
+            showLoanConditionDialog("Waiting", "The book is currently unavailable. You are added to the waiting list.");
         }
+        this.updateLoanStatus();
     }
 
     //Return book
     public void returnBook() {
         libraryService.returnBook(book);
         loanStatus = BookLoan.NOT_BORROWED;
-        book.setStatus("Unread");
-        showNotification("Book returned successfully");
-        updateLoanStatus();
+        this.updateLoanStatus();
+    }
+
+    private void showLoanConditionDialog(String status, String message) {
+        Dialog<String> dialog = new Dialog<>();
+        dialog.setTitle("Notification");
+        dialog.setHeaderText("Current Loan Status: " + status);
+
+        ButtonType okButtonType = new ButtonType("OK", ButtonBar.ButtonData.OK_DONE);
+        dialog.getDialogPane().getButtonTypes().addAll(okButtonType);
+
+        Label label = new Label(message);
+        dialog.getDialogPane().setContent(label);
+
+        dialog.showAndWait();
     }
 }
