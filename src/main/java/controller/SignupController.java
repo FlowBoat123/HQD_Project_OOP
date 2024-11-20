@@ -6,10 +6,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.ProgressIndicator;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.stage.Stage;
 import logic.User;
 
@@ -38,6 +35,9 @@ public class SignupController {
     @FXML
     private ProgressIndicator loadingIndicator;
 
+    @FXML
+    private Button backToLoginButton;
+
     private UserDAO userDAO = new UserDAO();
     private ExecutorService executorService = Executors.newFixedThreadPool(1);
 
@@ -52,15 +52,27 @@ public class SignupController {
 
         // Run the add user task in a separate thread
         Runnable task = () -> {
-            userDAO.add(user);
+            if (userDAO.isUsernameExists(user.getUsername())) {
+                // Update the UI if the username already exists
+                javafx.application.Platform.runLater(() -> {
+                    loadingIndicator.setVisible(false);
+                    signupStatusLabel.setText("Username already exists.");
+                });
+            } else {
+                // Add the user if the username does not exist
+                userDAO.add(user);
 
-            // Update the UI after the task is done
-            javafx.application.Platform.runLater(() -> {
-                loadingIndicator.setVisible(false);
-                signupStatusLabel.setText("Signup completed!");
-            });
+                // Update the UI after the task is done
+                javafx.application.Platform.runLater(() -> {
+                    loadingIndicator.setVisible(false);
+                    signupStatusLabel.setText("Signup completed!");
+                });
+            }
         };
         executorService.submit(task);
+    }
+
+    public SignupController() {
     }
 
     public void handleSignUp(ActionEvent actionEvent) {
@@ -82,9 +94,16 @@ public class SignupController {
         signupUser(new User(username, password, new Timestamp(System.currentTimeMillis()).toLocalDateTime()));
     }
 
+    private boolean fromLogin = false;
+
+    public void setFromLogin(boolean fromLogin) {
+        this.fromLogin = fromLogin;
+        backToLoginButton.setVisible(fromLogin);
+    }
+
     public void handleBackToLogin(ActionEvent actionEvent) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("login.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/example/javafxtutorial/login.fxml"));
             Parent root = loader.load();
             Stage stage = (Stage) signupStatusLabel.getScene().getWindow();
             stage.setScene(new Scene(root));

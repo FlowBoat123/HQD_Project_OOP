@@ -47,6 +47,7 @@ public class AdminDashboardController implements Initializable{
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/example/javafxtutorial/signup.fxml"));
             Node content = loader.load();
             SignupController signUpController = loader.getController();
+            signUpController.setFromLogin(false);
             mainView.getChildren().setAll(content);
             clickedButton.requestFocus();
         } catch (IOException e) {

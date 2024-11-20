@@ -11,6 +11,7 @@ import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.StackPane;
+import logic.User;
 import org.example.javafxtutorial.BrowseUserViewController;
 import org.example.javafxtutorial.LibraryService;
 import org.example.javafxtutorial.RecomUserViewController;
@@ -33,6 +34,14 @@ public class UserDashboardController implements Initializable {
 
     @FXML
     private Label loadingLabel;
+
+    @FXML
+    private User currentUser;
+
+    @FXML
+    public void setUser(User user) {
+        this.currentUser = user;
+    }
 
     @FXML
     void launchShelfView(ActionEvent event) {

@@ -9,21 +9,28 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane cache="true" prefHeight="600.0" prefWidth="840.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.SignupController">
+<AnchorPane cache="true" prefHeight="600.0" prefWidth="840.0" xmlns="http://javafx.com/javafx/23"
+            xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.SignupController">
     <!--SignUp UI-->
-    <VBox alignment="CENTER" layoutX="271.0" layoutY="89.0" prefHeight="318.0" prefWidth="297.0" spacing="10" xmlns:fx="http://javafx.com/fxml/1">
-        <Label style="-fx-font-size: 24px; -fx-font-weight: bold;" text="Create User" />
-        <Label text="Username:" />
-        <TextField fx:id="signupUsernameField" />
-        <Label text="Password:" />
-        <PasswordField fx:id="signupPasswordField" />
-        <Label text="Confirm Password:" />
-        <PasswordField fx:id="signupConfirmPasswordField" />
-        <Button onAction="#handleSignUp" text="Create" />
+    <VBox alignment="CENTER" layoutX="271.0" layoutY="89.0" prefHeight="318.0" prefWidth="297.0" spacing="10"
+          xmlns:fx="http://javafx.com/fxml/1">
+        <Label style="-fx-font-size: 24px; -fx-font-weight: bold;" text="Create User"/>
+        <Label text="Username:"/>
+        <TextField fx:id="signupUsernameField"/>
+        <Label text="Password:"/>
+        <PasswordField fx:id="signupPasswordField"/>
+        <Label text="Confirm Password:"/>
+        <PasswordField fx:id="signupConfirmPasswordField"/>
+        <Button fx:id="submit" onAction="#handleSignUp" text="Create"/>
     </VBox>
-    <Label fx:id="signupStatusLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="173.0" layoutY="407.0" prefHeight="46.0" prefWidth="494.0" AnchorPane.leftAnchor="173.0" AnchorPane.rightAnchor="172.5999999999999" AnchorPane.topAnchor="407.0">
-      <font>
-         <Font size="20.0" />
-      </font></Label>
-    <ProgressIndicator fx:id="loadingIndicator" layoutX="394.0" layoutY="463.0" visible="false" />
+    <Label fx:id="signupStatusLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="173.0" layoutY="407.0"
+           prefHeight="46.0" prefWidth="494.0" AnchorPane.leftAnchor="173.0" AnchorPane.rightAnchor="172.5999999999999"
+           AnchorPane.topAnchor="407.0">
+        <font>
+            <Font size="20.0"/>
+        </font>
+    </Label>
+    <ProgressIndicator fx:id="loadingIndicator" layoutX="394.0" layoutY="463.0" visible="false"/>
+    <Button fx:id="backToLoginButton" layoutX="14.0" layoutY="14.0" onAction="#handleBackToLogin"
+            mnemonicParsing="false" prefHeight="35.0" prefWidth="56.0" text="Back"/>
 </AnchorPane>
