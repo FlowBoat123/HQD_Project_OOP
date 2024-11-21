@@ -268,15 +268,28 @@ public class UserProfileController {
     @FXML
     public void handleImageClick(javafx.scene.input.MouseEvent mouseEvent) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/example/javafxtutorial/AdminDashboard.fxml"));
+            FXMLLoader loader;
+            if (user.getID() == 2) {
+                loader = new FXMLLoader(getClass().getResource("/org/example/javafxtutorial/AdminDashboard.fxml"));
+            } else {
+                loader = new FXMLLoader(getClass().getResource("/org/example/javafxtutorial/UserDashboard.fxml"));
+            }
+
             Parent root = loader.load();
             Stage stage = (Stage) ((ImageView) mouseEvent.getSource()).getScene().getWindow();
             stage.setScene(new Scene(root));
             stage.show();
+
+            // Optionally, set the user to the new controller if needed
+            if (user.getID() != 2) {
+                UserDashboardController controller = loader.getController();
+                controller.setUser(user);
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
+
 
     public void setAvatar(Image avatar) {
         profileImage.setImage(avatar);
