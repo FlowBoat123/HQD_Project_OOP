@@ -68,6 +68,9 @@ public class UserProfileController {
     private Button changeProfileImageButton;
 
     @FXML
+    private boolean isAdmin;
+
+    @FXML
     private AnchorPane scene1;
 
     @FXML
@@ -92,6 +95,11 @@ public class UserProfileController {
     public void setUser(User user) {
         this.user = user;
         updateUIWithUserData();
+        isAdmin = false;
+    }
+
+    public void setAdmin() {
+        isAdmin = true;
     }
 
     // new Image(Objects.<InputStream>requireNonNull(getClass().getResourceAsStream("/Avatar/icon_2.png")))
@@ -269,7 +277,7 @@ public class UserProfileController {
     public void handleImageClick(javafx.scene.input.MouseEvent mouseEvent) {
         try {
             FXMLLoader loader;
-            if (user.getID() == 2) {
+            if (user.getID() == 2 || this.isAdmin) {
                 loader = new FXMLLoader(getClass().getResource("/org/example/javafxtutorial/AdminDashboard.fxml"));
             } else {
                 loader = new FXMLLoader(getClass().getResource("/org/example/javafxtutorial/UserDashboard.fxml"));
@@ -281,7 +289,7 @@ public class UserProfileController {
             stage.show();
 
             // Optionally, set the user to the new controller if needed
-            if (user.getID() != 2) {
+            if (user.getID() != 2 && !this.isAdmin) {
                 UserDashboardController controller = loader.getController();
                 controller.setUser(user);
             }

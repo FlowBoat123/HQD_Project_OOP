@@ -1,4 +1,4 @@
-//package controller;
+package controller;
 //
 //import database.UserDAO;
 //import database.UserDatabaseTask;
@@ -27,7 +27,7 @@
 //import java.util.concurrent.Executors;
 //import java.util.concurrent.TimeUnit;
 //
-//public class ProfileViewController {
+public class ProfileViewController {
 //
 //    @FXML
 //    private ImageView profileImage;
@@ -329,4 +329,4 @@
 //        }
 //        isEditingDetail = !isEditingDetail;
 //    }
-//}
+}
