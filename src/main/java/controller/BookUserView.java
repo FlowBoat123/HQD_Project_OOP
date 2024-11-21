@@ -16,6 +16,7 @@ import javafx.util.Duration;
 import logic.Book;
 import logic.BookLoan;
 import org.example.javafxtutorial.LibraryService;
+import org.example.javafxtutorial.ShelfController;
 
 public class BookUserView {
 
@@ -44,7 +45,7 @@ public class BookUserView {
     private StackPane mainView;
     private Node previousContent;
     Book book;
-
+    private ShelfController shelfController;
     private LibraryService libraryService;
 
     public void initializeBookViewForUser(Book book) {
@@ -62,6 +63,9 @@ public class BookUserView {
         bookCover.setSmooth(true);
         if (book.getCoverImgUrl() != null) {
             bookCover.setImage(new Image(book.getCoverImgUrl(), true));
+        }
+        if (loanStatus == BookLoan.WAITING && book.getBorrowedCopies() < book.getQuantity()) {
+            notifyReadyBookDialog();
         }
     }
 
@@ -140,6 +144,9 @@ public class BookUserView {
             showLoanConditionDialog("Waiting", "The book is currently unavailable. You are added to the waiting list.");
         }
         this.updateLoanStatus();
+        if (shelfController != null) {
+            shelfController.refreshView();
+        }
     }
 
     //Return book
@@ -147,6 +154,9 @@ public class BookUserView {
         libraryService.returnBook(book);
         loanStatus = BookLoan.NOT_BORROWED;
         this.updateLoanStatus();
+        if (shelfController != null) {
+            shelfController.refreshView();
+        }
     }
 
     private void showLoanConditionDialog(String status, String message) {
@@ -161,5 +171,35 @@ public class BookUserView {
         dialog.getDialogPane().setContent(label);
 
         dialog.showAndWait();
+    }
+
+    private void notifyReadyBookDialog() {
+        Dialog<String> dialog = new Dialog<>();
+        dialog.setTitle("Notification");
+        dialog.setHeaderText("Book is ready for you");
+
+        ButtonType readNowBtn = new ButtonType("Read Now", ButtonBar.ButtonData.OK_DONE);
+        ButtonType laterBtn = new ButtonType("Later", ButtonBar.ButtonData.OK_DONE);
+        dialog.getDialogPane().getButtonTypes().addAll(readNowBtn, laterBtn);
+
+        Label label = new Label("The book is now available for you to read. Would you like to read it now?");
+        dialog.getDialogPane().setContent(label);
+        dialog.setResultConverter(dialogButton -> {
+            if (dialogButton == readNowBtn) {
+                libraryService.updateWaitingBookToLoan(book);
+                this.updateLoanStatus();
+                return "Read Now";
+            } else if (dialogButton == laterBtn) {
+                showNotification("You can read the book later.");
+                return "Later";
+            }
+            return null;
+        });
+
+        dialog.showAndWait();
+    }
+
+    public void setShelfController(ShelfController shelfController) {
+        this.shelfController = shelfController;
     }
 }
