@@ -24,8 +24,8 @@ public class HelloController {
     private TextField searchField;
     @FXML
     void launchDashboard() throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("UserDashboard.fxml"));
-        UserDashboardController userDashboardController = loader.getController();
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("AdminDashboard.fxml"));
+        AdminDashboardController userDashboardController = loader.getController();
         BorderPane root = loader.load();
         Scene scene = new Scene(root);
         Stage stage = new Stage();

@@ -1,5 +1,6 @@
 package controller;
 
+import database.DataSourceFactory;
 import database.UserDAO;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -22,12 +23,16 @@ import javafx.util.Callback;
 import org.example.javafxtutorial.DatabaseConnection;
 import logic.User;
 
+import javax.sql.DataSource;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.ExecutorService;
@@ -46,7 +51,7 @@ public class UserFormController {
     private TableColumn<User, String> passwordColumn;
 
     @FXML
-    private TableColumn<User, LocalDateTime> creationTimeColumn;
+    private TableColumn<User, Date> creationTimeColumn;
 
     @FXML
     private TableColumn<User, String> bioColumn;
@@ -65,11 +70,14 @@ public class UserFormController {
 
     @FXML
     private Button masterTrashButton;
-
+    private DataSource dataSource;
     private ObservableList<User> userData = FXCollections.observableArrayList();
-    private final ExecutorService executorService = Executors.newFixedThreadPool(1);
+    private final ExecutorService executorService = Executors.newFixedThreadPool(5);
     private boolean showTrashIcons = false;
 
+    public UserFormController() {
+        this.dataSource = DataSourceFactory.getDataSource();
+    }
     @FXML
     private void initialize() {
         usernameColumn.setCellValueFactory(new PropertyValueFactory<>("username"));
@@ -78,6 +86,19 @@ public class UserFormController {
         bioColumn.setCellValueFactory(new PropertyValueFactory<>("bio"));
         emailColumn.setCellValueFactory(new PropertyValueFactory<>("email"));
         websiteColumn.setCellValueFactory(new PropertyValueFactory<>("website"));
+        creationTimeColumn.setCellFactory(column -> new TableCell<User, Date>() {
+            private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+
+            @Override
+            protected void updateItem(Date item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty || item == null) {
+                    setText(null);
+                } else {
+                    setText(item.toInstant().atZone(ZoneId.systemDefault()).toLocalDate().format(formatter));
+                }
+            }
+        });
 
         loadUserData();
 
@@ -150,7 +171,7 @@ public class UserFormController {
         userTable.refresh();
 
         executorService.submit(() -> {
-            try (Connection connection = DatabaseConnection.getConnection()) {
+            try (Connection connection = dataSource.getConnection()) {
                 if (connection != null) {
                     String deleteQuery = "DELETE FROM users WHERE username = ?";
                     try (PreparedStatement preparedStatement = connection.prepareStatement(deleteQuery)) {

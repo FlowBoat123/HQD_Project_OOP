@@ -1,5 +1,6 @@
 package controller;
 
+import database.DataSourceFactory;
 import javafx.application.Platform;
 import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
@@ -17,6 +18,7 @@ import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 import org.example.javafxtutorial.DatabaseConnection;
 
+import javax.sql.DataSource;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
@@ -41,10 +43,16 @@ public class LoginController {
     @FXML
     private ProgressIndicator loadingIndicator;
 
+    private DataSource dataSource;
+
     public void initialize() {
 //        logoImageView.setStyle("-fx-background-color: red;");
 //        Image image = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/logo.png")));
 //        logoImageView.setImage(image);
+    }
+
+    public LoginController() {
+        this.dataSource = DataSourceFactory.getDataSource();
     }
 
     @FXML
@@ -55,10 +63,10 @@ public class LoginController {
 
         Task<Void> loginTask = new Task<>() {
             @Override
-            protected Void call() {
+            protected Void call() throws SQLException {
                 updateMessage("Logging in...");
 
-                Connection connection = DatabaseConnection.getConnection();
+                Connection connection = dataSource.getConnection();
                 if (connection == null) {
                     updateMessage("Failed to connect to the database");
                     return null;

@@ -1,12 +1,13 @@
 package logic;
 
 import java.time.LocalDateTime;
+import java.util.Date;
 
 public class User {
     private int ID;
     private String username;
     private String password;
-    private LocalDateTime creationTime;
+    private Date creationTime;
     private String bio;
     private String email;
 
@@ -18,7 +19,7 @@ public class User {
     private int followerCount;
     private int followingCount;
 
-    public User(int ID, String username, String password, LocalDateTime creationTime, String bio, String email, String website, int repoCount, int followerCount, int followingCount) {
+    public User(int ID, String username, String password, Date creationTime, String bio, String email, String website, int repoCount, int followerCount, int followingCount) {
         this.ID = ID;
         this.username = username;
         this.password = password;
@@ -36,7 +37,6 @@ public class User {
         this.ID = 1010;
         this.username = "FlowBoat123";
         this.password = "123";
-        this.creationTime = LocalDateTime.of(2024, 5, 11, 0, 0);
         this.bio = "LoveCraft";
         this.email = "hienflb@gmail.com";
         this.website = "love.craft";
@@ -45,13 +45,13 @@ public class User {
         this.followingCount = 0;
     }
 
-    public User(String username, String password, LocalDateTime creationTime) {
+    public User(String username, String password, Date creationTime) {
         this.username = username;
         this.password = password;
         this.creationTime = creationTime;
     }
 
-    public User(String username, String password, LocalDateTime creationTime, String bio, String email, String website, int repoCount, int followerCount, int followingCount) {
+    public User(String username, String password, Date creationTime, String bio, String email, String website, int repoCount, int followerCount, int followingCount) {
         this.username = username;
         this.password = password;
         this.creationTime = creationTime;
@@ -63,7 +63,7 @@ public class User {
         this.followingCount = followingCount;
     }
 
-    public User(String username, String password, LocalDateTime creationTime, String bio, String email, String website) {
+    public User(String username, String password, Date creationTime, String bio, String email, String website) {
         this.username = username;
         this.password = password;
         this.creationTime = creationTime;
@@ -72,7 +72,7 @@ public class User {
         this.website = website;
     }
 
-    public User(int ID, String username, String password, LocalDateTime creationTime, String bio, String email, String website, String details, String avatar) {
+    public User(int ID, String username, String password, Date creationTime, String bio, String email, String website, String details, String avatar) {
         this.ID = ID;
         this.username = username;
         this.password = password;
@@ -125,11 +125,11 @@ public class User {
         this.password = password;
     }
 
-    public LocalDateTime getCreationTime() {
+    public Date getCreationTime() {
         return creationTime;
     }
 
-    public void setCreationTime(LocalDateTime creationTime) {
+    public void setCreationTime(Date creationTime) {
         this.creationTime = creationTime;
     }
 
@@ -179,5 +179,23 @@ public class User {
 
     public void setFollowingCount(int followingCount) {
         this.followingCount = followingCount;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "ID=" + ID +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", creationTime=" + creationTime +
+                ", bio='" + bio + '\'' +
+                ", email='" + email + '\'' +
+                ", website='" + website + '\'' +
+                ", details='" + details + '\'' +
+                ", avatar='" + avatar + '\'' +
+                ", repoCount=" + repoCount +
+                ", followerCount=" + followerCount +
+                ", followingCount=" + followingCount +
+                '}';
     }
 }

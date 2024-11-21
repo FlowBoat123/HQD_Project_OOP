@@ -1,7 +1,6 @@
 package controller;
 
 import database.UserDAO;
-import database.UserDatabaseTask;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;

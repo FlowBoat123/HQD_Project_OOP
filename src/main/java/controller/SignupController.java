@@ -13,6 +13,7 @@ import logic.User;
 import java.io.IOException;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -38,8 +39,8 @@ public class SignupController {
     @FXML
     private Button backToLoginButton;
 
-    private UserDAO userDAO = new UserDAO();
-    private ExecutorService executorService = Executors.newFixedThreadPool(1);
+    private UserDAO userDAO ;
+    private ExecutorService executorService = Executors.newFixedThreadPool(5);
 
     public void setUserFormController(UserFormController userFormController) {
         this.userFormController = userFormController;
@@ -70,9 +71,11 @@ public class SignupController {
             }
         };
         executorService.submit(task);
+        shutdown();
     }
 
     public SignupController() {
+        userDAO = new UserDAO();
     }
 
     public void handleSignUp(ActionEvent actionEvent) {
@@ -91,7 +94,7 @@ public class SignupController {
         }
 
         // Call the method to run the insertion task
-        signupUser(new User(username, password, new Timestamp(System.currentTimeMillis()).toLocalDateTime()));
+        signupUser(new User(username, password, new Date()));
     }
 
     private boolean fromLogin = false;

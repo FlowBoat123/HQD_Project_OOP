@@ -4,17 +4,26 @@ import logic.User;
 import org.example.javafxtutorial.DatabaseConnection;
 
 import java.sql.*;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 import Exception.UsernameAlreadyExistsException;
 
+import javax.sql.DataSource;
+
 public class UserDAO implements DAO<User> {
 
+    private DataSource dataSource;
+
+    public UserDAO() {
+        this.dataSource = DataSourceFactory.getDataSource();
+    }
     @Override
     public void add(User user) {
         String sqlCheck = "SELECT COUNT(*) FROM users WHERE username = ?";
         String sqlInsert = "INSERT INTO users (username, password, creation_time, bio, email, website, details, avatar) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
-        try (Connection conn = DatabaseConnection.getConnection();
+        try (Connection conn = dataSource.getConnection();
              PreparedStatement pstmtCheck = conn.prepareStatement(sqlCheck);
              PreparedStatement pstmtInsert = conn.prepareStatement(sqlInsert)) {
 
@@ -29,7 +38,8 @@ public class UserDAO implements DAO<User> {
             // Insert new user if username does not exist
             pstmtInsert.setString(1, user.getUsername());
             pstmtInsert.setString(2, user.getPassword());
-            pstmtInsert.setTimestamp(3, Timestamp.valueOf(user.getCreationTime()));
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            pstmtInsert.setString(3, dateFormat.format(user.getCreationTime()));
             pstmtInsert.setString(4, user.getBio());
             pstmtInsert.setString(5, user.getEmail());
             pstmtInsert.setString(6, user.getWebsite());
@@ -47,7 +57,7 @@ public class UserDAO implements DAO<User> {
 
     public boolean isUsernameExists(String username) {
         String sql = "SELECT COUNT(*) FROM users WHERE username = ?";
-        try (Connection conn = DatabaseConnection.getConnection();
+        try (Connection conn = dataSource.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setString(1, username);
             try (ResultSet rs = pstmt.executeQuery()) {
@@ -66,7 +76,7 @@ public class UserDAO implements DAO<User> {
     @Override
     public void delete(User user) {
         String sql = "DELETE FROM users WHERE username = ?";
-        try (Connection conn = DatabaseConnection.getConnection();
+        try (Connection conn = dataSource.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
             pstmt.setString(1, user.getUsername());
@@ -80,11 +90,12 @@ public class UserDAO implements DAO<User> {
     public void update(User user) {
         System.out.println(user.getID());
         String sql = "UPDATE users SET password = ?, creation_time = ?, bio = ?, email = ?, website = ?, details = ?, avatar = ? WHERE id = ?";
-        try (Connection conn = DatabaseConnection.getConnection();
+        try (Connection conn = dataSource.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
             pstmt.setString(1, user.getPassword());
-            pstmt.setTimestamp(2, Timestamp.valueOf(user.getCreationTime()));
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            pstmt.setString(2, dateFormat.format(user.getCreationTime()));;
             pstmt.setString(3, user.getBio());
             pstmt.setString(4, user.getEmail());
             pstmt.setString(5, user.getWebsite());
@@ -101,7 +112,7 @@ public class UserDAO implements DAO<User> {
     public ArrayList<User> getAll() {
         ArrayList<User> userList = new ArrayList<>();
         String sql = "SELECT * FROM users";
-        try (Connection conn = DatabaseConnection.getConnection();
+        try (Connection conn = dataSource.getConnection();
              Statement stmt = conn.createStatement();
              ResultSet rs = stmt.executeQuery(sql)) {
 
@@ -109,17 +120,23 @@ public class UserDAO implements DAO<User> {
                 User user = new User();
                 user.setUsername(rs.getString("username"));
                 user.setPassword(rs.getString("password"));
-                user.setCreationTime(rs.getTimestamp("creation_time").toLocalDateTime());
+                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+                if(rs.getString("creation_time") != null) {
+                    user.setCreationTime(dateFormat.parse(rs.getString("creation_time").split(" ")[0]));
+                }
                 user.setBio(rs.getString("bio"));
                 user.setEmail(rs.getString("email"));
                 user.setWebsite(rs.getString("website"));
                 user.setDetails(rs.getString("details"));
                 user.setAvatar(rs.getString("avatar"));
                 user.setID(rs.getInt("id"));
+                System.out.println(user);
                 userList.add(user);
             }
         } catch (SQLException e) {
             e.printStackTrace();
+        } catch (ParseException e) {
+            throw new RuntimeException(e);
         }
         return userList;
     }
