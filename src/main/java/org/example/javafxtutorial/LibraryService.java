@@ -126,7 +126,37 @@ public class LibraryService {
     public void printBookLoan(){
         for (BookLoan bookLoan : bookLoans) {
             System.out.println(bookLoan.getLoanID()  +  bookLoan.getBook().toString() + ' ' + bookLoan.getLoanStatus());
-
         }
+    }
+
+    public ArrayList<Book> getBooksByLoanStatus(int loanStatus) {
+        ArrayList<Book> booksByLoanStatus = new ArrayList<>();
+        for (BookLoan bookLoan : bookLoans) {
+            if (bookLoan.getLoanStatus() == loanStatus) {
+                booksByLoanStatus.add(bookLoan.getBook());
+            }
+        }
+        return booksByLoanStatus;
+    }
+
+    public ArrayList<Book> getAllBooksHasLoan() {
+        ArrayList<Book> booksHasLoan = new ArrayList<>();
+        for (BookLoan bookLoan : bookLoans) {
+            booksHasLoan.add(bookLoan.getBook());
+        }
+        return booksHasLoan;
+    }
+
+    public void updateWaitingBookToLoan(Book book) {
+        for (BookLoan bookLoan : bookLoans) {
+            if (bookLoan.getBook().equals(book)) {
+                book.setBorrowedCopies(book.getBorrowedCopies() + 1);
+                libraryDAO.updateBorrowedCopies(book);
+                bookLoan.setLoanDate(new Date());
+                bookLoanDAO.update(bookLoan);
+                break;
+            }
+        }
+        this.printBookLoan();
     }
 }

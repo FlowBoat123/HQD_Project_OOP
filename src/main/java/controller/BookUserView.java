@@ -63,6 +63,9 @@ public class BookUserView {
         if (book.getCoverImgUrl() != null) {
             bookCover.setImage(new Image(book.getCoverImgUrl(), true));
         }
+        if (loanStatus == BookLoan.WAITING && book.getBorrowedCopies() < book.getQuantity()) {
+            notifyReadyBookDialog();
+        }
     }
 
     @FXML
@@ -159,6 +162,32 @@ public class BookUserView {
 
         Label label = new Label(message);
         dialog.getDialogPane().setContent(label);
+
+        dialog.showAndWait();
+    }
+
+    private void notifyReadyBookDialog() {
+        Dialog<String> dialog = new Dialog<>();
+        dialog.setTitle("Notification");
+        dialog.setHeaderText("Book is ready for you");
+
+        ButtonType readNowBtn = new ButtonType("Read Now", ButtonBar.ButtonData.OK_DONE);
+        ButtonType laterBtn = new ButtonType("Later", ButtonBar.ButtonData.OK_DONE);
+        dialog.getDialogPane().getButtonTypes().addAll(readNowBtn, laterBtn);
+
+        Label label = new Label("The book is now available for you to read. Would you like to read it now?");
+        dialog.getDialogPane().setContent(label);
+        dialog.setResultConverter(dialogButton -> {
+            if (dialogButton == readNowBtn) {
+                libraryService.updateWaitingBookToLoan(book);
+                this.updateLoanStatus();
+                return "Read Now";
+            } else if (dialogButton == laterBtn) {
+                showNotification("You can read the book later.");
+                return "Later";
+            }
+            return null;
+        });
 
         dialog.showAndWait();
     }

@@ -11,6 +11,8 @@ import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.StackPane;
+import logic.Book;
+import logic.BookLoan;
 import org.example.javafxtutorial.BrowseUserViewController;
 import org.example.javafxtutorial.LibraryService;
 import org.example.javafxtutorial.RecomUserViewController;
@@ -43,7 +45,10 @@ public class UserDashboardController implements Initializable {
         String shelfName = clickedButton.getText();
         loadView("/org/example/javafxtutorial/shelf-view.fxml", (loader) -> {
             ShelfController shelfController = loader.getController();
-            shelfController.initializeShelfView(new Shelf(shelfName));
+            shelfController.setLibraryService(libraryService);
+            shelfController.setMainView(mainView);
+            shelfController.setShelfTitle(shelfName);
+            shelfController.init();
         });
     }
 
