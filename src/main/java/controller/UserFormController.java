@@ -242,6 +242,7 @@ public class UserFormController {
             // Pass user data to UserProfileController
             UserProfileController controller = loader.getController();
             controller.setUser(user);
+            controller.setAdmin();
 
             Stage stage = (Stage) userTable.getScene().getWindow();
             stage.setScene(new Scene(userProfile));

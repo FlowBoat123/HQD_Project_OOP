@@ -2,15 +2,23 @@ package controller;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
+import javafx.scene.shape.Circle;
+import javafx.stage.Stage;
 import logic.User;
 import org.example.javafxtutorial.BrowseUserViewController;
 import org.example.javafxtutorial.LibraryService;
@@ -27,6 +35,8 @@ public class UserDashboardController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         libraryService = new LibraryService();
+        Circle clip = new Circle(25, 25, 25);
+        profileImage.setClip(clip);
     }
 
     @FXML
@@ -36,12 +46,34 @@ public class UserDashboardController implements Initializable {
     private Label loadingLabel;
 
     @FXML
+    private ImageView profileImage;
+
+    @FXML
+    private Label welcomeLabel;
+
+    @FXML
     private User currentUser;
 
     @FXML
     public void setUser(User user) {
         this.currentUser = user;
+
+        welcomeLabel.setText("Welcome, " + user.getUsername());
+        System.out.println("Avatar URL: " + user.getAvatar());
+
+        try {
+            if (user.getAvatar() != null && !user.getAvatar().isEmpty()) {
+                // Assuming the avatar is in the resources directory
+                String avatarPath = getClass().getResource(user.getAvatar()).toExternalForm();
+                Image avatarImage = new Image(avatarPath, true);
+                profileImage.setImage(avatarImage);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("Failed to load avatar image: " + e.getMessage());
+        }
     }
+
 
     @FXML
     void launchShelfView(ActionEvent event) {
@@ -99,6 +131,30 @@ public class UserDashboardController implements Initializable {
     private void hideLoading() {
         Platform.runLater(() -> loadingLabel.setVisible(false));
     }
+
+    @FXML
+    private void viewUserProfile(MouseEvent event) {
+        System.out.println("Navigating to the profile page of " + currentUser.getUsername());
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/example/javafxtutorial/user_profile.fxml"));
+            Parent userProfile = loader.load();
+
+            // If you need to pass the currentUser to the new controller, do it here
+            UserProfileController controller = loader.getController();
+            controller.setUser(currentUser);
+
+            Scene userProfileScene = new Scene(userProfile);
+
+            // Get the current stage and set the new scene
+            Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            window.setScene(userProfileScene);
+            window.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.out.println("Failed to load user profile: " + e.getMessage());
+        }
+    }
+
 
     private interface LoaderCallback {
         void call(FXMLLoader loader);

@@ -16,6 +16,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
+import logic.User;
 import org.example.javafxtutorial.DatabaseConnection;
 
 import javax.sql.DataSource;
@@ -25,6 +26,10 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.Objects;
 
 public class LoginController {
@@ -47,8 +52,8 @@ public class LoginController {
 
     public void initialize() {
 //        logoImageView.setStyle("-fx-background-color: red;");
-//        Image image = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/logo.png")));
-//        logoImageView.setImage(image);
+        Image image = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/logo.png")));
+        logoImageView.setImage(image);
     }
 
     public LoginController() {
@@ -72,7 +77,7 @@ public class LoginController {
                     return null;
                 }
 
-                String query = "SELECT * FROM users WHERE username = ? AND password = ?";
+                String query = "SELECT id, username, password, creation_time, bio, email, website, details, avatar FROM users WHERE username = ? AND password = ?";
 
                 try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
                     preparedStatement.setString(1, username);
@@ -81,7 +86,21 @@ public class LoginController {
 
                     if (resultSet.next()) {
                         if (!username.equals("admin") && !passwordStr.equals("admin")) {
-                            Parent userDashboard = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/org/example/javafxtutorial/UserDashboard.fxml")));
+                            int ID = resultSet.getInt("id");
+                            String retrievedUsername = resultSet.getString("username");
+                            String retrievedPassword = resultSet.getString("password");
+                            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+                            Date creationTime = dateFormat.parse(resultSet.getString("creation_time"));
+                            String bio = resultSet.getString("bio");
+                            String email = resultSet.getString("email");
+                            String website = resultSet.getString("website");
+                            String details = resultSet.getString("details");
+                            String avatar = resultSet.getString("avatar");
+                            User user = new User(ID, retrievedUsername, retrievedPassword, creationTime, bio, email, website, details, avatar);
+                            FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(getClass().getResource("/org/example/javafxtutorial/UserDashboard.fxml")));
+                            Parent userDashboard = loader.load();
+                            UserDashboardController controller = loader.getController();
+                            controller.setUser(user);
                             Scene userDashboardScene = new Scene(userDashboard);
 
                             Platform.runLater(() -> {
@@ -105,6 +124,8 @@ public class LoginController {
                 } catch (SQLException | IOException e) {
                     e.printStackTrace();
                     updateMessage("Failed to login");
+                } catch (ParseException e) {
+                    throw new RuntimeException(e);
                 }
                 return null;
             }
@@ -120,7 +141,6 @@ public class LoginController {
         loginThread.setDaemon(true);
         loginThread.start();
     }
-
 
 
     public void handleSignUp(ActionEvent actionEvent) {
