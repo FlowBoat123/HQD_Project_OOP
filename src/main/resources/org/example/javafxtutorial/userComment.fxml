@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<HBox prefHeight="172.0" prefWidth="670.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.javafxtutorial.CommentController">
+   <children>
+      <VBox prefHeight="172.0" prefWidth="628.0">
+         <children>
+            <TextArea fx:id="textArea" onKeyTyped="#textAreaTyped" prefHeight="100.0" prefWidth="624.0" promptText="Enter the text here" />
+         </children>
+      </VBox>
+      <ImageView fx:id="saveImage" fitHeight="58.0" fitWidth="43.0" onMouseClicked="#handleBack" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../images/save.png" />
+         </image>
+      </ImageView>
+   </children>
+</HBox>
