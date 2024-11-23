@@ -11,6 +11,7 @@ import org.example.javafxtutorial.LibraryService;
 import org.example.javafxtutorial.Shelf;
 import org.example.javafxtutorial.ShelfController;
 
+import java.awt.event.MouseEvent;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -18,6 +19,8 @@ import java.util.ResourceBundle;
 public class AdminDashboardController implements Initializable{
 
     private LibraryService libraryService;
+
+    private Button currentlyFocusedButton;
 
     @FXML
     private AnchorPane mainView;
@@ -33,7 +36,7 @@ public class AdminDashboardController implements Initializable{
             apiController.setMainView(mainView);
             mainView.getChildren().setAll(content);
             apiController.setLibraryService(libraryService);
-            clickedButton.requestFocus();
+            updateFocus(clickedButton);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -43,6 +46,7 @@ public class AdminDashboardController implements Initializable{
     void launchAddUser(ActionEvent event) {
         Object source = event.getSource();
         Button clickedButton = (Button) source;
+        updateFocus(clickedButton);
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/example/javafxtutorial/signup.fxml"));
             Node content = loader.load();
@@ -54,7 +58,6 @@ public class AdminDashboardController implements Initializable{
             e.printStackTrace();
         }
     }
-
 
     @FXML
     void launchLibView(ActionEvent event) {
@@ -68,7 +71,7 @@ public class AdminDashboardController implements Initializable{
             libraryViewController.setMainView(mainView);
             libraryViewController.initializeLibraryView(libraryService.getBooks());
             mainView.getChildren().setAll(content);
-            clickedButton.requestFocus();
+            updateFocus(clickedButton);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -78,6 +81,7 @@ public class AdminDashboardController implements Initializable{
     void launchUserInfo(ActionEvent event) {
         Object source = event.getSource();
         Button clickedButton = (Button) source;
+        updateFocus(clickedButton);
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/example/javafxtutorial/user-form.fxml"));
             Node content = loader.load();
@@ -93,5 +97,16 @@ public class AdminDashboardController implements Initializable{
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         libraryService = new LibraryService();
+    }
+
+    private void updateFocus(Button clickedButton) {
+        if (currentlyFocusedButton != null) {
+            currentlyFocusedButton.getStyleClass().remove("focused-button");
+            currentlyFocusedButton.getStyleClass().add("transparent-button");
+        }
+        clickedButton.requestFocus();
+        clickedButton.getStyleClass().remove("transparent-button");
+        clickedButton.getStyleClass().add("focused-button");
+        currentlyFocusedButton = clickedButton;
     }
 }

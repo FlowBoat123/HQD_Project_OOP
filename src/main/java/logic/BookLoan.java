@@ -83,4 +83,15 @@ public class BookLoan {
         return userID == loan.userID  && Objects.equals(book, loan.book) ;
     }
 
+    @Override
+    public String toString() {
+        return "BookLoan{" +
+                "book=" + book +
+                ", userID=" + userID +
+                ", loanDate=" + loanDate +
+                ", returnDate=" + returnDate +
+                ", loanID=" + loanID +
+                '}';
+    }
+
 }

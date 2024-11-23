@@ -2,7 +2,6 @@ package controller;
 
 import java.net.URL;
 import java.util.ResourceBundle;
-
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -20,6 +19,8 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
 import logic.User;
+import logic.Book;
+import logic.BookLoan;
 import org.example.javafxtutorial.BrowseUserViewController;
 import org.example.javafxtutorial.LibraryService;
 import org.example.javafxtutorial.RecomUserViewController;
@@ -31,6 +32,7 @@ import java.io.IOException;
 public class UserDashboardController implements Initializable {
 
     private LibraryService libraryService;
+    private Button currentlyFocusedButton;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -79,15 +81,22 @@ public class UserDashboardController implements Initializable {
     void launchShelfView(ActionEvent event) {
         Object source = event.getSource();
         Button clickedButton = (Button) source;
+        updateFocus(clickedButton);
         String shelfName = clickedButton.getText();
         loadView("/org/example/javafxtutorial/shelf-view.fxml", (loader) -> {
             ShelfController shelfController = loader.getController();
-            shelfController.initializeShelfView(new Shelf(shelfName));
+            shelfController.setLibraryService(libraryService);
+            shelfController.setMainView(mainView);
+            shelfController.setShelfTitle(shelfName);
+            shelfController.init();
         });
     }
 
     @FXML
     void launchBrowse(ActionEvent event) {
+        Object source = event.getSource();
+        Button clickedButton = (Button) source;
+        updateFocus(clickedButton);
         loadView("/org/example/javafxtutorial/browse-view.fxml", (loader) -> {
             BrowseUserViewController browseViewController = loader.getController();
             browseViewController.setLibraryService(libraryService);
@@ -98,6 +107,9 @@ public class UserDashboardController implements Initializable {
 
     @FXML
     void launchRecommendation(ActionEvent event) {
+        Object source = event.getSource();
+        Button clickedButton = (Button) source;
+        updateFocus(clickedButton);
         loadView("/org/example/javafxtutorial/recom-view.fxml", (loader) -> {
             RecomUserViewController recomUserViewController = loader.getController();
             recomUserViewController.setLibraryService(libraryService);
@@ -158,5 +170,16 @@ public class UserDashboardController implements Initializable {
 
     private interface LoaderCallback {
         void call(FXMLLoader loader);
+    }
+
+    private void updateFocus(Button clickedButton) {
+        if (currentlyFocusedButton != null) {
+            currentlyFocusedButton.getStyleClass().remove("focused-button");
+            currentlyFocusedButton.getStyleClass().add("transparent-button");
+        }
+        clickedButton.requestFocus();
+        clickedButton.getStyleClass().remove("transparent-button");
+        clickedButton.getStyleClass().add("focused-button");
+        currentlyFocusedButton = clickedButton;
     }
 }

@@ -74,7 +74,18 @@ public class GoogleAPI {
         JsonArray items = responseJson.getAsJsonArray("items");
         for (JsonElement item : items) {
             JsonObject volumeInfo = item.getAsJsonObject().getAsJsonObject("volumeInfo");
-            if (volumeInfo.has("imageLinks")) {
+            JsonArray identifiers = volumeInfo.getAsJsonArray("industryIdentifiers");
+            boolean hasIsbn13 = false;
+            if (identifiers != null) {
+                for (JsonElement identifier : identifiers) {
+                    JsonObject identifierJson = identifier.getAsJsonObject();
+                    if (identifierJson.get("type").getAsString().equals("ISBN_13")) {
+                        hasIsbn13 = true;
+                        break;
+                    }
+                }
+            }
+            if (hasIsbn13 && volumeInfo.has("imageLinks")) {
                 searchResult.add(parseBookFromJSON(item));
             }
         }

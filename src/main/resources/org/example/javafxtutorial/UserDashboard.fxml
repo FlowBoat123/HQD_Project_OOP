@@ -143,6 +143,19 @@
                                 </Button>
                             </children>
                         </HBox>
+                        <HBox alignment="CENTER" prefHeight="41.0" prefWidth="230.0">
+                            <children>
+                                <Button alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#launchShelfView" prefHeight="30.0" prefWidth="200.0" stylesheets="@main.css" text="Waiting">
+                                    <font>
+                                        <Font name="Calibri" size="16.0" />
+                                    </font>
+                                    <styleClass>
+                                        <String fx:value="transparent-button" />
+                                        <String fx:value="padding-left" />
+                                    </styleClass>
+                                </Button>
+                            </children>
+                        </HBox>
                         <HBox alignment="CENTER" layoutX="20.0" layoutY="63.0" prefHeight="41.0" prefWidth="230.0">
                             <children>
                                 <Button alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#launchShelfView"

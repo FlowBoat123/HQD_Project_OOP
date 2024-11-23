@@ -27,6 +27,7 @@ public class LibraryService {
         } else {
             System.out.println("User");
             bookLoans = bookLoanDAO.getUserLoan(userSession.getUserID());
+            this.printBookLoan();
         }
     }
 
@@ -83,6 +84,7 @@ public class LibraryService {
             bookLoanDAO.add(bookLoan);
             bookLoans.add(bookLoan);
             System.out.println("Loan book successfully");
+            this.printBookLoan();
             return true;
         } else {
             bookLoan.setBook(book);
@@ -92,8 +94,10 @@ public class LibraryService {
             bookLoanDAO.add(bookLoan);
             bookLoans.add(bookLoan);
             System.out.println("Add to waiting list");
+            this.printBookLoan();
             return false;
         }
+
     }
 
     public void returnBook(Book book) {
@@ -102,11 +106,12 @@ public class LibraryService {
                 book.setBorrowedCopies(book.getBorrowedCopies() - 1);
                 libraryDAO.updateBorrowedCopies(book);
                 bookLoan.setReturnDate(new Date());
-                bookLoanDAO.update(bookLoan);
+                bookLoanDAO.delete(bookLoan);
                 System.out.println("Book returned successfully");
                 break;
             }
         }
+        this.printBookLoan();
     }
 
     public int getLoanStatus(Book book) {
@@ -116,5 +121,42 @@ public class LibraryService {
             }
         }
         return BookLoan.NOT_BORROWED;
+    }
+
+    public void printBookLoan(){
+        for (BookLoan bookLoan : bookLoans) {
+            System.out.println(bookLoan.getLoanID()  +  bookLoan.getBook().toString() + ' ' + bookLoan.getLoanStatus());
+        }
+    }
+
+    public ArrayList<Book> getBooksByLoanStatus(int loanStatus) {
+        ArrayList<Book> booksByLoanStatus = new ArrayList<>();
+        for (BookLoan bookLoan : bookLoans) {
+            if (bookLoan.getLoanStatus() == loanStatus) {
+                booksByLoanStatus.add(bookLoan.getBook());
+            }
+        }
+        return booksByLoanStatus;
+    }
+
+    public ArrayList<Book> getAllBooksHasLoan() {
+        ArrayList<Book> booksHasLoan = new ArrayList<>();
+        for (BookLoan bookLoan : bookLoans) {
+            booksHasLoan.add(bookLoan.getBook());
+        }
+        return booksHasLoan;
+    }
+
+    public void updateWaitingBookToLoan(Book book) {
+        for (BookLoan bookLoan : bookLoans) {
+            if (bookLoan.getBook().equals(book)) {
+                book.setBorrowedCopies(book.getBorrowedCopies() + 1);
+                libraryDAO.updateBorrowedCopies(book);
+                bookLoan.setLoanDate(new Date());
+                bookLoanDAO.update(bookLoan);
+                break;
+            }
+        }
+        this.printBookLoan();
     }
 }
