@@ -18,7 +18,7 @@ public class AvatarSelectionController {
     private Image selectedImage;
     private String selectedImagePath;
     private Stage stage;
-    private UserProfileController userProfileController;
+    private ProfileViewController profileViewController;
 
     @FXML
     public void initialize() {
@@ -59,9 +59,9 @@ public class AvatarSelectionController {
     }
 
 
-    public void setStageAndController(Stage stage, UserProfileController userProfileController) {
+    public void setStageAndController(Stage stage, ProfileViewController profileViewController) {
         this.stage = stage;
-        this.userProfileController = userProfileController;
+        this.profileViewController = profileViewController;
     }
 
     private void selectAvatar(ImageView imageView, String path) {
@@ -69,8 +69,8 @@ public class AvatarSelectionController {
         selectedImagePath = path; // Store the path of the selected image
         System.out.println("Avatar selected: " + selectedImage.getUrl());
 
-        if (userProfileController != null) {
-            userProfileController.setAvatar(selectedImage);
+        if (profileViewController != null) {
+            profileViewController.setAvatar(selectedImage);
         }
 
         // Close the avatar selection window
