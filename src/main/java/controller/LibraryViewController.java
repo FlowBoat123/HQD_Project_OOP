@@ -17,6 +17,8 @@ import logic.Book;
 import org.example.javafxtutorial.LibraryService;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class LibraryViewController {
 
@@ -53,8 +55,11 @@ public class LibraryViewController {
 
     ObservableList<Book> books = FXCollections.observableArrayList();
 
-    public void initializeLibraryView() {
-        books = FXCollections.observableArrayList(libraryService.getBooks());
+    ArrayList<Book> result = new ArrayList<>();
+
+    public void initializeLibraryView(ArrayList<Book> result) {
+        this.result = result;
+        books = FXCollections.observableArrayList(result);
         bookTitleCol.setCellValueFactory(new PropertyValueFactory<>("title"));
         bookAuthorsCol.setCellValueFactory(new PropertyValueFactory<>("authorString"));
         bookGenresCol.setCellValueFactory(new PropertyValueFactory<>("genreString"));
@@ -116,13 +121,17 @@ public class LibraryViewController {
             Node content = loader.load();
             BookController bookController = loader.getController();
             bookController.setMainView(mainView, mainView.getChildren().getFirst());
-            bookController.setRefreshLibraryViewCallback(v -> initializeLibraryView());
+            bookController.setRefreshLibraryViewCallback(v -> initializeLibraryView(result));
             mainView.getChildren().setAll(content);
             bookController.initializeBookViewForAdmin(book);
             bookController.setLibraryService(libraryService);
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+    public void addBookToTable(Book book) {
+        books.add(book);
+        library.refresh();
     }
 
     public void setMainView(AnchorPane mainView) {

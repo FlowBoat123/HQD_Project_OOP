@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.ProgressIndicator?>
 <?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
@@ -10,7 +12,7 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="660.0" prefWidth="1030.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.GoogleAPIController">
    <children>
-      <VBox alignment="CENTER" layoutX="246.0" layoutY="270.0" prefHeight="120.0" prefWidth="538.0">
+      <VBox alignment="CENTER" layoutX="246.0" layoutY="270.0" prefHeight="194.0" prefWidth="538.0">
          <children>
             <HBox alignment="CENTER" prefHeight="40.0" prefWidth="451.0" styleClass="round-corner" stylesheets="@main.css">
                <children>
@@ -28,6 +30,11 @@
                   <RadioButton fx:id="searchMethodISBN" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" text="By ISBN" />
                </children>
             </HBox>
+            <ProgressIndicator fx:id="loadingIndicator" prefHeight="56.0" prefWidth="91.0" visible="false">
+               <VBox.margin>
+                  <Insets top="25.0" />
+               </VBox.margin>
+            </ProgressIndicator>
          </children>
       </VBox>
    </children>
