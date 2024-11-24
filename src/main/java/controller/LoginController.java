@@ -18,6 +18,7 @@ import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 import logic.User;
 import org.example.javafxtutorial.DatabaseConnection;
+import org.example.javafxtutorial.UserSession;
 
 import javax.sql.DataSource;
 import java.io.IOException;
@@ -85,8 +86,9 @@ public class LoginController {
                     ResultSet resultSet = preparedStatement.executeQuery();
 
                     if (resultSet.next()) {
+                        int ID = resultSet.getInt("id");
+                        UserSession.getInstance().setUserID(ID);
                         if (!username.equals("admin") && !passwordStr.equals("admin")) {
-                            int ID = resultSet.getInt("id");
                             String retrievedUsername = resultSet.getString("username");
                             String retrievedPassword = resultSet.getString("password");
                             SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
@@ -97,6 +99,7 @@ public class LoginController {
                             String details = resultSet.getString("details");
                             String avatar = resultSet.getString("avatar");
                             User user = new User(ID, retrievedUsername, retrievedPassword, creationTime, bio, email, website, details, avatar);
+                            UserSession.getInstance().setUser(user);
                             FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(getClass().getResource("/org/example/javafxtutorial/UserDashboard.fxml")));
                             Parent userDashboard = loader.load();
                             UserDashboardController controller = loader.getController();

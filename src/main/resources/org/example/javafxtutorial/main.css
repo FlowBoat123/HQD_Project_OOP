@@ -47,6 +47,14 @@
     -fx-font-size: 16px;
     -fx-background-radius: 5;
 }
+.blue-button {
+    -fx-background-color: #1188F6;
+    -fx-text-fill: white;
+    -fx-font-family: 'Calibri';
+    -fx-font-weight: bold;
+    -fx-font-size: 16px;
+    -fx-background-radius: 5;
+}
 .green-button:hover {
     -fx-background-color: #218838;
 }

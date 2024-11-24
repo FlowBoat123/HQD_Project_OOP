@@ -1,6 +1,7 @@
 package controller;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
@@ -18,12 +19,11 @@ import javafx.scene.control.Label;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import logic.Book;
+import logic.Comment;
 import org.example.javafxtutorial.CommentController;
 import logic.BookLoan;
 import org.example.javafxtutorial.LibraryService;
@@ -86,6 +86,8 @@ public class BookUserView {
         if (loanStatus == BookLoan.WAITING && book.getBorrowedCopies() < book.getQuantity()) {
             notifyReadyBookDialog();
         }
+        comments = libraryService.getBookComments(book);
+        displayComments();
     }
 
     @FXML
@@ -115,47 +117,59 @@ public class BookUserView {
                 ae -> notificationLabel.setVisible(false)));
         timeline.play();
     }
+
     @FXML
     private void handleComment() {
-    try {
-      FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/example/javafxtutorial/userComment.fxml"));
-      Parent commentView = loader.load();
-      Scene commentScene = new Scene(commentView);
-      Stage commentStage = new Stage();
-      commentStage.setTitle("Comments");
-      commentStage.setScene(commentScene);
-      commentStage.showAndWait(); // Use showAndWait to wait for the window to close
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/example/javafxtutorial/userComment.fxml"));
+            Parent commentView = loader.load();
+            Scene commentScene = new Scene(commentView);
+            Stage commentStage = new Stage();
+            commentStage.setTitle("Comments");
+            commentStage.setScene(commentScene);
+            commentStage.showAndWait(); // Use showAndWait to wait for the window to close
+            // Get the comment from the CommentController
+            CommentController commentController = loader.getController();
+            int userId = commentController.getUserID();
+            String comment = commentController.getComment();
+            String username = commentController.getUsername();
+            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+            String date = sdf.format(System.currentTimeMillis());
+            ImageView userImage = commentController.getUserImage();
+            if (comment != null && !comment.isEmpty()) {
+                Comment newComment = new Comment(userId, username, userImage, comment, date, book.getIsbn_13());
+                comments.add(newComment);
+                libraryService.addComment(newComment);
+                displayComments();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
-      // Get the comment from the CommentController
-      CommentController commentController = loader.getController();
-      String comment = commentController.getComment();
-      String username = commentController.getUsername();
-      ImageView userImage = commentController.getUserImage();
-      if (comment != null && !comment.isEmpty()) {
-        comments.add(new Comment(username, userImage, comment));
-        displayComments();
-      }
-    } catch (IOException e) {
-      e.printStackTrace();
+    private void displayComments() {
+        commentsContainer.getChildren().clear();
+        for (Comment comment : comments) {
+            HBox commentBox = new HBox();
+            commentBox.setSpacing(12);
+            commentBox.getChildren().add(comment.getUserImage());
+            VBox commentDetails = new VBox();
+            Label usernameLabel = new Label(comment.getUsername());
+            usernameLabel.setStyle("-fx-font-size: 32px; -fx-font-weight: bold; -fx-font-family: Calibri");
+            Label commentLabel = new Label(comment.getComment());
+            commentLabel.setStyle("-fx-font-size: 18px; -fx-font-family: Calibri; -fx-margin-top: 10px");
+            commentLabel.setWrapText(true);
+            commentLabel.setMinHeight(Region.USE_PREF_SIZE);
+            commentLabel.setMaxHeight(Double.MAX_VALUE);
+            VBox.setVgrow(commentLabel, Priority.ALWAYS);
+            Label dateLabel = new Label(comment.getDate());
+            dateLabel.setStyle("-fx-font-size: 13px; -fx-font-family: Calibri");
+            commentDetails.getChildren().addAll(usernameLabel, dateLabel, commentLabel);
+            commentBox.getChildren().add(commentDetails);
+            commentsContainer.getChildren().add(commentBox);
+        }
+        VBox.setVgrow(commentsContainer, Priority.ALWAYS);
     }
-    }
-
-  private void displayComments() {
-    commentsContainer.getChildren().clear();
-    for (Comment comment : comments) {
-      HBox commentBox = new HBox();
-      commentBox.getChildren().add(comment.getUserImage());
-      VBox commentContent = new VBox();
-      Label usernameLabel = new Label(comment.getUsername());
-      usernameLabel.setFont(new javafx.scene.text.Font(18.0));
-      Label commentLabel = new Label(comment.getComment());
-      commentLabel.setWrapText(true);
-      commentLabel.setMaxWidth(624.0); // Set the maximum width to match the TextArea width
-      commentContent.getChildren().addAll(usernameLabel, commentLabel);
-      commentBox.getChildren().add(commentContent);
-      commentsContainer.getChildren().add(commentBox);
-    }
-  }
 
     public void setLibraryService(LibraryService libraryService) {
         this.libraryService = libraryService;
@@ -191,8 +205,8 @@ public class BookUserView {
                     readButton.setText("Unavailable");
                     break;
             }
-    });
-}
+        });
+    }
 
     //Borrow book
     public void borrowBook() {
@@ -262,31 +276,8 @@ public class BookUserView {
     public void setShelfController(ShelfController shelfController) {
         this.shelfController = shelfController;
     }
-  public void setRefreshLibraryViewCallback(Consumer<Void> refreshLibraryViewCallback) {
-    this.refreshLibraryViewCallback = refreshLibraryViewCallback;
-  }
 
-  private static class Comment {
-    private final String username;
-    private final ImageView userImage;
-    private final String comment;
-
-    public Comment(String username, ImageView userImage, String comment) {
-      this.username = username;
-      this.userImage = userImage;
-      this.comment = comment;
+    public void setRefreshLibraryViewCallback(Consumer<Void> refreshLibraryViewCallback) {
+        this.refreshLibraryViewCallback = refreshLibraryViewCallback;
     }
-
-    public String getUsername() {
-      return username;
-    }
-
-    public ImageView getUserImage() {
-      return userImage;
-    }
-
-    public String getComment() {
-      return comment;
-    }
-  }
 }

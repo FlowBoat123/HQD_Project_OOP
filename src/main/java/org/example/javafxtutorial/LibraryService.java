@@ -1,10 +1,12 @@
 package org.example.javafxtutorial;
 
 import database.BookLoanDAO;
+import database.CommentDAO;
 import database.LibraryDAO;
 import logic.Book;
 import database.BookDAO;
 import logic.BookLoan;
+import logic.Comment;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -15,18 +17,22 @@ public class LibraryService {
     private UserSession userSession;
     private ArrayList<Book> books;
     private ArrayList<BookLoan> bookLoans;
+    private ArrayList<Comment> comments;
     private BookLoanDAO bookLoanDAO;
+    private CommentDAO commentDAO;
     public LibraryService() {
         this.libraryDAO = new LibraryDAO();
         this.bookLoanDAO = new BookLoanDAO();
+        this.commentDAO = new CommentDAO();
         this.userSession = UserSession.getInstance();
         this.books = libraryDAO.getAll();
         if (userSession.isAdmin()) {
             System.out.println("Admin");
             bookLoans = bookLoanDAO.getAll();
         } else {
-            System.out.println("User");
+            System.out.println("User" + userSession.getUserID());
             bookLoans = bookLoanDAO.getUserLoan(userSession.getUserID());
+            comments = commentDAO.getAll();
             this.printBookLoan();
         }
     }
@@ -158,5 +164,21 @@ public class LibraryService {
             }
         }
         this.printBookLoan();
+    }
+
+    public void addComment(Comment comment) {
+        commentDAO.add(comment);
+        comments.add(comment);
+    }
+
+    public ArrayList<Comment> getBookComments(Book book) {
+        ArrayList<Comment> bookCmt = new ArrayList<>();
+        for (Comment comment : comments) {
+            if (comment.getBook_isbn_13().equals(book.getIsbn_13())) {
+                System.out.println(comment.getComment());
+                bookCmt.add(comment);
+            }
+        }
+        return bookCmt;
     }
 }

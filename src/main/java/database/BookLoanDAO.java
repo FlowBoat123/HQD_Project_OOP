@@ -91,7 +91,6 @@ public class BookLoanDAO implements DAO<BookLoan> {
             while (resultSet.next()) {
                 Book loanedBook = new Book();
                 BookLoan loan = new BookLoan();
-                System.out.println("loanid:" + resultSet.getInt("loanID"));
                 loan.setLoanID(resultSet.getInt("loanID"));
                 loanedBook.setTitle(resultSet.getString("title"));
                 loanedBook.setAuthorsFromString(resultSet.getString("authors"));
