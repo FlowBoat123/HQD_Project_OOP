@@ -7,11 +7,8 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
+import javafx.scene.control.*;
 
-import javafx.scene.control.Label;
-import javafx.scene.control.Spinner;
-import javafx.scene.control.SpinnerValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
@@ -20,6 +17,7 @@ import javafx.util.Duration;
 import logic.Book;
 import org.example.javafxtutorial.LibraryService;
 
+import java.sql.SQLOutput;
 import java.util.function.Consumer;
 
 
@@ -38,16 +36,16 @@ public class BookController {
     private Label bookTitle;
 
     @FXML
-    private Label genreLabel;
+    private Label borrowedNumLabel;
 
     @FXML
-    private Label notificationLabel;
+    private Label genreLabel;
 
     @FXML
     private Spinner<Integer> numberPicker;
 
     @FXML
-    private ImageView returnBtn;
+    private Label quantityLabel;
 
     private AnchorPane mainView;
     private Node previousContent;
@@ -65,6 +63,8 @@ public class BookController {
         bookAuthor.setText(book.getAuthorsAsString());
         bookDescription.setText(book.getDescription());
         genreLabel.setText(book.getGenresAsString());
+        quantityLabel.setText("Number of copies in library: " + book.getQuantity());
+        borrowedNumLabel.setText("Number of people currently borrowed: " + book.getBorrowedCopies());
         bookCover.setFitWidth(200);
         bookCover.setFitHeight(300);
         bookCover.setPreserveRatio(true);
@@ -77,7 +77,9 @@ public class BookController {
     @FXML
     void handleUpdateBook(ActionEvent event) {
         libraryService.addCopiesToLibrary(book, numberPicker.getValue());
-        showNotification("Added successfully!");
+        System.out.println("current quantity: " + book.getQuantity());
+        quantityLabel.setText("Number of copies in library: " + book.getQuantity());
+        showNotificationAlert("Added successfully!", false);
     }
 
     public void setMainView(AnchorPane mainView, Node previousContent) {
@@ -98,22 +100,15 @@ public class BookController {
     @FXML
     void handleRemoveAll(ActionEvent event) {
         if (book == null) {
-            showNotification("Book not found!");
+            showNotificationAlert("Book not found!", true);
         } else if (book.getBorrowedCopies() > 0) {
-            showNotification("Cannot remove copies, some are borrowed!");
+            showNotificationAlert("Cannot remove all copies, some are borrowed!", true);
         } else {
             libraryService.removeCopiesFromLibrary(book);
-            showNotification("Removed all copies successfully!");
+            System.out.println("current quantity: " + book.getQuantity());
+            quantityLabel.setText("Number of copies in library: " + book.getQuantity());
+            showNotificationAlert("Removed all copies successfully!", false);
         }
-    }
-
-    private void showNotification(String message) {
-        notificationLabel.setText(message);
-        notificationLabel.setVisible(true);
-        Timeline timeline = new Timeline(new KeyFrame(
-                Duration.millis(2000),
-                ae -> notificationLabel.setVisible(false)));
-        timeline.play();
     }
 
     public void setLibraryService(LibraryService libraryService) {
@@ -122,5 +117,20 @@ public class BookController {
 
     public void setRefreshLibraryViewCallback(Consumer<Void> refreshLibraryViewCallback) {
         this.refreshLibraryViewCallback = refreshLibraryViewCallback;
+    }
+
+    void showNotificationAlert(String message, boolean warning) {
+        Alert alert;
+        if (warning) {
+            alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Warning");
+            alert.setHeaderText(null);
+        } else {
+            alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Notification");
+            alert.setHeaderText(null);
+        }
+        alert.setContentText(message);
+        alert.showAndWait();
     }
 }

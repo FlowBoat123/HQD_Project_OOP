@@ -69,6 +69,7 @@ public class AdminDashboardController implements Initializable{
             LibraryViewController libraryViewController = loader.getController();
             libraryViewController.setLibraryService(libraryService);
             libraryViewController.setMainView(mainView);
+            libraryService.updateBooksRequestNumber();
             libraryViewController.initializeLibraryView(libraryService.getBooks());
             mainView.getChildren().setAll(content);
             updateFocus(clickedButton);

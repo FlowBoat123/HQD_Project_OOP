@@ -10,6 +10,8 @@ import logic.Comment;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 public class LibraryService {
 
@@ -50,6 +52,13 @@ public class LibraryService {
         } else {
             Book existingBook = books.get(books.indexOf(book));
             existingBook.setQuantity(existingBook.getQuantity() + numberOfCopies);
+            if (existingBook.getRequestedCopies() > 0) {
+                if (numberOfCopies > existingBook.getRequestedCopies()) {
+                    existingBook.setRequestedCopies(0);
+                } else {
+                    existingBook.setRequestedCopies(existingBook.getRequestedCopies() - numberOfCopies);
+                }
+            }
             libraryDAO.update(existingBook);
         }
         printBooks();
@@ -180,5 +189,29 @@ public class LibraryService {
             }
         }
         return bookCmt;
+    }
+
+    public Map<String, Integer> getBooksRequestNumber() {
+        Map<String, Integer> requestCounts = new HashMap<>();
+        for (BookLoan bookLoan : bookLoans) {
+            if (bookLoan.getLoanStatus() == BookLoan.WAITING) {
+                Book book = bookLoan.getBook();
+                requestCounts.put(book.getIsbn_13(), requestCounts.getOrDefault(book.getIsbn_13(), 0) + 1);
+            }
+        }
+        return requestCounts;
+    }
+
+    public void updateBooksRequestNumber() {
+        Map<String, Integer> requestCounts = getBooksRequestNumber();
+        for (Book book : books) {
+            int requestedCopies = requestCounts.getOrDefault(book.getIsbn_13(), 0);
+            System.out.println(book.getIsbn_13() + " " + requestedCopies);
+            if (requestedCopies + book.getBorrowedCopies() > book.getQuantity()) {
+                book.setRequestedCopies(book.getBorrowedCopies() + requestedCopies - book.getQuantity());
+            } else {
+                book.setRequestedCopies(0);
+            }
+        }
     }
 }

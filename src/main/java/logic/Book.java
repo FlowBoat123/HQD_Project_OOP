@@ -4,11 +4,6 @@ import java.util.ArrayList;
 import java.util.Objects;
 
 public class Book {
-    public static final int READING = 0;
-    public static final int PLAN_TO_READ = 1;
-    public static final int ON_HOLD = 2;
-    public static final int COMPLETED = 3;
-
     private String title;
     private ArrayList<String> authors = null;
     private String authorString;
@@ -21,6 +16,8 @@ public class Book {
     private String status;
     private int quantity;
     private int borrowedCopies;
+    private int requestedCopies;
+
 
     public Book() {}
 
@@ -98,6 +95,14 @@ public class Book {
     public String getGenreString() {
         this.genreString = getGenresAsString();
         return genreString;
+    }
+
+    public int getRequestedCopies() {
+        return requestedCopies;
+    }
+
+    public void setRequestedCopies(int requestedCopies) {
+        this.requestedCopies = requestedCopies;
     }
 
     @Override

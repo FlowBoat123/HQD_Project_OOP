@@ -39,9 +39,6 @@ public class LibraryViewController {
     private TableColumn<Book, String> bookGenresCol;
 
     @FXML
-    private TableColumn<Book, String> bookIsbn10Col;
-
-    @FXML
     private TableColumn<Book, String> bookIsbn13Col;
 
     @FXML
@@ -49,6 +46,9 @@ public class LibraryViewController {
 
     @FXML
     private TableColumn<Book, Integer> borrowedCopiesCol;
+
+    @FXML
+    private TableColumn<Book, Integer> requestedCopiesCol;
 
     @FXML
     private TextField searchField;
@@ -63,10 +63,10 @@ public class LibraryViewController {
         bookTitleCol.setCellValueFactory(new PropertyValueFactory<>("title"));
         bookAuthorsCol.setCellValueFactory(new PropertyValueFactory<>("authorString"));
         bookGenresCol.setCellValueFactory(new PropertyValueFactory<>("genreString"));
-        bookIsbn10Col.setCellValueFactory(new PropertyValueFactory<>("isbn_10"));
         bookIsbn13Col.setCellValueFactory(new PropertyValueFactory<>("isbn_13"));
         quantityCol.setCellValueFactory(new PropertyValueFactory<>("quantity"));
         borrowedCopiesCol.setCellValueFactory(new PropertyValueFactory<>("borrowedCopies"));
+        requestedCopiesCol.setCellValueFactory(new PropertyValueFactory<>("requestedCopies"));
 
         library.setRowFactory(bookTableView -> {
             TableRow<Book> row = new TableRow<>();
@@ -96,13 +96,13 @@ public class LibraryViewController {
                     return true;
                 } else if (book.getGenresAsString()!= null && book.getGenresAsString().toLowerCase().contains(lowerCaseFilter)) {
                     return true;
-                } else if (book.getIsbn_10()!= null && book.getIsbn_10().toLowerCase().contains(lowerCaseFilter)) {
-                    return true;
-                } else if (book.getIsbn_10()!= null && book.getIsbn_13().toLowerCase().contains(lowerCaseFilter)) {
+                } else if (book.getIsbn_13()!= null && book.getIsbn_13().toLowerCase().contains(lowerCaseFilter)) {
                     return true;
                 } else if (String.valueOf(book.getQuantity()).contains(lowerCaseFilter)) {
                     return true;
                 } else if (String.valueOf(book.getBorrowedCopies()).contains(lowerCaseFilter)) {
+                    return true;
+                } else if (String.valueOf(book.getRequestedCopies()).contains(lowerCaseFilter)) {
                     return true;
                 } else {
                     return false;

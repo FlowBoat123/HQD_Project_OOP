@@ -212,10 +212,10 @@ public class BookUserView {
     public void borrowBook() {
         if (libraryService.borrowBook(book)) {
             loanStatus = BookLoan.READING;
-            showLoanConditionDialog("Reading", "Book borrowed successfully");
+            showLoanConditionAlert("Book borrowed successfully");
         } else {
             loanStatus = BookLoan.WAITING;
-            showLoanConditionDialog("Waiting", "The book is currently unavailable. You are added to the waiting list.");
+            showLoanConditionAlert("The book is currently unavailable. You are added to the waiting list.");
         }
         this.updateLoanStatus();
         if (shelfController != null) {
@@ -233,24 +233,19 @@ public class BookUserView {
         }
     }
 
-    private void showLoanConditionDialog(String status, String message) {
-        Dialog<String> dialog = new Dialog<>();
-        dialog.setTitle("Notification");
-        dialog.setHeaderText("Current Loan Status: " + status);
+    private void showLoanConditionAlert(String message) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Book status notification");
+        alert.setHeaderText(null);
+        alert.setContentText(message);
 
-        ButtonType okButtonType = new ButtonType("OK", ButtonBar.ButtonData.OK_DONE);
-        dialog.getDialogPane().getButtonTypes().addAll(okButtonType);
-
-        Label label = new Label(message);
-        dialog.getDialogPane().setContent(label);
-
-        dialog.showAndWait();
+        alert.showAndWait();
     }
 
     private void notifyReadyBookDialog() {
         Dialog<String> dialog = new Dialog<>();
         dialog.setTitle("Notification");
-        dialog.setHeaderText("Book is ready for you");
+        dialog.setHeaderText(null);
 
         ButtonType readNowBtn = new ButtonType("Read Now", ButtonBar.ButtonData.OK_DONE);
         ButtonType laterBtn = new ButtonType("Later", ButtonBar.ButtonData.OK_DONE);

@@ -54,7 +54,6 @@ public class CommentController implements Initializable {
 
     public ImageView getUserImage() {
         ImageView userImage = new ImageView();
-//    File file = new File("C:/Users/bogie/IdeaProjects/JavaFX/src/main/resources/images/usericon.png");
         String path;
         User currentUser = UserSession.getInstance().getUser();
         System.out.println(currentUser.getAvatar());
