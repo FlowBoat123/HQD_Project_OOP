@@ -12,7 +12,7 @@
 
 <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="660.0" prefWidth="1030.0" styleClass="transparent-border" stylesheets="@main.css" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.javafxtutorial.ShelfController">
    <children>
-      <HBox alignment="CENTER_LEFT" prefHeight="90.0" prefWidth="1030.0" spacing="20.0" stylesheets="@main.css">
+      <HBox fx:id="shelfHeader" alignment="CENTER_LEFT" prefHeight="90.0" prefWidth="1030.0" spacing="20.0" stylesheets="@main.css">
          <children>
             <StackPane prefHeight="59.0" prefWidth="284.0">
                <children>

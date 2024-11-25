@@ -90,6 +90,7 @@ public class AdminDashboardController implements Initializable{
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/example/javafxtutorial/user-form.fxml"));
             Node content = loader.load();
             UserFormController userInfoController = loader.getController();
+            userInfoController.setLibraryService(libraryService);
             mainView.getChildren().setAll(content);
             clickedButton.requestFocus();
         } catch (IOException e) {

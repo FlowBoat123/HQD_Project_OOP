@@ -11,10 +11,10 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="680.0" prefWidth="1020.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.UserProfileController">
-    <VBox layoutX="-0.5" layoutY="0.5">
+<AnchorPane prefHeight="736.0" prefWidth="1030.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.UserProfileController">
+    <VBox layoutY="1.0" prefHeight="0.0" prefWidth="1032.0">
         <StackPane prefHeight="44.0" prefWidth="943.0">
-            <Rectangle height="74.0" style="-fx-fill: white; -fx-stroke: lightgray; -fx-stroke-width: 1;" width="1020.0" />
+            <Rectangle height="75.0" style="-fx-fill: white; -fx-stroke: lightgray; -fx-stroke-width: 1;" width="1031.0" />
             <VBox prefHeight="93.0" prefWidth="906.0">
                 <HBox prefHeight="48.0" prefWidth="960.0">
                     <ImageView fx:id="imageView" fitHeight="43.0" fitWidth="114.0" onMouseClicked="#handleImageClick" pickOnBounds="true" preserveRatio="true">
@@ -24,26 +24,31 @@
                     </ImageView>
                 </HBox>
                 <HBox focusTraversable="true" prefHeight="66.0" prefWidth="1040.0">
-                    <Button fx:id="button1" mnemonicParsing="false" onAction="#showScene1" prefHeight="34.0" prefWidth="130.0" text="Trang cá nhân">
+                    <Button fx:id="button1" mnemonicParsing="false" onAction="#showScene1" prefHeight="34.0" prefWidth="130.0" text="Profile">
                         <font>
-                            <Font size="15.0" />
+                            <Font name="Calibri" size="15.0" />
                         </font>
                     </Button>
-                    <Button fx:id="button2" mnemonicParsing="false" onAction="#showScene2" prefHeight="32.0" prefWidth="135.0" text="Sách đang đọc">
+               <Button fx:id="button4" layoutX="140.0" layoutY="10.0" mnemonicParsing="false" onAction="#showScene4" prefHeight="32.0" prefWidth="135.0" text="Waiting">
+                  <font>
+                     <Font name="Calibri" size="15.0" />
+                  </font>
+               </Button>
+                    <Button fx:id="button2" mnemonicParsing="false" onAction="#showScene2" prefHeight="32.0" prefWidth="135.0" text="Currently Reading">
                         <font>
-                            <Font size="15.0" />
+                            <Font name="Calibri" size="15.0" />
                         </font>
                     </Button>
-                    <Button fx:id="button3" mnemonicParsing="false" onAction="#showScene3" prefHeight="34.0" prefWidth="131.0" text="Đã đọc xong">
+                    <Button fx:id="button3" mnemonicParsing="false" onAction="#showScene3" prefHeight="34.0" prefWidth="131.0" text="Completed">
                         <font>
-                            <Font size="15.0" />
+                            <Font name="Calibri" size="15.0" />
                         </font>
                     </Button>
                 </HBox>
             </VBox>
         </StackPane>
     </VBox>
-    <StackPane fx:id="contentPane" layoutX="0.0" layoutY="77.0" prefWidth="30.0">
+    <StackPane fx:id="contentPane" layoutX="0.0" layoutY="77.0" prefWidth="1021.0">
         <!-- Content will be dynamically loaded here -->
     </StackPane>
    <Label fx:id="loadingSymbol" alignment="CENTER" layoutX="403.0" layoutY="244.0" prefHeight="34.0" prefWidth="135.0" text="Loading..." visible="false">

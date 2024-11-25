@@ -105,7 +105,7 @@
                                        <children>
                                           <HBox prefHeight="36.0" prefWidth="745.0">
                                              <children>
-                                                <ImageView fitHeight="25.0" fitWidth="25.0" onMouseClicked="#handleComment" pickOnBounds="true" preserveRatio="true">
+                                                <ImageView fx:id="commentIcon" fitHeight="25.0" fitWidth="25.0" onMouseClicked="#handleComment" pickOnBounds="true" preserveRatio="true">
                                                    <image>
                                                       <Image url="@../../../images/common.png" />
                                                    </image>

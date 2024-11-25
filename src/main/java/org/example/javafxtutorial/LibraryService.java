@@ -22,19 +22,20 @@ public class LibraryService {
     private ArrayList<Comment> comments;
     private BookLoanDAO bookLoanDAO;
     private CommentDAO commentDAO;
+
     public LibraryService() {
         this.libraryDAO = new LibraryDAO();
         this.bookLoanDAO = new BookLoanDAO();
         this.commentDAO = new CommentDAO();
         this.userSession = UserSession.getInstance();
         this.books = libraryDAO.getAll();
+        this.comments = commentDAO.getAll();
         if (userSession.isAdmin()) {
             System.out.println("Admin");
             bookLoans = bookLoanDAO.getAll();
         } else {
             System.out.println("User" + userSession.getUserID());
             bookLoans = bookLoanDAO.getUserLoan(userSession.getUserID());
-            comments = commentDAO.getAll();
             this.printBookLoan();
         }
     }
@@ -72,6 +73,7 @@ public class LibraryService {
         }
         printBooks();
     }
+
     public void printBooks() {
         for (Book book : books) {
             System.out.println(book);
@@ -130,7 +132,7 @@ public class LibraryService {
     }
 
     public int getLoanStatus(Book book) {
-        for(BookLoan bookLoan : bookLoans) {
+        for (BookLoan bookLoan : bookLoans) {
             if (bookLoan.getBook().equals(book)) {
                 return bookLoan.getLoanStatus();
             }
@@ -138,21 +140,22 @@ public class LibraryService {
         return BookLoan.NOT_BORROWED;
     }
 
-    public void printBookLoan(){
+    public void printBookLoan() {
         for (BookLoan bookLoan : bookLoans) {
-            System.out.println(bookLoan.getLoanID()  +  bookLoan.getBook().toString() + ' ' + bookLoan.getLoanStatus());
+            System.out.println(bookLoan.getLoanID() + bookLoan.getBook().toString() + ' ' + bookLoan.getLoanStatus());
         }
     }
 
-    public ArrayList<Book> getBooksByLoanStatus(int loanStatus) {
+    public ArrayList<Book> getBooksByLoanStatus(int loanStatus, int userID) {
         ArrayList<Book> booksByLoanStatus = new ArrayList<>();
         for (BookLoan bookLoan : bookLoans) {
-            if (bookLoan.getLoanStatus() == loanStatus) {
+            if (bookLoan.getLoanStatus() == loanStatus && bookLoan.getUserID() == userID) {
                 booksByLoanStatus.add(bookLoan.getBook());
             }
         }
         return booksByLoanStatus;
     }
+
 
     public ArrayList<Book> getAllBooksHasLoan() {
         ArrayList<Book> booksHasLoan = new ArrayList<>();

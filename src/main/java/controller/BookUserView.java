@@ -61,11 +61,11 @@ public class BookUserView {
     private int loanStatus;
     private StackPane mainView;
     private Node previousContent;
-    private Consumer<Void> refreshLibraryViewCallback;
     Book book;
     private ShelfController shelfController;
     private LibraryService libraryService;
     private List<Comment> comments = new ArrayList<>(); // Add this line
+    private boolean inProfileView = false;
 
     public void initializeBookViewForUser(Book book) {
         this.book = book;
@@ -83,7 +83,7 @@ public class BookUserView {
         if (book.getCoverImgUrl() != null) {
             bookCover.setImage(new Image(book.getCoverImgUrl(), true));
         }
-        if (loanStatus == BookLoan.WAITING && book.getBorrowedCopies() < book.getQuantity()) {
+        if (loanStatus == BookLoan.WAITING && book.getBorrowedCopies() < book.getQuantity() && !inProfileView) {
             notifyReadyBookDialog();
         }
         comments = libraryService.getBookComments(book);
@@ -272,7 +272,10 @@ public class BookUserView {
         this.shelfController = shelfController;
     }
 
-    public void setRefreshLibraryViewCallback(Consumer<Void> refreshLibraryViewCallback) {
-        this.refreshLibraryViewCallback = refreshLibraryViewCallback;
+    public void setUpBookViewForUserProfile() {
+        this.inProfileView = true;
+        readButton.setVisible(false);
+        readButton.setManaged(false);
+        commentIcon.setDisable(true);
     }
 }

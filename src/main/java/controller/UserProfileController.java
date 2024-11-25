@@ -35,10 +35,15 @@ public class UserProfileController {
 
     @FXML
     private Button button1;
+
     @FXML
     private Button button2;
+
     @FXML
     private Button button3;
+
+    @FXML
+    private Button button4;
 
     @FXML
     private boolean isAdmin;
@@ -46,8 +51,13 @@ public class UserProfileController {
     @FXML
     private Label loadingSymbol;
 
-    private LibraryService libraryService = new LibraryService();
+
+    private LibraryService libraryService;
     private User user;
+
+    public void setLibraryService(LibraryService libraryService) {
+        this.libraryService = libraryService;
+    }
 
     private final ExecutorService executorService = Executors.newFixedThreadPool(1);
 
@@ -88,6 +98,7 @@ public class UserProfileController {
         button1.getStyleClass().add("button-active");
         button2.getStyleClass().remove("button-active");
         button3.getStyleClass().remove("button-active");
+        button4.getStyleClass().remove("button-active");
     }
 
     /**
@@ -103,11 +114,13 @@ public class UserProfileController {
             shelfController.setLibraryService(libraryService);
             shelfController.setMainView(contentPane);
             shelfController.setShelfTitle(shelfName);
+            shelfController.setUpShelfViewForUserProfile(user.getID());
             shelfController.init();
         });
         button1.getStyleClass().remove("button-active");
         button2.getStyleClass().add("button-active");
         button3.getStyleClass().remove("button-active");
+        button4.getStyleClass().remove("button-active");
     }
 
     /**
@@ -123,11 +136,35 @@ public class UserProfileController {
             shelfController.setLibraryService(libraryService);
             shelfController.setMainView(contentPane);
             shelfController.setShelfTitle(shelfName);
+            shelfController.setUpShelfViewForUserProfile(user.getID());
             shelfController.init();
         });
         button1.getStyleClass().remove("button-active");
         button2.getStyleClass().remove("button-active");
         button3.getStyleClass().add("button-active");
+        button4.getStyleClass().remove("button-active");
+    }
+
+    /**
+     * Shows the fourth scene.
+     *
+     * @param event The ActionEvent that triggered this method.
+     */
+    @FXML
+    public void showScene4(ActionEvent event) {
+        String shelfName = "Waiting";
+        loadView("/org/example/javafxtutorial/shelf-view.fxml", (loader) -> {
+            ShelfController shelfController = loader.getController();
+            shelfController.setLibraryService(libraryService);
+            shelfController.setMainView(contentPane);
+            shelfController.setShelfTitle(shelfName);
+            shelfController.setUpShelfViewForUserProfile(user.getID());
+            shelfController.init();
+        });
+        button1.getStyleClass().remove("button-active");
+        button2.getStyleClass().remove("button-active");
+        button3.getStyleClass().remove("button-active");
+        button4.getStyleClass().add("button-active");
     }
 
     /**
@@ -135,7 +172,6 @@ public class UserProfileController {
      */
     @FXML
     public void initialize() {
-        // showScene1(null);  // This should be called after contentPane is initialized
 
     }
 

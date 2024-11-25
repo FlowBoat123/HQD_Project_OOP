@@ -18,6 +18,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
 import javafx.scene.shape.Circle;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import logic.User;
 import logic.Book;
@@ -154,6 +155,7 @@ public class UserDashboardController implements Initializable {
 
             // If you need to pass the currentUser to the new controller, do it here
             UserProfileController controller = loader.getController();
+            controller.setLibraryService(libraryService);
             controller.setUser(currentUser);
 
             Scene userProfileScene = new Scene(userProfile);
@@ -161,6 +163,7 @@ public class UserDashboardController implements Initializable {
             // Get the current stage and set the new scene
             Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
             window.setScene(userProfileScene);
+            window.setResizable(false);
             window.show();
         } catch (IOException e) {
             e.printStackTrace();

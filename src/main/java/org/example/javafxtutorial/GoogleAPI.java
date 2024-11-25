@@ -12,6 +12,9 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import logic.Book;
 
+/**
+ * The GoogleAPI class provides methods to search for books using the Google Books API.
+ */
 public class GoogleAPI {
     private static final String GOOGLE_BOOKS_URL = "https://www.googleapis.com/books/v1/volumes?q=";
     private static final String MY_API_KEY = "AIzaSyAxz15rEaspqhv_sPHwlLqSAsv4w1z0lUo";
@@ -47,6 +50,13 @@ public class GoogleAPI {
         return responseJson;
     }
 
+    /**
+     * Constructs a URI for the Google Books API request.
+     * @param searchQuery the search query
+     * @param searchMethod the search method (e.g., by title, author, or ISBN)
+     * @return the URI for the API request
+     * @throws URISyntaxException if the URI syntax is incorrect
+     */
     private static URI getUri(String searchQuery, String searchMethod) throws URISyntaxException {
         URI url;
         if (searchQuery.isEmpty()) {
@@ -65,6 +75,13 @@ public class GoogleAPI {
         return url;
     }
 
+    /**
+     * Searches for books using the Google Books API.
+     * @param searchQuery the search query
+     * @param searchMethod the search method (e.g., by title, author, or ISBN)
+     * @return a list of books matching the search criteria
+     * @throws Exception if an error occurs during the search
+     */
     public static ArrayList<Book> searchBook(String searchQuery, String searchMethod) throws Exception {
         JsonObject responseJson = getHttpMethod(searchQuery, searchMethod);
         if (!responseJson.has("items")){
@@ -91,6 +108,12 @@ public class GoogleAPI {
         }
         return searchResult;
     }
+
+    /**
+     * Parses a book from a JSON element.
+     * @param bookElement the JSON element representing the book
+     * @return the parsed book
+     */
     private static Book parseBookFromJSON(JsonElement bookElement){
         JsonObject itemJson = bookElement.getAsJsonObject().getAsJsonObject("volumeInfo");
         String isbn10 = null;

@@ -12,6 +12,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import logic.Book;
 import logic.BookLoan;
@@ -21,11 +22,19 @@ import java.util.List;
 
 public class ShelfController extends UserViewController {
 
+    private boolean userProfileView;
+
     @FXML
     private GridPane bookGridPane;
 
     @FXML
+    private HBox shelfHeader;
+
+    @FXML
     private Label shelfTitle;
+
+    @FXML
+    private int userID;
 
     @Override
     public void init() {
@@ -51,6 +60,9 @@ public class ShelfController extends UserViewController {
             mainView.getChildren().add(content);
             bookUserView.setLibraryService(libraryService);
             bookUserView.setShelfController(this);
+            if (userProfileView) {
+                bookUserView.setUpBookViewForUserProfile();
+            }
             bookUserView.initializeBookViewForUser(book);
         } catch (IOException e) {
             e.printStackTrace();
@@ -88,15 +100,18 @@ public class ShelfController extends UserViewController {
     private void loadBooksToShelf() throws IOException {
         List<Book> books;
         String shelfName = shelfTitle.getText();
+        if (userID == 0 && UserSession.getInstance().getUserID() != 0) {
+            userID = UserSession.getInstance().getUserID();
+        }
         switch (shelfName) {
             case "Currently Reading":
-                books = libraryService.getBooksByLoanStatus(BookLoan.READING);
+                books = libraryService.getBooksByLoanStatus(BookLoan.READING, userID);
                 break;
             case "Waiting":
-                books = libraryService.getBooksByLoanStatus(BookLoan.WAITING);
+                books = libraryService.getBooksByLoanStatus(BookLoan.WAITING, userID);
                 break;
             case "Completed":
-                books = libraryService.getBooksByLoanStatus(BookLoan.COMPLETED);
+                books = libraryService.getBooksByLoanStatus(BookLoan.COMPLETED, userID);
                 break;
             case "All":
                 books = libraryService.getAllBooksHasLoan();
@@ -122,5 +137,17 @@ public class ShelfController extends UserViewController {
             bookGridPane.add(bookCard, col++, row);
             GridPane.setMargin(bookCard, new Insets(10));
         }
+    }
+
+    public void hideShelfHeader() {
+        shelfHeader.setVisible(false);
+        shelfHeader.setManaged(false);
+    }
+
+    public void setUpShelfViewForUserProfile(int userID) {
+        this.userProfileView = true;
+        this.userID = userID;
+        hideShelfHeader();
+
     }
 }

@@ -18,10 +18,12 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 import org.example.javafxtutorial.DatabaseConnection;
 import logic.User;
+import org.example.javafxtutorial.LibraryService;
 
 import javax.sql.DataSource;
 import java.io.IOException;
@@ -74,7 +76,7 @@ public class UserFormController {
     private ObservableList<User> userData = FXCollections.observableArrayList();
     private final ExecutorService executorService = Executors.newFixedThreadPool(5);
     private boolean showTrashIcons = false;
-
+    private LibraryService libraryService;
     public UserFormController() {
         this.dataSource = DataSourceFactory.getDataSource();
     }
@@ -245,9 +247,10 @@ public class UserFormController {
             UserProfileController controller = loader.getController();
             controller.setUser(user);
             controller.setAdmin();
-
+            controller.setLibraryService(libraryService);
             Stage stage = (Stage) userTable.getScene().getWindow();
             stage.setScene(new Scene(userProfile));
+            stage.setResizable(false);
             stage.show();
         } catch (IOException e) {
             e.printStackTrace();
@@ -264,5 +267,9 @@ public class UserFormController {
         } catch (InterruptedException e) {
             executorService.shutdownNow();
         }
+    }
+
+    public void setLibraryService(LibraryService libraryService) {
+        this.libraryService = libraryService;
     }
 }
