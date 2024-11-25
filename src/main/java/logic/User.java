@@ -1,8 +1,10 @@
 package logic;
 
-import java.time.LocalDateTime;
 import java.util.Date;
 
+/**
+ * This class represents a user in the system.
+ */
 public class User {
     private int ID;
     private String username;
@@ -10,8 +12,6 @@ public class User {
     private Date creationTime;
     private String bio;
     private String email;
-
-
     private String website;
     private String details;
     private String avatar;
@@ -19,6 +19,20 @@ public class User {
     private int followerCount;
     private int followingCount;
 
+    /**
+     * Constructor to initialize a User object with all fields.
+     *
+     * @param ID            The user's ID.
+     * @param username      The user's username.
+     * @param password      The user's password.
+     * @param creationTime  The user's creation time.
+     * @param bio           The user's bio.
+     * @param email         The user's email.
+     * @param website       The user's website.
+     * @param repoCount     The user's repository count.
+     * @param followerCount The user's follower count.
+     * @param followingCount The user's following count.
+     */
     public User(int ID, String username, String password, Date creationTime, String bio, String email, String website, int repoCount, int followerCount, int followingCount) {
         this.ID = ID;
         this.username = username;
@@ -32,7 +46,9 @@ public class User {
         this.followingCount = followingCount;
     }
 
-
+    /**
+     * Default constructor to initialize a User object with default values.
+     */
     public User() {
         this.ID = 1010;
         this.username = "FlowBoat123";
@@ -45,12 +61,32 @@ public class User {
         this.followingCount = 0;
     }
 
+    /**
+     * Constructor to initialize a User object with username, password, and creation time.
+     *
+     * @param username     The user's username.
+     * @param password     The user's password.
+     * @param creationTime The user's creation time.
+     */
     public User(String username, String password, Date creationTime) {
         this.username = username;
         this.password = password;
         this.creationTime = creationTime;
     }
 
+    /**
+     * Constructor to initialize a User object with username, password, creation time, bio, email, website, repo count, follower count, and following count.
+     *
+     * @param username      The user's username.
+     * @param password      The user's password.
+     * @param creationTime  The user's creation time.
+     * @param bio           The user's bio.
+     * @param email         The user's email.
+     * @param website       The user's website.
+     * @param repoCount     The user's repository count.
+     * @param followerCount The user's follower count.
+     * @param followingCount The user's following count.
+     */
     public User(String username, String password, Date creationTime, String bio, String email, String website, int repoCount, int followerCount, int followingCount) {
         this.username = username;
         this.password = password;
@@ -63,6 +99,16 @@ public class User {
         this.followingCount = followingCount;
     }
 
+    /**
+     * Constructor to initialize a User object with username, password, creation time, bio, email, and website.
+     *
+     * @param username     The user's username.
+     * @param password     The user's password.
+     * @param creationTime The user's creation time.
+     * @param bio          The user's bio.
+     * @param email        The user's email.
+     * @param website      The user's website.
+     */
     public User(String username, String password, Date creationTime, String bio, String email, String website) {
         this.username = username;
         this.password = password;
@@ -72,6 +118,19 @@ public class User {
         this.website = website;
     }
 
+    /**
+     * Constructor to initialize a User object with ID, username, password, creation time, bio, email, website, details, and avatar.
+     *
+     * @param ID            The user's ID.
+     * @param username      The user's username.
+     * @param password      The user's password.
+     * @param creationTime  The user's creation time.
+     * @param bio           The user's bio.
+     * @param email         The user's email.
+     * @param website       The user's website.
+     * @param details       The user's details.
+     * @param avatar        The user's avatar.
+     */
     public User(int ID, String username, String password, Date creationTime, String bio, String email, String website, String details, String avatar) {
         this.ID = ID;
         this.username = username;

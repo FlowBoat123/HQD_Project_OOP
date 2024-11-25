@@ -107,7 +107,9 @@ public class UserFormController {
             row.setOnMouseClicked(event -> {
                 if (!row.isEmpty() && event.getClickCount() == 1 && !(event.getTarget() instanceof Button)) {
                     User clickedRow = row.getItem();
-                    loadUserProfile(clickedRow);
+                    if(!clickedRow.getUsername().equals("admin")) {
+                        loadUserProfile(clickedRow);
+                    }
                 }
             });
             return row;

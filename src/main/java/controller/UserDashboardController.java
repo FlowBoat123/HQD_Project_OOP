@@ -2,6 +2,7 @@ package controller;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -164,6 +165,24 @@ public class UserDashboardController implements Initializable {
         } catch (IOException e) {
             e.printStackTrace();
             System.out.println("Failed to load user profile: " + e.getMessage());
+        }
+    }
+
+    public void backToLogin(ActionEvent actionEvent) {
+        try {
+            // Load the login FXML
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/example/javafxtutorial/login.fxml"));
+            Parent root = loader.load();
+
+            // Get the current stage
+            Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+
+            // Set the new scene
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
