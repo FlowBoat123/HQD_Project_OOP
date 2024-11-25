@@ -26,6 +26,9 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
+/**
+ * This class controls the profile view and handles interactions with the user profile.
+ */
 public class ProfileViewController {
 
     @FXML
@@ -72,12 +75,19 @@ public class ProfileViewController {
 
     private final ExecutorService executorService = Executors.newFixedThreadPool(1);
 
+    /**
+     * Sets the user for the profile.
+     *
+     * @param user The User object to be set.
+     */
     public void setUser(User user) {
         this.user = user;
         updateUIWithUserData();
     }
 
-    // new Image(Objects.<InputStream>requireNonNull(getClass().getResourceAsStream("/Avatar/icon_2.png")))
+    /**
+     * Updates the UI with the user's data.
+     */
     private void updateUIWithUserData() {
         if (user != null) {
             // Set the profile image, assuming you have logic to retrieve the user's image
@@ -111,6 +121,11 @@ public class ProfileViewController {
         }
     }
 
+    /**
+     * Handles the change profile image button click event.
+     *
+     * @param event The ActionEvent that triggered this method.
+     */
     @FXML
     private void handleChangeProfileImage(ActionEvent event) {
         try {
@@ -118,9 +133,9 @@ public class ProfileViewController {
             Parent root = loader.load();
             AvatarSelectionController controller = loader.getController();
             Stage dialogStage = new Stage();
-            dialogStage.initModality(Modality.WINDOW_MODAL);
+            dialogStage.initModality(Modality.WINDOW_MODAL);        // set the pop up window for choosing avatar
             dialogStage.initOwner((Stage) ((Node) event.getSource()).getScene().getWindow());
-            dialogStage.setScene(new Scene(root));
+            dialogStage.setScene(new Scene(root));                  // set scene
             controller.setStageAndController(dialogStage, this);
             dialogStage.showAndWait();
             String selectedImagePath = controller.getSelectedImagePath();
@@ -135,6 +150,11 @@ public class ProfileViewController {
         }
     }
 
+    /**
+     * Handles the edit profile button click event.
+     *
+     * @param event The ActionEvent that triggered this method.
+     */
     @FXML
     public void handleEditProfile(ActionEvent event) {
         if (isEditing) {
@@ -173,6 +193,11 @@ public class ProfileViewController {
         isEditing = !isEditing;
     }
 
+    /**
+     * Updates the user's data in the database.
+     *
+     * @param user The User object to be updated.
+     */
     private void updateUserDatabase(User user) {
         Runnable task = () -> {
             try {
@@ -194,7 +219,11 @@ public class ProfileViewController {
         executorService.submit(task);
     }
 
-
+    /**
+     * Toggles the editing mode.
+     *
+     * @param enable True to enable editing mode, false to disable.
+     */
     private void toggleEditing(boolean enable) {
         // Show or hide TextFields based on editing mode
         usernameField.setVisible(enable);
@@ -212,43 +241,27 @@ public class ProfileViewController {
         changeProfileImageButton.setVisible(enable);
     }
 
+    /**
+     * Initializes the controller.
+     */
     public void initialize() {
         // Ensure that editing is initially disabled
         toggleEditing(false);
         updateUIWithUserData();
-        
     }
 
-//    @FXML
-//    public void handleImageClick(javafx.scene.input.MouseEvent mouseEvent) {
-//        try {
-//            FXMLLoader loader;
-//            if (user.getID() == 2) {
-//                loader = new FXMLLoader(getClass().getResource("/org/example/javafxtutorial/AdminDashboard.fxml"));
-//            } else {
-//                loader = new FXMLLoader(getClass().getResource("/org/example/javafxtutorial/UserDashboard.fxml"));
-//            }
-//
-//            Parent root = loader.load();
-//            Stage stage = (Stage) ((ImageView) mouseEvent.getSource()).getScene().getWindow();
-//            stage.setScene(new Scene(root));
-//            stage.show();
-//
-//            // Optionally, set the user to the new controller if needed
-//            if (user.getID() != 2) {
-//                UserDashboardController controller = loader.getController();
-//                controller.setUser(user);
-//            }
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//    }
-
-
+    /**
+     * Sets the avatar image for the user.
+     *
+     * @param avatar The Image object to be set as the avatar.
+     */
     public void setAvatar(Image avatar) {
         profileImage.setImage(avatar);
     }
 
+    /**
+     * Stops the executor service.
+     */
     @FXML
     public void stop() {
         executorService.shutdown();
@@ -269,6 +282,9 @@ public class ProfileViewController {
 
     boolean isEditingDetail = false;
 
+    /**
+     * Handles the edit bio button click event.
+     */
     @FXML
     private void handleEditBio() {
         if (isEditingDetail) {

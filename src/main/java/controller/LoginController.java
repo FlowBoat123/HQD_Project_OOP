@@ -33,6 +33,9 @@ import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.Objects;
 
+/**
+ * This class controls the login view and handles user authentication.
+ */
 public class LoginController {
     @FXML
     private TextField usernameField;
@@ -51,16 +54,26 @@ public class LoginController {
 
     private DataSource dataSource;
 
+    /**
+     * Initializes the controller.
+     */
     public void initialize() {
-//        logoImageView.setStyle("-fx-background-color: red;");
         Image image = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/logo.png")));
         logoImageView.setImage(image);
     }
 
+    /**
+     * Constructor to initialize the DataSource.
+     */
     public LoginController() {
         this.dataSource = DataSourceFactory.getDataSource();
     }
 
+    /**
+     * Handles the login button click event.
+     *
+     * @param event The ActionEvent that triggered this method.
+     */
     @FXML
     private void handleLogin(ActionEvent event) {
         String username = usernameField.getText();
@@ -145,7 +158,11 @@ public class LoginController {
         loginThread.start();
     }
 
-
+    /**
+     * Handles the sign-up button click event.
+     *
+     * @param actionEvent The ActionEvent that triggered this method.
+     */
     public void handleSignUp(ActionEvent actionEvent) {
         try {
             URL fxmlLocation = getClass().getResource("/org/example/javafxtutorial/signup.fxml");
