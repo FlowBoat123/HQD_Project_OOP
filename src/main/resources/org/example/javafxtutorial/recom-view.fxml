@@ -58,7 +58,7 @@
                </ScrollPane>
 
                <!-- Style 4 -->
-               <Label prefHeight="48.0" prefWidth="350.0" text="Trending in Computer Science">
+               <Label prefHeight="48.0" prefWidth="350.0" text="Trending in Fiction">
                   <font>
                      <Font name="Berlin Sans FB" size="24.0" />
                   </font>
