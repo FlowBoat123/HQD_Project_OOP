@@ -14,6 +14,7 @@ public class Book {
     private String isbn_13;
     private String coverImgUrl;
     private String status;
+    private String previewUrl;
     private int quantity;
     private int borrowedCopies;
     private int requestedCopies;
@@ -181,6 +182,17 @@ public class Book {
         for (String genre : genresArray) {
             addGenre(genre);
         }
+    }
+
+    public String getPreviewUrl() {
+        return previewUrl;
+    }
+
+    public void setPreviewUrl(String previewUrl) {
+        if (previewUrl == null) {
+            this.previewUrl = "https://www.youtube.com/watch?v=IzSYlr3VI1A";
+        }
+        this.previewUrl = previewUrl;
     }
 
     @Override

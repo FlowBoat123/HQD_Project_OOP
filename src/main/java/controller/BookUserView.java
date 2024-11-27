@@ -22,10 +22,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-import logic.Book;
-import logic.Comment;
-import logic.BookLoan;
-import logic.LibraryService;
+import logic.*;
 
 public class BookUserView {
 
@@ -56,6 +53,12 @@ public class BookUserView {
     @FXML
     private VBox commentsContainer; // Add this line
 
+    @FXML
+    private ImageView bookPreviewQR;
+
+    @FXML
+    private StackPane imageStackPane;
+
     private int loanStatus;
     private StackPane mainView;
     private Node previousContent;
@@ -64,6 +67,7 @@ public class BookUserView {
     private LibraryService libraryService;
     private List<Comment> comments = new ArrayList<>(); // Add this line
     private boolean inProfileView = false;
+    private boolean isShowingCover = true;
 
     public void initializeBookViewForUser(Book book) {
         this.book = book;
@@ -78,13 +82,16 @@ public class BookUserView {
         readButton.setText(book.getStatus());
         bookCover.setPreserveRatio(true);
         bookCover.setSmooth(true);
+        QRGenerator.displayQRCode(book.getPreviewUrl(), bookPreviewQR);
         if (book.getCoverImgUrl() != null) {
             bookCover.setImage(new Image(book.getCoverImgUrl(), true));
         }
+        bookPreviewQR.setVisible(false);
         if (loanStatus == BookLoan.WAITING && book.getBorrowedCopies() < book.getQuantity() && !inProfileView) {
             notifyReadyBookDialog();
         }
         comments = libraryService.getBookComments(book);
+        imageStackPane.setOnMouseClicked(event -> toggleImage());
         displayComments();
     }
 
@@ -275,5 +282,16 @@ public class BookUserView {
         readButton.setVisible(false);
         readButton.setManaged(false);
         commentIcon.setDisable(true);
+    }
+
+    private void toggleImage() {
+        if (isShowingCover) {
+            bookCover.setVisible(false);
+            bookPreviewQR.setVisible(true);
+        } else {
+            bookCover.setVisible(true);
+            bookPreviewQR.setVisible(false);
+        }
+        isShowingCover = !isShowingCover;
     }
 }

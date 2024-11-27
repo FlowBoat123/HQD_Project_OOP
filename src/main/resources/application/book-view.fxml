@@ -10,6 +10,7 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
@@ -40,11 +41,15 @@
                                           </ImageView>
                                        </children>
                                     </HBox>
-                                    <ImageView fx:id="bookCover" fitHeight="328.0" fitWidth="214.0" pickOnBounds="true" preserveRatio="true" styleClass="book-cover">
+                                    <StackPane fx:id="imageStackPane">
                                        <VBox.margin>
                                           <Insets bottom="20.0" top="5.0" />
                                        </VBox.margin>
-                                    </ImageView>
+                                       <children>
+                                          <ImageView fx:id="bookCover" fitHeight="328.0" fitWidth="214.0" pickOnBounds="true" preserveRatio="true" styleClass="book-cover" />
+                                          <ImageView fx:id="bookPreviewQR" fitHeight="250.0" fitWidth="250.0" pickOnBounds="true" preserveRatio="true" />
+                                       </children>
+                                    </StackPane>
                                     <VBox>
                                        <children>
                                           <HBox alignment="CENTER" prefHeight="48.0" prefWidth="335.0" spacing="10.0">

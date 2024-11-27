@@ -8,8 +8,10 @@ import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.StackPane;
 import logic.Book;
 import logic.LibraryService;
+import logic.QRGenerator;
 
 import java.util.function.Consumer;
 
@@ -21,6 +23,9 @@ public class BookController {
 
     @FXML
     private ImageView bookCover;
+
+    @FXML
+    private ImageView bookPreviewQR;
 
     @FXML
     private Label bookDescription;
@@ -40,10 +45,14 @@ public class BookController {
     @FXML
     private Label quantityLabel;
 
+    @FXML
+    private StackPane imageStackPane;
+
     private AnchorPane mainView;
     private Node previousContent;
     private Consumer<Void> refreshLibraryViewCallback;
     Book book;
+    private boolean isShowingCover = true;
 
     private LibraryService libraryService;
 
@@ -62,9 +71,12 @@ public class BookController {
         bookCover.setFitHeight(300);
         bookCover.setPreserveRatio(true);
         bookCover.setSmooth(true);
+        QRGenerator.displayQRCode(book.getPreviewUrl(), bookPreviewQR);
+        bookPreviewQR.setVisible(false);
         if(book.getCoverImgUrl() != null) {
             bookCover.setImage(new Image(book.getCoverImgUrl(), true));
         }
+        imageStackPane.setOnMouseClicked(event -> toggleImage());
     }
 
     @FXML
@@ -125,5 +137,16 @@ public class BookController {
         }
         alert.setContentText(message);
         alert.showAndWait();
+    }
+
+    private void toggleImage() {
+        if (isShowingCover) {
+            bookCover.setVisible(false);
+            bookPreviewQR.setVisible(true);
+        } else {
+            bookCover.setVisible(true);
+            bookPreviewQR.setVisible(false);
+        }
+        isShowingCover = !isShowingCover;
     }
 }

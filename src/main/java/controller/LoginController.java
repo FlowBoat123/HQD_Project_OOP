@@ -83,69 +83,72 @@ public class LoginController {
             protected Void call() throws SQLException {
                 updateMessage("Logging in...");
 
-                Connection connection = dataSource.getConnection();
-                if (connection == null) {
-                    updateMessage("Failed to connect to the database");
+                try (Connection connection = dataSource.getConnection()) {
+                    if (connection == null) {
+                        updateMessage("Failed to connect to the database");
+                        return null;
+                    }
+
+                    String query = "SELECT id, username, password, creation_time, bio, email, website, details, avatar FROM users WHERE username = ? AND password = ?";
+
+                    try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+                        preparedStatement.setString(1, username);
+                        preparedStatement.setString(2, passwordStr);
+                        ResultSet resultSet = preparedStatement.executeQuery();
+
+                        if (resultSet.next()) {
+                            int ID = resultSet.getInt("id");
+                            UserSession.getInstance().setUserID(ID);
+                            if (!username.equals("admin") && !passwordStr.equals("admin")) {
+                                String retrievedUsername = resultSet.getString("username");
+                                String retrievedPassword = resultSet.getString("password");
+                                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+                                Date creationTime = dateFormat.parse(resultSet.getString("creation_time"));
+                                String bio = resultSet.getString("bio");
+                                String email = resultSet.getString("email");
+                                String website = resultSet.getString("website");
+                                String details = resultSet.getString("details");
+                                String avatar = resultSet.getString("avatar");
+                                User user = new User(ID, retrievedUsername, retrievedPassword, creationTime, bio, email, website, details, avatar);
+                                UserSession.getInstance().setUser(user);
+                                FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(getClass().getResource("/application/UserDashboard.fxml")));
+                                Parent userDashboard = loader.load();
+                                UserDashboardController controller = loader.getController();
+                                controller.setUser(user);
+                                Scene userDashboardScene = new Scene(userDashboard);
+
+                                Platform.runLater(() -> {
+                                    Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                                    window.setScene(userDashboardScene);
+                                    window.show();
+                                });
+                            } else {
+                                Parent adminDashboard = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/application/AdminDashboard.fxml")));
+                                Scene adminDashboardScene = new Scene(adminDashboard);
+
+                                Platform.runLater(() -> {
+                                    Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                                    window.setScene(adminDashboardScene);
+                                    window.show();
+                                });
+                            }
+                        } else {
+                            updateMessage("Invalid username or password");
+                        }
+                    } catch (SQLException | IOException e) {
+                        e.printStackTrace();
+                        updateMessage("Failed to login");
+                    } catch (ParseException e) {
+                        throw new RuntimeException(e);
+                    }
                     return null;
                 }
-
-                String query = "SELECT id, username, password, creation_time, bio, email, website, details, avatar FROM users WHERE username = ? AND password = ?";
-
-                try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-                    preparedStatement.setString(1, username);
-                    preparedStatement.setString(2, passwordStr);
-                    ResultSet resultSet = preparedStatement.executeQuery();
-
-                    if (resultSet.next()) {
-                        int ID = resultSet.getInt("id");
-                        UserSession.getInstance().setUserID(ID);
-                        if (!username.equals("admin") && !passwordStr.equals("admin")) {
-                            String retrievedUsername = resultSet.getString("username");
-                            String retrievedPassword = resultSet.getString("password");
-                            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-                            Date creationTime = dateFormat.parse(resultSet.getString("creation_time"));
-                            String bio = resultSet.getString("bio");
-                            String email = resultSet.getString("email");
-                            String website = resultSet.getString("website");
-                            String details = resultSet.getString("details");
-                            String avatar = resultSet.getString("avatar");
-                            User user = new User(ID, retrievedUsername, retrievedPassword, creationTime, bio, email, website, details, avatar);
-                            UserSession.getInstance().setUser(user);
-                            FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(getClass().getResource("/application/UserDashboard.fxml")));
-                            Parent userDashboard = loader.load();
-                            UserDashboardController controller = loader.getController();
-                            controller.setUser(user);
-                            Scene userDashboardScene = new Scene(userDashboard);
-
-                            Platform.runLater(() -> {
-                                Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-                                window.setScene(userDashboardScene);
-                                window.show();
-                            });
-                        } else {
-                            Parent adminDashboard = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/application/AdminDashboard.fxml")));
-                            Scene adminDashboardScene = new Scene(adminDashboard);
-
-                            Platform.runLater(() -> {
-                                Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-                                window.setScene(adminDashboardScene);
-                                window.show();
-                            });
-                        }
-                    } else {
-                        updateMessage("Invalid username or password");
-                    }
-                } catch (SQLException | IOException e) {
-                    e.printStackTrace();
-                    updateMessage("Failed to login");
-                } catch (ParseException e) {
-                    throw new RuntimeException(e);
-                }
-                return null;
             }
         };
 
-        statusLabel.textProperty().bind(loginTask.messageProperty());
+        statusLabel.textProperty().
+
+                bind(loginTask.messageProperty());
 
         loginTask.setOnRunning(e -> loadingIndicator.setVisible(true));
         loginTask.setOnSucceeded(e -> loadingIndicator.setVisible(false));

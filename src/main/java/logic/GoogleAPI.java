@@ -133,6 +133,11 @@ public class GoogleAPI {
             JsonObject imageLinks = itemJson.getAsJsonObject("imageLinks");
             coverImageUrl = imageLinks.has("thumbnail") ? imageLinks.get("thumbnail").getAsString() : null;
         }
+        String previewLink = null;
+        if (itemJson.has("previewLink")) {
+            System.out.println("Preview link: " + itemJson.get("previewLink").getAsString());
+            previewLink = itemJson.get("previewLink").getAsString();
+        }
         Book book = new Book();
         book.setTitle(itemJson.get("title").getAsString());
         JsonArray authorsJson = itemJson.getAsJsonArray("authors");
@@ -151,6 +156,7 @@ public class GoogleAPI {
         book.setIsbn_10(isbn10);
         book.setIsbn_13(isbn13);
         book.setCoverImgUrl(coverImageUrl);
+        book.setPreviewUrl(previewLink);
         return book;
     }
 }

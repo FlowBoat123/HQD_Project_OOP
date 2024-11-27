@@ -82,7 +82,7 @@ public class SignupController {
             }
         };
         executorService.submit(task);
-        shutdown();
+//        shutdown();
     }
 
     /**

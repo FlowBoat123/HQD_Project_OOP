@@ -101,6 +101,7 @@ public class BookLoanDAO implements DAO<BookLoan> {
                 loanedBook.setCoverImgUrl(resultSet.getString("cover_url"));
                 loanedBook.setQuantity(resultSet.getInt("quantity"));
                 loanedBook.setBorrowedCopies(resultSet.getInt("borrowedCopies"));
+                loanedBook.setPreviewUrl(resultSet.getString("preview_url"));
                 loan.setBook(loanedBook);
                 loan.setUserID(resultSet.getInt("userID"));
                 SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
@@ -144,6 +145,7 @@ public class BookLoanDAO implements DAO<BookLoan> {
                 loanedBook.setCoverImgUrl(resultSet.getString("cover_url"));
                 loanedBook.setQuantity(resultSet.getInt("quantity"));
                 loanedBook.setBorrowedCopies(resultSet.getInt("borrowedCopies"));
+                loanedBook.setPreviewUrl(resultSet.getString("preview_url"));
                 loan.setBook(loanedBook);
                 loan.setUserID(resultSet.getInt("userID"));
                 SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");

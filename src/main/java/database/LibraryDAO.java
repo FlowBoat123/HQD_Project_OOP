@@ -20,9 +20,8 @@ public class LibraryDAO implements DAO<Book>{
     }
     @Override
     public void add(Book book) {
-        String query = "INSERT INTO library (title, authors, description, isbn_10, isbn_13, genres, cover_url, quantity, borrowedCopies) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
-        try {
-             Connection connection = dataSource.getConnection();
+        String query = "INSERT INTO library (title, authors, description, isbn_10, isbn_13, genres, cover_url, quantity, borrowedCopies, preview_url) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        try (Connection connection = dataSource.getConnection()) {
              PreparedStatement statement = connection.prepareStatement(query);
              statement.setString(1, book.getTitle());
              statement.setString(2, book.getAuthorsAsString());
@@ -33,6 +32,7 @@ public class LibraryDAO implements DAO<Book>{
              statement.setString(7, book.getCoverImgUrl());
              statement.setInt(8, book.getQuantity());
              statement.setInt(9, book.getBorrowedCopies());
+             statement.setString(10, book.getPreviewUrl());
              statement.executeUpdate();
         } catch (Exception e) {
             e.printStackTrace();
@@ -48,8 +48,7 @@ public class LibraryDAO implements DAO<Book>{
     public void update(Book book) {
         // Update the quantity of the book
         String query = "UPDATE library SET quantity = ? WHERE isbn_10 = ?";
-        try {
-            Connection connection = dataSource.getConnection();
+        try (Connection connection = dataSource.getConnection()){
             PreparedStatement statement = connection.prepareStatement(query);
             statement.setInt(1, book.getQuantity());
             statement.setString(2, book.getIsbn_10());
@@ -78,6 +77,7 @@ public class LibraryDAO implements DAO<Book>{
                 book.setCoverImgUrl(resultSet.getString("cover_url"));
                 book.setQuantity(resultSet.getInt("quantity"));
                 book.setBorrowedCopies(resultSet.getInt("borrowedCopies"));
+                book.setPreviewUrl(resultSet.getString("preview_url"));
                 books.add(book);
             }
         } catch (SQLException e) {
@@ -89,8 +89,7 @@ public class LibraryDAO implements DAO<Book>{
     public void updateBorrowedCopies(Book book) {
         // Update the quantity of the book
         String query = "UPDATE library SET borrowedCopies = ? WHERE isbn_10 = ?";
-        try {
-            Connection connection = dataSource.getConnection();
+        try (Connection connection = dataSource.getConnection()) {
             PreparedStatement statement = connection.prepareStatement(query);
             statement.setInt(1, book.getBorrowedCopies());
             statement.setString(2, book.getIsbn_10());
