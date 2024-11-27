@@ -2,9 +2,12 @@
 
 ## 📝 Giới thiệu
 Đây là một ứng dụng quản lý thư viện được xây dựng nhằm cải thiện trải nghiệm người dùng trong việc mượn, trả, tra cứu sách và hỗ trợ quản lý thư viện một cách hiệu quả, tiện lợi.
-
+<br><br>
+### Tác giả:
+1. Đầu Hồng Quang - 23020135
+2. Nguyễn Trung Hiển - 23020063
+3. Trương Quang Duy - 23020033
 ---
-
 ## ⚡ Tính năng chính
 
 ### **Giao diện Người dùng (User):**
@@ -13,23 +16,21 @@
      - **Tủ gợi ý đọc**: Dựa trên thói quen và đánh giá sách của người dùng.
      - **Tủ toàn bộ sách**: Liệt kê tất cả sách trong thư viện.
    - Tìm kiếm sách bằng: 
-     - Tên sách, tác giả, thể loại hoặc ISBN.
+     - Tên sách hoặc ISBN.
    - Giao diện trực quan, thân thiện và dễ sử dụng.
 
 2. **Chức năng mượn/trả sách:**
    - Người dùng có thể:
-     - **Unread** bạn có thể mượn sách.
-     - **Waiting** nếu số lượng sách đã hết, bạn trong danh sách chờ.
-     - **Waiting** nếu số lượng sách đã được thêm ứng dụng sẽ có request trong lần tiếp theo bạn đăng nhập rằng bạn muốn mượn cuốn sách này nữa hay không.
-     - **Return** nếu bạn muốn trả sách
-     - **Completed** nếu bạn đã trả sách  
+     - **Borrow** bạn có thể mượn sách.
+     - **Waiting** nếu số lượng sách đã hết, bạn trong danh sách chờ. Hệ thống sẽ thông báo nếu sách yêu cầu được admin thêm vào thư viện.
+     - **Return** đánh dấu đã đọc xong và trả sách.
+     - **Completed** sách đã đọc xong.
 
 3. **Tích hợp mã QR:**
-   - Quét mã QR để lấy thông tin.
+   - Quét mã QR để đọc preview của sách.
      
 4. **Comment:**
    - Hãy để lại comment của bạn về điều bạn ấn tượng nhất với mỗi cuốn sách bạn đọc và mọi người đều có thể thấy cảm nhận của bạn về cuốn sách đó.
-
 ---
 
 ### **Giao diện Người quản lý (Admin):**
@@ -52,22 +53,25 @@
 1. **Ngôn ngữ lập trình chính:**  
    - Java  
    - Sử dụng các tính năng lập trình hướng đối tượng (*OOP*) như trừu tượng hóa, kế thừa, đa hình, trừu tượng hóa.  
-   - Tích hợp **Design Pattern: Singleton** để tối ưu hóa quản lý tài nguyên.
+   - Tích hợp **Design Pattern: Singleton, Data Access Object** để tối ưu hóa và quản lý tài nguyên.
 
 2. **Cơ sở dữ liệu:**  
-   - SQLite: Quản lý và lưu trữ thông tin sách, người dùng và các hoạt động liên quan.
+   - SQLite: Quản lý và lưu trữ thông tin sách, người dùng và các hoạt động liên quan, lưu trữ local tại project .
 
 3. **Kiểm thử:**  
    - JUnit: Kiểm tra các thành phần logic để đảm bảo ứng dụng hoạt động chính xác.
 
 4. **API tích hợp:**  
-   - **Google API**: Hỗ trợ tra cứu thông tin sách qua mã ISBN.
+   - **Google API**: Hỗ trợ tra cứu thông tin sách qua tiêu đề và mã ISBN.
 
 5. **Tính năng nâng cao:**
    - Thiết kế đa luồng (**Multithreading**) giúp cải thiện hiệu suất và giảm thời gian chờ của người dùng.
-
 ---
-
+## Biểu đồ lớp
+![image](/src/main/resources/images/classdiagram.png)
+Đơn giản hóa:
+![image](/src/main/resources/images/meme.jpg)
+---
 ## 🎯 Mục tiêu
 - **Người dùng:**
   - Đơn giản hóa việc tra cứu, mượn và trả sách.
@@ -94,8 +98,7 @@
 
 ### 3. **Tài khoản mặc định:**
    - **Người dùng (User):**
-     - Tài khoản: `duy`
-     - Mật khẩu: `duy`
+     - Tự tạo tài khoản và quản lý
    - **Người quản lý (Admin):**
      - Tài khoản: `admin`
      - Mật khẩu: `admin`
@@ -107,5 +110,6 @@
 2. Cải thiện thuật toán gợi ý sách dựa trên lịch sử mượn/trả.
 3. Mở rộng giao diện quản lý báo cáo thống kê chi tiết cho Admin.
 4. Hỗ trợ giao diện đa ngôn ngữ.
-
+5. Cải thiện giao diện.
+6. Đa dạng hóa các thể loại tài liệu.
 ---

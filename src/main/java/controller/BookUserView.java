@@ -108,6 +108,9 @@ public class BookUserView {
         if (loanStatus == BookLoan.WAITING && book.getBorrowedCopies() < book.getQuantity() && !inProfileView) {
             notifyReadyBookDialog();
         }
+        if (loanStatus == BookLoan.COMPLETED) {
+            readButton.setVisible(false);
+        }
         comments = libraryService.getBookComments(book);
         imageStackPane.setOnMouseClicked(event -> toggleImage());
         displayComments();
@@ -136,7 +139,6 @@ public class BookUserView {
             this.borrowBook();
         } else if (loanStatus == BookLoan.READING) {
             this.returnBook();
-            showNotification("Book returned successfully");
         } else {
             showNotification("Book is not available");
         }
@@ -291,6 +293,7 @@ public class BookUserView {
     public void returnBook() {
         libraryService.returnBook(book);
         loanStatus = BookLoan.NOT_BORROWED;
+        showLoanConditionAlert("Book returned successfully");
         this.updateLoanStatus();
         if (shelfController != null) {
             shelfController.refreshView();
