@@ -19,8 +19,8 @@
 2. **Chức năng mượn/trả sách:**
    - Người dùng có thể:
      - **Unread** bạn có thể mượn sách.
-     - **Chờ đợi** nếu số lượng sách đã hết, bạn trong danh sách chờ.
-     - **Chờ đợi** nếu số lượng sách đã được thêm ứng dụng sẽ có request trong lần tiếp theo bạn đăng nhập rằng bạn muốn mượn cuốn sách này nữa hay không.
+     - **Waiting** nếu số lượng sách đã hết, bạn trong danh sách chờ.
+     - **Waiting** nếu số lượng sách đã được thêm ứng dụng sẽ có request trong lần tiếp theo bạn đăng nhập rằng bạn muốn mượn cuốn sách này nữa hay không.
      - **Return** nếu bạn muốn trả sách
      - **Completed** nếu bạn đã trả sách  
 
