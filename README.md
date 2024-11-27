@@ -90,11 +90,11 @@
 
 ### 3. **Tài khoản mặc định:**
    - **Người dùng (User):**
-     - Tài khoản: `user`
-     - Mật khẩu: `user123`
+     - Tài khoản: `duy`
+     - Mật khẩu: `duy`
    - **Người quản lý (Admin):**
      - Tài khoản: `admin`
-     - Mật khẩu: `admin123`
+     - Mật khẩu: `admin`
 
 ---
 
@@ -110,5 +110,3 @@
 
 
 ---
-
-Cảm ơn bạn đã sử dụng ứng dụng của chúng tôi! Nếu có vấn đề hoặc góp ý, vui lòng liên hệ nhóm qua email: **library.support@example.com**.
