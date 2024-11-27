@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Spinner?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="660.0" prefWidth="1030.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.BookController">
+    <children>
+      <VBox prefHeight="720.0" prefWidth="1280.0" styleClass="white-background" stylesheets="@main.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <SplitPane prefHeight="678.0" prefWidth="1030.0" styleClass="white-background" stylesheets="@main.css">
+              <items>
+                  <HBox prefHeight="683.0" prefWidth="1028.0" stylesheets="@main.css">
+                     <children>
+                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="612.0" prefWidth="350.0">
+                           <children>
+                              <VBox alignment="TOP_CENTER" layoutX="42.0" layoutY="47.0" prefHeight="612.0" prefWidth="266.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                 <children>
+                                    <HBox alignment="CENTER_LEFT" prefHeight="40.0" prefWidth="268.0">
+                                       <opaqueInsets>
+                                          <Insets />
+                                       </opaqueInsets>
+                                       <children>
+                                          <ImageView fitHeight="37.0" fitWidth="45.0" onMouseClicked="#handleGoBack" pickOnBounds="true" preserveRatio="true">
+                                             <HBox.margin>
+                                                <Insets left="10.0" />
+                                             </HBox.margin>
+                                             <image>
+                                                <Image url="@../images/backicon.png" />
+                                             </image>
+                                          </ImageView>
+                                       </children>
+                                    </HBox>
+                                    <StackPane fx:id="imageStackPane">
+                                       <VBox.margin>
+                                          <Insets bottom="20.0" top="5.0" />
+                                       </VBox.margin>
+                                       <children>
+                                          <ImageView fx:id="bookCover" fitHeight="328.0" fitWidth="214.0" pickOnBounds="true" preserveRatio="true" styleClass="book-cover" />
+                                          <ImageView fx:id="bookPreviewQR" fitHeight="250.0" fitWidth="250.0" pickOnBounds="true" preserveRatio="true" />
+                                       </children>
+                                    </StackPane>
+                                    <VBox>
+                                       <children>
+                                          <HBox alignment="CENTER" prefHeight="48.0" prefWidth="335.0" spacing="10.0">
+                                             <children>
+                                                <Button mnemonicParsing="false" onAction="#handleUpdateBook" prefHeight="40.0" prefWidth="163.0" styleClass="green-button" stylesheets="@main.css" text="Add copies to library">
+                                                   <font>
+                                                      <Font name="Calibri" size="16.0" />
+                                                   </font>
+                                                </Button>
+                                                <Spinner fx:id="numberPicker" editable="true" prefHeight="42.0" prefWidth="63.0" stylesheets="@bookview.css" />
+                                             </children>
+                                          </HBox>
+                                       </children>
+                                    </VBox>
+                                    <Button mnemonicParsing="false" onAction="#handleRemoveAll" prefHeight="40.0" prefWidth="236.0" styleClass="red-button" stylesheets="@main.css" text="Remove all copies" />
+                                    <Label fx:id="notificationLabel" prefHeight="29.0" prefWidth="230.0" text="Label" visible="false">
+                                       <VBox.margin>
+                                          <Insets top="10.0" />
+                                       </VBox.margin>
+                                    </Label>
+                                 </children>
+                              </VBox>
+                           </children>
+                        </AnchorPane>
+                        <ScrollPane prefHeight="612.0" prefWidth="842.0" styleClass="white-background" stylesheets="@main.css">
+                          <content>
+                            <AnchorPane prefHeight="659.0" prefWidth="745.0">
+                                 <children>
+                                    <VBox prefHeight="659.0" prefWidth="745.0" styleClass="white-background" stylesheets="@main.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                       <children>
+                                          <VBox prefWidth="745.0">
+                                             <padding>
+                                                <Insets left="50.0" top="40.0" />
+                                             </padding>
+                                             <children>
+                                                <Label fx:id="bookTitle" prefHeight="4.0" prefWidth="729.0" styleClass="label-wrap" text="BOOK TITLE">
+                                                   <font>
+                                                      <Font name="Calibri Bold" size="36.0" />
+                                                   </font>
+                                                </Label>
+                                                <Label fx:id="bookAuthor" layoutX="60.0" layoutY="50.0" prefHeight="0.0" prefWidth="727.0" styleClass="label-wrap" text="Label">
+                                                   <font>
+                                                      <Font size="18.0" />
+                                                   </font>
+                                                </Label>
+                                                <Label fx:id="bookDescription" alignment="TOP_LEFT" layoutX="60.0" layoutY="91.0" lineSpacing="1.2" minHeight="-Infinity" prefHeight="307.0" prefWidth="683.0" styleClass="label-wrap" wrapText="true">
+                                                   <font>
+                                                      <Font name="Calibri" size="13.0" />
+                                                   </font>
+                                                   <VBox.margin>
+                                                      <Insets top="10.0" />
+                                                   </VBox.margin>
+                                                </Label>
+                                                <Label fx:id="genreLabel" prefHeight="49.0" prefWidth="695.0" text="Label">
+                                                   <font>
+                                                      <Font name="Calibri" size="18.0" />
+                                                   </font>
+                                                </Label>
+                                                <Label fx:id="quantityLabel" layoutX="60.0" layoutY="145.0" prefHeight="49.0" prefWidth="728.0" text="Label">
+                                                   <font>
+                                                      <Font name="Calibri" size="18.0" />
+                                                   </font>
+                                                </Label>
+                                                <Label fx:id="borrowedNumLabel" layoutX="60.0" layoutY="194.0" prefHeight="49.0" prefWidth="728.0" text="Label">
+                                                   <font>
+                                                      <Font name="Calibri" size="18.0" />
+                                                   </font>
+                                                </Label>
+                                             </children>
+                                          </VBox>
+                                       </children>
+                                    </VBox>
+                                 </children>
+                              </AnchorPane>
+                          </content>
+                        </ScrollPane>
+                     </children>
+                  </HBox>
+              </items>
+            </SplitPane>
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>

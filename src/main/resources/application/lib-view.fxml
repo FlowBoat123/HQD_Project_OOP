@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.String?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="660.0" prefWidth="1030.0" styleClass="transparent-border" stylesheets="@main.css" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.LibraryViewController">
+   <children>
+      <HBox alignment="CENTER_LEFT" prefHeight="90.0" prefWidth="1030.0" spacing="20.0" stylesheets="@main.css">
+         <children>
+            <StackPane prefHeight="88.0" prefWidth="284.0" />
+            <VBox alignment="CENTER">
+               <children>
+                  <HBox alignment="CENTER" prefHeight="40.0" prefWidth="451.0" styleClass="round-corner" stylesheets="@main.css">
+                     <children>
+                        <TextField fx:id="searchField" prefHeight="30.0" prefWidth="413.0" promptText="Search" styleClass="transparent" stylesheets="@main.css" />
+                        <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../images/searchicon.png" />
+                           </image>
+                        </ImageView>
+                     </children>
+                  </HBox>
+               </children>
+            </VBox>
+         </children>
+         <styleClass>
+            <String fx:value="white-background" />
+            <String fx:value="gray-border" />
+            <String fx:value="border-bottom" />
+         </styleClass>
+      </HBox>
+      <ScrollPane prefHeight="570.0" prefWidth="1030.0" styleClass="white-background" stylesheets="@main.css">
+         <content>
+            <TableView fx:id="library" prefHeight="565.0" prefWidth="1024.0">
+               <columns>
+                  <TableColumn fx:id="bookTitleCol" editable="false" prefWidth="348.0" resizable="false" text="Title" />
+                  <TableColumn fx:id="bookAuthorsCol" editable="false" minWidth="0.0" prefWidth="148.0" resizable="false" text="Authors" />
+                  <TableColumn fx:id="bookGenresCol" editable="false" prefWidth="116.0" resizable="false" text="Genres" />
+                  <TableColumn fx:id="bookIsbn13Col" editable="false" minWidth="0.0" prefWidth="143.0" resizable="false" text="ISBN-13" />
+                  <TableColumn fx:id="quantityCol" editable="false" prefWidth="76.0" resizable="false" text="Quantity" />
+                  <TableColumn fx:id="borrowedCopiesCol" prefWidth="95.0" text="BorrowedCopy" />
+                  <TableColumn fx:id="requestedCopiesCol" prefWidth="97.0" text="RequestedCopy" />
+               </columns>
+            </TableView>
+         </content>
+      </ScrollPane>
+   </children>
+</VBox>

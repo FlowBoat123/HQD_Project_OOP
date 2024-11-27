@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="486.0" prefWidth="735.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.AvatarSelectionController">
+    <children>
+        <VBox alignment="CENTER" layoutX="100.0" layoutY="100.0" spacing="10.0">
+            <HBox fx:id="avatarContainer" alignment="CENTER" spacing="10.0" />
+        </VBox>
+        <Label alignment="CENTER" contentDisplay="CENTER" layoutX="266.0" layoutY="35.0" prefHeight="78.0" prefWidth="204.0" text="Select an Avatar" textOverrun="CLIP">
+            <font>
+                <Font size="25.0" />
+            </font>
+        </Label>
+        <ImageView fx:id="imageView1" fitHeight="100.0" fitWidth="110.0" layoutX="90.0" layoutY="137.0" pickOnBounds="true" preserveRatio="true" />
+        <ImageView fx:id="imageView2" fitHeight="106.0" fitWidth="110.0" layoutX="399.0" layoutY="134.0" pickOnBounds="true" preserveRatio="true" />
+        <ImageView fx:id="imageView3" fitHeight="106.0" fitWidth="110.0" layoutX="250.0" layoutY="134.0" pickOnBounds="true" preserveRatio="true" />
+        <ImageView fx:id="imageView4" fitHeight="106.0" fitWidth="110.0" layoutX="545.0" layoutY="134.0" pickOnBounds="true" preserveRatio="true" />
+        <ImageView fx:id="imageView5" fitHeight="106.0" fitWidth="110.0" layoutX="90.0" layoutY="289.0" pickOnBounds="true" preserveRatio="true" />
+        <ImageView fx:id="imageView6" fitHeight="106.0" fitWidth="110.0" layoutX="250.0" layoutY="289.0" pickOnBounds="true" preserveRatio="true" />
+        <ImageView fx:id="imageView7" fitHeight="106.0" fitWidth="110.0" layoutX="399.0" layoutY="289.0" pickOnBounds="true" preserveRatio="true" />
+        <ImageView fx:id="imageView8" fitHeight="106.0" fitWidth="110.0" layoutX="545.0" layoutY="289.0" pickOnBounds="true" preserveRatio="true" />
+    </children>
+</AnchorPane>
