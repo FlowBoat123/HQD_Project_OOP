@@ -108,5 +108,4 @@
 
 ## 📷 Hình ảnh minh họa
 
-![UML Map] https://imgur.com/a/psBWzSh
 ---
