@@ -105,7 +105,3 @@
 4. Hỗ trợ giao diện đa ngôn ngữ.
 
 ---
-
-## 📷 Hình ảnh minh họa
-![Mô tả](https://ibb.co/ypKY3dC)
----
