@@ -33,13 +33,17 @@
 ---
 
 ### **Giao diện Người quản lý (Admin):**
-1. **Quản lý sách:**
-   - Thêm, sửa, hoặc xóa sách khỏi thư viện.
-   - Theo dõi lượng sách hiện tại trong thư viện.
+1. **Quản lý tài liệu:**
+   - Thêm, sửa, hoặc xóa tài liệu khỏi thư viện.
+   - Theo dõi lượng tài liệu hiện tại trong thư viện.
 
 2. **Quản lý người dùng:**
    - Thêm hoặc xóa người dùng trong hệ thống.
    - Theo dõi hoạt động mượn sách của người dùng.
+     
+3. **Xử lý trường hợp lỗi:**
+   - Thông báo lỗi.
+   - Kiểm tra điều kiện khi mượn tài liệu.
 
 ---
 
