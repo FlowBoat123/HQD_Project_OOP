@@ -35,7 +35,7 @@
                                                 <Insets left="10.0" />
                                              </HBox.margin>
                                              <image>
-                                                <Image url="@../../../images/backicon.png" />
+                                                <Image url="@../images/backicon.png" />
                                              </image>
                                           </ImageView>
                                        </children>

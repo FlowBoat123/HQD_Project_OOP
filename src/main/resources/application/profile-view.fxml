@@ -34,9 +34,6 @@
                     <VBox.margin>
                         <Insets />
                     </VBox.margin>
-                    <image>
-                        <Image url="@../../../../../../../../OneDrive/Pictures/sillycat/8.jpg" />
-                    </image>
                 </ImageView>
                 <!-- Change Profile Image Button -->
                 <Button fx:id="changeProfileImageButton" onAction="#handleChangeProfileImage" style="-fx-background-color: lightblue; -fx-font-size: 14px;" text="Change Image" />

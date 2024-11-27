@@ -18,20 +18,15 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Callback;
-import org.example.javafxtutorial.DatabaseConnection;
 import logic.User;
-import org.example.javafxtutorial.LibraryService;
+import logic.LibraryService;
 
 import javax.sql.DataSource;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
@@ -240,7 +235,7 @@ public class UserFormController {
 
     private void loadUserProfile(User user) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/example/javafxtutorial/user_profile.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/application/user_profile.fxml"));
             Parent userProfile = loader.load();
 
             // Pass user data to UserProfileController

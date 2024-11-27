@@ -1,6 +1,5 @@
 package controller;
 
-import database.UserDAO;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -10,16 +9,13 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.ProgressBar;
-import javafx.scene.control.TextArea;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import logic.User;
-import org.example.javafxtutorial.LibraryService;
-import org.example.javafxtutorial.ShelfController;
+import logic.LibraryService;
 
 import java.io.IOException;
 import java.util.concurrent.ExecutorService;
@@ -87,7 +83,7 @@ public class UserProfileController {
     @FXML
     public void showScene1(ActionEvent event) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/example/javafxtutorial/profile-view.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/application/profile-view.fxml"));
             AnchorPane newContent = loader.load();
             ProfileViewController profileViewController = loader.getController();
             profileViewController.setUser(this.user);
@@ -109,7 +105,7 @@ public class UserProfileController {
     @FXML
     public void showScene2(ActionEvent event) {
         String shelfName = "Currently Reading";
-        loadView("/org/example/javafxtutorial/shelf-view.fxml", (loader) -> {
+        loadView("/application/shelf-view.fxml", (loader) -> {
             ShelfController shelfController = loader.getController();
             shelfController.setLibraryService(libraryService);
             shelfController.setMainView(contentPane);
@@ -131,7 +127,7 @@ public class UserProfileController {
     @FXML
     public void showScene3(ActionEvent event) {
         String shelfName = "Completed";
-        loadView("/org/example/javafxtutorial/shelf-view.fxml", (loader) -> {
+        loadView("/application/shelf-view.fxml", (loader) -> {
             ShelfController shelfController = loader.getController();
             shelfController.setLibraryService(libraryService);
             shelfController.setMainView(contentPane);
@@ -153,7 +149,7 @@ public class UserProfileController {
     @FXML
     public void showScene4(ActionEvent event) {
         String shelfName = "Waiting";
-        loadView("/org/example/javafxtutorial/shelf-view.fxml", (loader) -> {
+        loadView("/application/shelf-view.fxml", (loader) -> {
             ShelfController shelfController = loader.getController();
             shelfController.setLibraryService(libraryService);
             shelfController.setMainView(contentPane);
@@ -185,9 +181,9 @@ public class UserProfileController {
         try {
             FXMLLoader loader;
             if (user.getID() == 2 || this.isAdmin) {
-                loader = new FXMLLoader(getClass().getResource("/org/example/javafxtutorial/AdminDashboard.fxml"));
+                loader = new FXMLLoader(getClass().getResource("/application/AdminDashboard.fxml"));
             } else {
-                loader = new FXMLLoader(getClass().getResource("/org/example/javafxtutorial/UserDashboard.fxml"));
+                loader = new FXMLLoader(getClass().getResource("/application/UserDashboard.fxml"));
             }
 
             Parent root = loader.load();

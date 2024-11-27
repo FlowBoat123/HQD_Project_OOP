@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<HBox fx:id="box" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="400.0" spacing="15.0" style="-fx-background-radius: 15;" stylesheets="@cardStyle.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.javafxtutorial.BookCardController">
+<HBox fx:id="box" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="400.0" spacing="15.0" style="-fx-background-radius: 15;" stylesheets="@cardStyle.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.BookCardController">
    <children>
       <ImageView fx:id="coverImg" fitHeight="155.0" fitWidth="155.0" pickOnBounds="true" preserveRatio="true" />
       <VBox alignment="CENTER" prefHeight="185.0" prefWidth="246.0" spacing="10.0">

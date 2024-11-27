@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.Consumer;
+
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Platform;
@@ -24,10 +24,8 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 import logic.Book;
 import logic.Comment;
-import org.example.javafxtutorial.CommentController;
 import logic.BookLoan;
-import org.example.javafxtutorial.LibraryService;
-import org.example.javafxtutorial.ShelfController;
+import logic.LibraryService;
 
 public class BookUserView {
 
@@ -121,7 +119,7 @@ public class BookUserView {
     @FXML
     private void handleComment() {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/example/javafxtutorial/userComment.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/application/userComment.fxml"));
             Parent commentView = loader.load();
             Scene commentScene = new Scene(commentView);
             Stage commentStage = new Stage();

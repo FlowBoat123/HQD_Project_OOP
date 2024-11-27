@@ -17,8 +17,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 import logic.User;
-import org.example.javafxtutorial.DatabaseConnection;
-import org.example.javafxtutorial.UserSession;
+import logic.UserSession;
 
 import javax.sql.DataSource;
 import java.io.IOException;
@@ -29,7 +28,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.Objects;
 
@@ -113,7 +111,7 @@ public class LoginController {
                             String avatar = resultSet.getString("avatar");
                             User user = new User(ID, retrievedUsername, retrievedPassword, creationTime, bio, email, website, details, avatar);
                             UserSession.getInstance().setUser(user);
-                            FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(getClass().getResource("/org/example/javafxtutorial/UserDashboard.fxml")));
+                            FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(getClass().getResource("/application/UserDashboard.fxml")));
                             Parent userDashboard = loader.load();
                             UserDashboardController controller = loader.getController();
                             controller.setUser(user);
@@ -125,7 +123,7 @@ public class LoginController {
                                 window.show();
                             });
                         } else {
-                            Parent adminDashboard = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/org/example/javafxtutorial/AdminDashboard.fxml")));
+                            Parent adminDashboard = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/application/AdminDashboard.fxml")));
                             Scene adminDashboardScene = new Scene(adminDashboard);
 
                             Platform.runLater(() -> {
@@ -165,7 +163,7 @@ public class LoginController {
      */
     public void handleSignUp(ActionEvent actionEvent) {
         try {
-            URL fxmlLocation = getClass().getResource("/org/example/javafxtutorial/signup.fxml");
+            URL fxmlLocation = getClass().getResource("/application/signup.fxml");
             System.out.println(fxmlLocation); // This should print the path to the console
             FXMLLoader loader = new FXMLLoader(fxmlLocation);
             Parent root = loader.load();

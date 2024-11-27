@@ -6,18 +6,15 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
-import javafx.scene.Scene;
 import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
-import javafx.stage.Modality;
-import javafx.stage.Stage;
 import logic.Book;
-import org.example.javafxtutorial.GoogleAPI;
-import org.example.javafxtutorial.LibraryService;
+import logic.GoogleAPI;
+import logic.LibraryService;
 
 import java.io.IOException;
 import java.net.URL;
@@ -78,7 +75,7 @@ public class GoogleAPIController implements Initializable {
                     }
                 } else {
                     try {
-                        FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/example/javafxtutorial/lib-view.fxml"));
+                        FXMLLoader loader = new FXMLLoader(getClass().getResource("/application/lib-view.fxml"));
                         Node content = loader.load();
                         LibraryViewController libraryViewController = loader.getController();
                         libraryViewController.setMainView(mainView);
@@ -109,7 +106,7 @@ public class GoogleAPIController implements Initializable {
     private void launchBookView(Book book) throws Exception {
 
 
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/example/javafxtutorial/book-view.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/application/book-view.fxml"));
         Node content = loader.load();
 
 
@@ -120,7 +117,7 @@ public class GoogleAPIController implements Initializable {
 
         bookController.setLibraryService(libraryService);
 //        Scene scene = new Scene((AnchorPane) content);
-//        scene.getStylesheets().add(getClass().getResource("/org/example/javafxtutorial/bookview.css").toExternalForm());
+//        scene.getStylesheets().add(getClass().getResource("/application/bookview.css").toExternalForm());
 //        Stage bookStage = new Stage();
 //        bookStage.setScene(scene);
 //        bookStage.setTitle("Book View");

@@ -1,7 +1,5 @@
-package org.example.javafxtutorial;
+package controller;
 
-import controller.BookUserView;
-import controller.UserViewController;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
@@ -35,7 +33,7 @@ public class BrowseUserViewController extends UserViewController {
       int col = 0;
       for (Book book : books) {
         FXMLLoader cardLoader = new FXMLLoader(
-            getClass().getResource("/org/example/javafxtutorial/book-card.fxml"));
+            getClass().getResource("/application/book-card.fxml"));
         VBox bookCard = cardLoader.load();
         BookCardController bookCardController = cardLoader.getController();
         bookCardController.setBook(book, this);
@@ -57,7 +55,7 @@ public class BrowseUserViewController extends UserViewController {
   @Override
   public void launchBookView(Book book) {
     try {
-      FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/example/javafxtutorial/BookUserview.fxml"));
+      FXMLLoader loader = new FXMLLoader(getClass().getResource("/application/BookUserview.fxml"));
       Node content = loader.load();
       BookUserView bookUserView = loader.getController();
       bookUserView.setMainView(mainView, mainView.getChildren().get(0));
@@ -101,7 +99,7 @@ public class BrowseUserViewController extends UserViewController {
     int col = 0;
     for (Book book : filteredBooks) {
       FXMLLoader cardLoader = new FXMLLoader(
-          getClass().getResource("/org/example/javafxtutorial/book-card.fxml"));
+          getClass().getResource("/application/book-card.fxml"));
       VBox bookCard = cardLoader.load();
       BookCardController bookCardController = cardLoader.getController();
       bookCardController.setBook(book, this);

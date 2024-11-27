@@ -34,7 +34,7 @@
                                                 <Insets left="10.0" />
                                              </HBox.margin>
                                              <image>
-                                                <Image url="@../../../images/backicon.png" />
+                                                <Image url="@../images/backicon.png" />
                                              </image>
                                           </ImageView>
                                        </children>
@@ -107,7 +107,7 @@
                                              <children>
                                                 <ImageView fx:id="commentIcon" fitHeight="25.0" fitWidth="25.0" onMouseClicked="#handleComment" pickOnBounds="true" preserveRatio="true">
                                                    <image>
-                                                      <Image url="@../../../images/common.png" />
+                                                      <Image url="@../images/common.png" />
                                                    </image>
                                                    <HBox.margin>
                                                       <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />

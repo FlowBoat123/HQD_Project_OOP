@@ -18,16 +18,9 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
 import javafx.scene.shape.Circle;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
 import logic.User;
-import logic.Book;
-import logic.BookLoan;
-import org.example.javafxtutorial.BrowseUserViewController;
-import org.example.javafxtutorial.LibraryService;
-import org.example.javafxtutorial.RecomUserViewController;
-import org.example.javafxtutorial.Shelf;
-import org.example.javafxtutorial.ShelfController;
+import logic.LibraryService;
 
 import java.io.IOException;
 
@@ -85,7 +78,7 @@ public class UserDashboardController implements Initializable {
         Button clickedButton = (Button) source;
         updateFocus(clickedButton);
         String shelfName = clickedButton.getText();
-        loadView("/org/example/javafxtutorial/shelf-view.fxml", (loader) -> {
+        loadView("/application/shelf-view.fxml", (loader) -> {
             ShelfController shelfController = loader.getController();
             shelfController.setLibraryService(libraryService);
             shelfController.setMainView(mainView);
@@ -99,7 +92,7 @@ public class UserDashboardController implements Initializable {
         Object source = event.getSource();
         Button clickedButton = (Button) source;
         updateFocus(clickedButton);
-        loadView("/org/example/javafxtutorial/browse-view.fxml", (loader) -> {
+        loadView("/application/browse-view.fxml", (loader) -> {
             BrowseUserViewController browseViewController = loader.getController();
             browseViewController.setLibraryService(libraryService);
             browseViewController.setMainView(mainView);
@@ -112,7 +105,7 @@ public class UserDashboardController implements Initializable {
         Object source = event.getSource();
         Button clickedButton = (Button) source;
         updateFocus(clickedButton);
-        loadView("/org/example/javafxtutorial/recom-view.fxml", (loader) -> {
+        loadView("/application/recom-view.fxml", (loader) -> {
             RecomUserViewController recomUserViewController = loader.getController();
             recomUserViewController.setLibraryService(libraryService);
             recomUserViewController.setMainView(mainView);
@@ -150,7 +143,7 @@ public class UserDashboardController implements Initializable {
     private void viewUserProfile(MouseEvent event) {
         System.out.println("Navigating to the profile page of " + currentUser.getUsername());
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/example/javafxtutorial/user_profile.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/application/user_profile.fxml"));
             Parent userProfile = loader.load();
 
             // If you need to pass the currentUser to the new controller, do it here
@@ -174,7 +167,7 @@ public class UserDashboardController implements Initializable {
     public void backToLogin(ActionEvent actionEvent) {
         try {
             // Load the login FXML
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/example/javafxtutorial/login.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/application/login.fxml"));
             Parent root = loader.load();
 
             // Get the current stage

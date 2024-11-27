@@ -1,4 +1,4 @@
-package org.example.javafxtutorial;
+package application;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -29,7 +29,7 @@ public class LoginApp extends Application {
         primaryStage.getIcons().add(icon);
 
         // Load the FXML file for the login view
-        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/org/example/javafxtutorial/login.fxml")));
+        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/application/login.fxml")));
 
         // Set the title of the primary stage
         primaryStage.setTitle("Library Management");

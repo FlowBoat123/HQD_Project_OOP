@@ -19,7 +19,7 @@
                   <TextField fx:id="searchField" prefHeight="30.0" prefWidth="494.0" promptText="Search" styleClass="transparent" stylesheets="@main.css" />
                   <ImageView fitHeight="20.0" fitWidth="20.0" onMouseClicked="#handleSearch" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../../../images/searchicon.png" />
+                        <Image url="@../images/searchicon.png" />
                      </image>
                   </ImageView>
                </children>

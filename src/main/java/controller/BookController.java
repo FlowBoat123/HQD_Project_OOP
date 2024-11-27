@@ -1,23 +1,16 @@
 package controller;
 
-import javafx.animation.KeyFrame;
-import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.BorderPane;
-import javafx.util.Duration;
 import logic.Book;
-import org.example.javafxtutorial.LibraryService;
+import logic.LibraryService;
 
-import java.sql.SQLOutput;
 import java.util.function.Consumer;
 
 

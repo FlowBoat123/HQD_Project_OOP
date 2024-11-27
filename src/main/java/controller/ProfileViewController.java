@@ -13,14 +13,12 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.shape.Circle;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import logic.User;
 
 import java.io.InputStream;
-import java.time.LocalDateTime;
 import java.util.Objects;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -129,7 +127,7 @@ public class ProfileViewController {
     @FXML
     private void handleChangeProfileImage(ActionEvent event) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/example/javafxtutorial/avatar-selection.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/application/avatar-selection.fxml"));
             Parent root = loader.load();
             AvatarSelectionController controller = loader.getController();
             Stage dialogStage = new Stage();

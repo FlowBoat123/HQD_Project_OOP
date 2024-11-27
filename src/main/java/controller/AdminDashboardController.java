@@ -10,11 +10,8 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
-import org.example.javafxtutorial.LibraryService;
-import org.example.javafxtutorial.Shelf;
-import org.example.javafxtutorial.ShelfController;
+import logic.LibraryService;
 
-import java.awt.event.MouseEvent;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -33,7 +30,7 @@ public class AdminDashboardController implements Initializable{
         Object source = event.getSource();
         Button clickedButton = (Button) source;
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/example/javafxtutorial/api.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/application/api.fxml"));
             Node content = loader.load();
             GoogleAPIController apiController = loader.getController();
             apiController.setMainView(mainView);
@@ -51,7 +48,7 @@ public class AdminDashboardController implements Initializable{
         Button clickedButton = (Button) source;
         updateFocus(clickedButton);
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/example/javafxtutorial/signup.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/application/signup.fxml"));
             Node content = loader.load();
             SignupController signUpController = loader.getController();
             signUpController.setFromLogin(false);
@@ -67,7 +64,7 @@ public class AdminDashboardController implements Initializable{
         Object source = event.getSource();
         Button clickedButton = (Button) source;
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/example/javafxtutorial/lib-view.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/application/lib-view.fxml"));
             Node content = loader.load();
             LibraryViewController libraryViewController = loader.getController();
             libraryViewController.setLibraryService(libraryService);
@@ -87,7 +84,7 @@ public class AdminDashboardController implements Initializable{
         Button clickedButton = (Button) source;
         updateFocus(clickedButton);
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/example/javafxtutorial/user-form.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/application/user-form.fxml"));
             Node content = loader.load();
             UserFormController userInfoController = loader.getController();
             userInfoController.setLibraryService(libraryService);
@@ -118,7 +115,7 @@ public class AdminDashboardController implements Initializable{
     public void backToLogin(ActionEvent actionEvent) {
         try {
             // Load the login FXML
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/example/javafxtutorial/login.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/application/login.fxml"));
             Parent root = loader.load();
 
             // Get the current stage

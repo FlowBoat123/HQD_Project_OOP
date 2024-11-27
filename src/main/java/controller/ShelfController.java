@@ -1,21 +1,18 @@
-package org.example.javafxtutorial;
+package controller;
 
-import controller.BookUserView;
-import controller.UserViewController;
 import javafx.application.Platform;
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import logic.Book;
 import logic.BookLoan;
+import logic.UserSession;
 
 import java.io.IOException;
 import java.util.List;
@@ -53,7 +50,7 @@ public class ShelfController extends UserViewController {
     @Override
     public void launchBookView(Book book) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/example/javafxtutorial/BookUserview.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/application/BookUserview.fxml"));
             Node content = loader.load();
             BookUserView bookUserView = loader.getController();
             bookUserView.setMainView(mainView, mainView.getChildren().get(0));
@@ -124,7 +121,7 @@ public class ShelfController extends UserViewController {
         int col = 0;
         for (Book book : books) {
             FXMLLoader cardLoader = new FXMLLoader(
-                    getClass().getResource("/org/example/javafxtutorial/book-card.fxml"));
+                    getClass().getResource("/application/book-card.fxml"));
             VBox bookCard = cardLoader.load();
             BookCardController bookCardController = cardLoader.getController();
             bookCardController.setBook(book, this);

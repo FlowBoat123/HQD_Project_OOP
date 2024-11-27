@@ -1,7 +1,4 @@
-package org.example.javafxtutorial;
-
-import controller.BookUserView;
-import controller.UserViewController;
+package controller;
 
 import java.io.IOException;
 import java.util.Comparator;
@@ -12,7 +9,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
 import logic.Book;
 
 public class RecomUserViewController extends UserViewController {
@@ -59,7 +55,7 @@ public class RecomUserViewController extends UserViewController {
     private void initializeCardLayout(HBox cardLayout, List<Book> books) throws IOException {
         for (Book book : books) {
             FXMLLoader cardLoader = new FXMLLoader(
-                    getClass().getResource("/org/example/javafxtutorial/recom-card.fxml"));
+                    getClass().getResource("/application/recom-card.fxml"));
             HBox cardBox = cardLoader.load();
             BookCardController bookCardController = cardLoader.getController();
             bookCardController.setBook(book, this);
@@ -69,7 +65,7 @@ public class RecomUserViewController extends UserViewController {
 
     public void launchBookView(Book book) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/example/javafxtutorial/BookUserview.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/application/BookUserview.fxml"));
             Node content = loader.load();
             BookUserView bookUserView = loader.getController();
             bookUserView.setMainView(mainView, mainView.getChildren().get(0));

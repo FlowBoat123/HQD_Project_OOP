@@ -1,6 +1,4 @@
-package org.example.javafxtutorial;
-
-import logic.User;
+package logic;
 
 public class UserSession {
     private static UserSession instance;
@@ -21,7 +19,7 @@ public class UserSession {
         return userID;
     }
 
-    boolean isAdmin(){
+    public boolean isAdmin(){
         return userID == 1;
     }
 

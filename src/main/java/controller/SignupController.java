@@ -135,7 +135,7 @@ public class SignupController {
      */
     public void handleBackToLogin(ActionEvent actionEvent) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/example/javafxtutorial/login.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/application/login.fxml"));
             Parent root = loader.load();
             Stage stage = (Stage) signupStatusLabel.getScene().getWindow();
             stage.setScene(new Scene(root));

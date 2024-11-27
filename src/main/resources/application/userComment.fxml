@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<HBox prefHeight="172.0" prefWidth="364.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.javafxtutorial.CommentController">
+<HBox prefHeight="172.0" prefWidth="364.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.CommentController">
    <children>
       <VBox alignment="CENTER" prefHeight="189.0" prefWidth="364.0">
          <children>
@@ -18,7 +18,7 @@
                <font>
                   <Font name="Calibri" size="13.0" />
                </font></TextArea>
-            <Button alignment="CENTER" mnemonicParsing="false" onAction="#handleBack" prefHeight="35.0" prefWidth="347.0" styleClass="blue-button" stylesheets="@main.css" text="Button">
+            <Button alignment="CENTER" mnemonicParsing="false" onAction="#handleBack" prefHeight="35.0" prefWidth="347.0" styleClass="blue-button" stylesheets="@main.css" text="Comment">
                <VBox.margin>
                   <Insets bottom="5.0" top="5.0" />
                </VBox.margin>

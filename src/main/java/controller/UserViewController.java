@@ -1,7 +1,7 @@
 package controller;
 
 import javafx.scene.layout.StackPane;
-import org.example.javafxtutorial.LibraryService;
+import logic.LibraryService;
 import logic.Book;
 
 public abstract class UserViewController {

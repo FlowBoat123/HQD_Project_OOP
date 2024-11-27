@@ -9,8 +9,8 @@ module org.example.javafxtutorial {
     requires org.xerial.sqlitejdbc;
 
 
-  opens org.example.javafxtutorial to javafx.fxml;
-    exports org.example.javafxtutorial;
+  opens application to javafx.fxml;
+    exports application;
 
     opens controller to javafx.fxml;
     exports controller;

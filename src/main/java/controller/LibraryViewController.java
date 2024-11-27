@@ -14,11 +14,10 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import logic.Book;
-import org.example.javafxtutorial.LibraryService;
+import logic.LibraryService;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
 
 public class LibraryViewController {
 
@@ -117,7 +116,7 @@ public class LibraryViewController {
 
     public void launchBookView(Book book) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/example/javafxtutorial/book-view.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/application/book-view.fxml"));
             Node content = loader.load();
             BookController bookController = loader.getController();
             bookController.setMainView(mainView, mainView.getChildren().getFirst());

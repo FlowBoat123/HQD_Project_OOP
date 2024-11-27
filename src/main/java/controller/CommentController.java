@@ -1,4 +1,4 @@
-package org.example.javafxtutorial;
+package controller;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -12,6 +12,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 import logic.User;
+import logic.UserSession;
 
 public class CommentController implements Initializable {
     private String lastText;

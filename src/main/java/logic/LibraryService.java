@@ -1,12 +1,8 @@
-package org.example.javafxtutorial;
+package logic;
 
 import database.BookLoanDAO;
 import database.CommentDAO;
 import database.LibraryDAO;
-import logic.Book;
-import database.BookDAO;
-import logic.BookLoan;
-import logic.Comment;
 
 import java.util.ArrayList;
 import java.util.Date;
