@@ -1,7 +1,7 @@
 # 📚 Dự án Quản lý Thư viện
 
 ## 📝 Giới thiệu
-Đây là một ứng dụng quản lý thư viện được xây dựng bởi nhóm 3 sinh viên nhằm cải thiện trải nghiệm người dùng trong việc mượn, trả, tra cứu sách và hỗ trợ quản lý thư viện một cách hiệu quả, tiện lợi.
+Đây là một ứng dụng quản lý thư viện được xây dựng nhằm cải thiện trải nghiệm người dùng trong việc mượn, trả, tra cứu sách và hỗ trợ quản lý thư viện một cách hiệu quả, tiện lợi.
 
 ---
 
@@ -108,5 +108,5 @@
 
 ## 📷 Hình ảnh minh họa
 
-
+![UML Map] https://imgur.com/a/psBWzSh
 ---
