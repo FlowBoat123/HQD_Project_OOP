@@ -85,8 +85,8 @@
 ### 2. **Hướng dẫn cài đặt:**
    - Clone hoặc tải dự án từ repository.
    - Import dự án vào IDE (IntelliJ IDEA, Eclipse, NetBeans).
-   - Kết nối cơ sở dữ liệu SQLite (file `.db` được cấu hình sẵn trong mã nguồn).
-   - Chạy chương trình bằng cách thực thi file chính (`Main.java`).
+   - Kết nối cơ sở dữ liệu SQLite.
+   - Chạy chương trình bằng cách thực thi file chính (`LoginApp.java`).
 
 ### 3. **Tài khoản mặc định:**
    - **Người dùng (User):**
