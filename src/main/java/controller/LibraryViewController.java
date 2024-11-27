@@ -19,43 +19,93 @@ import logic.LibraryService;
 import java.io.IOException;
 import java.util.ArrayList;
 
+/**
+ * Controller class for the Library View.
+ * Handles the initialization and event handling for the library view in the admin interface.
+ * Manages the display of books in a table, search functionality, and interactions with individual books.
+ */
 public class LibraryViewController {
 
+    /**
+     * Service class that provides library-related functionalities.
+     */
     private LibraryService libraryService;
 
+    /**
+     * The main view container.
+     */
     private AnchorPane mainView;
 
+    /**
+     * TableView to display the list of books.
+     */
     @FXML
     private TableView<Book> library;
 
+    /**
+     * TableColumn to display the book titles.
+     */
     @FXML
     private TableColumn<Book, String> bookTitleCol;
 
+    /**
+     * TableColumn to display the book authors.
+     */
     @FXML
     private TableColumn<Book, String> bookAuthorsCol;
 
+    /**
+     * TableColumn to display the book genres.
+     */
     @FXML
     private TableColumn<Book, String> bookGenresCol;
 
+    /**
+     * TableColumn to display the book ISBN-13.
+     */
     @FXML
     private TableColumn<Book, String> bookIsbn13Col;
 
+    /**
+     * TableColumn to display the book quantity.
+     */
     @FXML
     private TableColumn<Book, Integer> quantityCol;
 
+    /**
+     * TableColumn to display the number of borrowed copies.
+     */
     @FXML
     private TableColumn<Book, Integer> borrowedCopiesCol;
 
+    /**
+     * TableColumn to display the number of requested copies.
+     */
     @FXML
     private TableColumn<Book, Integer> requestedCopiesCol;
 
+    /**
+     * TextField for searching books.
+     */
     @FXML
     private TextField searchField;
 
+    /**
+     * ObservableList to hold the list of books.
+     */
     ObservableList<Book> books = FXCollections.observableArrayList();
 
+    /**
+     * ArrayList to hold the search results.
+     */
     ArrayList<Book> result = new ArrayList<>();
 
+    /**
+     * Initializes the library view with the given list of books.
+     * Sets up the table columns, row factory for double-click events, and search functionality.
+     *
+     * @param result The list of books to be displayed.
+     */
     public void initializeLibraryView(ArrayList<Book> result) {
         this.result = result;
         books = FXCollections.observableArrayList(result);
@@ -77,7 +127,6 @@ public class LibraryViewController {
             });
             return row;
         });
-//        library.setItems(books);
 
         FilteredList<Book> filteredData = new FilteredList<>(books, b -> true);
 
@@ -91,11 +140,11 @@ public class LibraryViewController {
 
                 if (book.getTitle().toLowerCase().contains(lowerCaseFilter)) {
                     return true;
-                } else if (book.getAuthorsAsString()!= null && book.getAuthorsAsString().toLowerCase().contains(lowerCaseFilter)) {
+                } else if (book.getAuthorsAsString() != null && book.getAuthorsAsString().toLowerCase().contains(lowerCaseFilter)) {
                     return true;
-                } else if (book.getGenresAsString()!= null && book.getGenresAsString().toLowerCase().contains(lowerCaseFilter)) {
+                } else if (book.getGenresAsString() != null && book.getGenresAsString().toLowerCase().contains(lowerCaseFilter)) {
                     return true;
-                } else if (book.getIsbn_13()!= null && book.getIsbn_13().toLowerCase().contains(lowerCaseFilter)) {
+                } else if (book.getIsbn_13() != null && book.getIsbn_13().toLowerCase().contains(lowerCaseFilter)) {
                     return true;
                 } else if (String.valueOf(book.getQuantity()).contains(lowerCaseFilter)) {
                     return true;
@@ -114,6 +163,12 @@ public class LibraryViewController {
         library.setItems(sortedData);
     }
 
+    /**
+     * Launches the book view for the selected book.
+     * Loads the book view FXML and initializes it with the selected book's details.
+     *
+     * @param book The Book object to be displayed.
+     */
     public void launchBookView(Book book) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/application/book-view.fxml"));
@@ -128,14 +183,31 @@ public class LibraryViewController {
             e.printStackTrace();
         }
     }
+
+    /**
+     * Adds a book to the table.
+     *
+     * @param book The Book object to be added.
+     */
     public void addBookToTable(Book book) {
         books.add(book);
         library.refresh();
     }
 
+    /**
+     * Sets the main view container.
+     *
+     * @param mainView The main view container.
+     */
     public void setMainView(AnchorPane mainView) {
         this.mainView = mainView;
     }
+
+    /**
+     * Sets the LibraryService instance.
+     *
+     * @param libraryService The LibraryService instance.
+     */
     public void setLibraryService(LibraryService libraryService) {
         this.libraryService = libraryService;
     }

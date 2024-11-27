@@ -14,16 +14,29 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonBar;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.Dialog;
 import javafx.scene.control.Label;
-import javafx.scene.control.*;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.*;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
+import javafx.scene.layout.Region;
+import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import logic.*;
 
+/**
+ * Controller class for the Book User View.
+ * Handles the initialization and event handling for the book view in the user interface.
+ * Manages the display of book details, loan status, comments, and interactions with the book.
+ */
 public class BookUserView {
 
     @FXML
@@ -51,7 +64,7 @@ public class BookUserView {
     private ImageView commentIcon;
 
     @FXML
-    private VBox commentsContainer; // Add this line
+    private VBox commentsContainer;
 
     @FXML
     private ImageView bookPreviewQR;
@@ -62,16 +75,21 @@ public class BookUserView {
     private int loanStatus;
     private StackPane mainView;
     private Node previousContent;
-    Book book;
+    private Book book;
     private ShelfController shelfController;
     private LibraryService libraryService;
-    private List<Comment> comments = new ArrayList<>(); // Add this line
+    private List<Comment> comments = new ArrayList<>();
     private boolean inProfileView = false;
     private boolean isShowingCover = true;
 
+    /**
+     * Initializes the book view for the user.
+     * Sets up the UI components with the book's details and handles the loan status.
+     *
+     * @param book The Book object to be displayed.
+     */
     public void initializeBookViewForUser(Book book) {
         this.book = book;
-        // check loan status
         this.updateLoanStatus();
         bookTitle.setText(book.getTitle());
         bookAuthor.setText(book.getAuthorsAsString());
@@ -95,6 +113,10 @@ public class BookUserView {
         displayComments();
     }
 
+    /**
+     * Handles the go back action.
+     * Restores the previous content in the main view.
+     */
     @FXML
     private void handleGoBack() {
         if (mainView != null && previousContent != null) {
@@ -102,6 +124,12 @@ public class BookUserView {
         }
     }
 
+    /**
+     * Handles the update book action.
+     * Borrows or returns the book based on the current loan status.
+     *
+     * @param event The ActionEvent triggered by the button click.
+     */
     @FXML
     void handleUpdateBook(ActionEvent event) {
         if (loanStatus == BookLoan.NOT_BORROWED) {
@@ -114,6 +142,11 @@ public class BookUserView {
         }
     }
 
+    /**
+     * Displays a notification message.
+     *
+     * @param message The message to be displayed.
+     */
     private void showNotification(String message) {
         notificationLabel.setText(message);
         notificationLabel.setVisible(true);
@@ -123,6 +156,10 @@ public class BookUserView {
         timeline.play();
     }
 
+    /**
+     * Handles the comment action.
+     * Opens a dialog to add a new comment and updates the comments display.
+     */
     @FXML
     private void handleComment() {
         try {
@@ -132,8 +169,7 @@ public class BookUserView {
             Stage commentStage = new Stage();
             commentStage.setTitle("Comments");
             commentStage.setScene(commentScene);
-            commentStage.showAndWait(); // Use showAndWait to wait for the window to close
-            // Get the comment from the CommentController
+            commentStage.showAndWait();
             CommentController commentController = loader.getController();
             int userId = commentController.getUserID();
             String comment = commentController.getComment();
@@ -152,6 +188,9 @@ public class BookUserView {
         }
     }
 
+    /**
+     * Displays the comments for the book.
+     */
     private void displayComments() {
         commentsContainer.getChildren().clear();
         for (Comment comment : comments) {
@@ -176,15 +215,29 @@ public class BookUserView {
         VBox.setVgrow(commentsContainer, Priority.ALWAYS);
     }
 
+    /**
+     * Sets the LibraryService instance.
+     *
+     * @param libraryService The LibraryService instance.
+     */
     public void setLibraryService(LibraryService libraryService) {
         this.libraryService = libraryService;
     }
 
+    /**
+     * Sets the main view and previous content.
+     *
+     * @param mainView The main view container.
+     * @param previousContent The previous content in the main view.
+     */
     public void setMainView(StackPane mainView, Node previousContent) {
         this.mainView = mainView;
         this.previousContent = previousContent;
     }
 
+    /**
+     * Updates the loan status of the book.
+     */
     public void updateLoanStatus() {
         loanStatus = libraryService.getLoanStatus(book);
         Platform.runLater(() -> {
@@ -213,7 +266,10 @@ public class BookUserView {
         });
     }
 
-    //Borrow book
+    /**
+     * Borrows the book.
+     * Updates the loan status and refreshes the view if necessary.
+     */
     public void borrowBook() {
         if (libraryService.borrowBook(book)) {
             loanStatus = BookLoan.READING;
@@ -228,7 +284,10 @@ public class BookUserView {
         }
     }
 
-    //Return book
+    /**
+     * Returns the book.
+     * Updates the loan status and refreshes the view if necessary.
+     */
     public void returnBook() {
         libraryService.returnBook(book);
         loanStatus = BookLoan.NOT_BORROWED;
@@ -238,15 +297,22 @@ public class BookUserView {
         }
     }
 
+    /**
+     * Displays an alert with the loan condition message.
+     *
+     * @param message The message to be displayed.
+     */
     private void showLoanConditionAlert(String message) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Book status notification");
         alert.setHeaderText(null);
         alert.setContentText(message);
-
         alert.showAndWait();
     }
 
+    /**
+     * Displays a dialog to notify the user that the book is ready to read.
+     */
     private void notifyReadyBookDialog() {
         Dialog<String> dialog = new Dialog<>();
         dialog.setTitle("Notification");
@@ -273,10 +339,19 @@ public class BookUserView {
         dialog.showAndWait();
     }
 
+    /**
+     * Sets the ShelfController instance.
+     *
+     * @param shelfController The ShelfController instance.
+     */
     public void setShelfController(ShelfController shelfController) {
         this.shelfController = shelfController;
     }
 
+    /**
+     * Sets up the book view for the user profile.
+     * Hides the read button and disables the comment icon.
+     */
     public void setUpBookViewForUserProfile() {
         this.inProfileView = true;
         readButton.setVisible(false);
@@ -284,6 +359,9 @@ public class BookUserView {
         commentIcon.setDisable(true);
     }
 
+    /**
+     * Toggles the display between the book cover and the preview QR code.
+     */
     private void toggleImage() {
         if (isShowingCover) {
             bookCover.setVisible(false);

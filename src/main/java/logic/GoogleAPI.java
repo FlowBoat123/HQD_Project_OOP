@@ -21,17 +21,44 @@ public class GoogleAPI {
     private static final String BY_TITLE = "title";
     private static final String BY_AUTHOR = "author";
 
+    /**
+     * Generates a URL for searching books by title.
+     *
+     * @param query The search query.
+     * @return The generated URL.
+     */
     private static String generateBookSearchURLbyTitle(String query) {
         return GOOGLE_BOOKS_URL + query;
     }
 
+    /**
+     * Generates a URL for searching books by ISBN.
+     *
+     * @param ISBN The ISBN to search for.
+     * @return The generated URL.
+     */
     private static String generateBookSearchURLbyISBN(String ISBN) {
         return GOOGLE_BOOKS_URL + "isbn:" + ISBN;
     }
+
+    /**
+     * Generates a URL for searching books by author.
+     *
+     * @param author The author to search for.
+     * @return The generated URL.
+     */
     private static String generateBookSearchURLbyAuthor(String author) {
         return GOOGLE_BOOKS_URL + "inauthor:" + author;
     }
 
+    /**
+     * Executes an HTTP GET request to the Google Books API.
+     *
+     * @param searchQuery The search query.
+     * @param searchMethod The search method (e.g., by title, author, or ISBN).
+     * @return The JSON response from the API.
+     * @throws Exception If an error occurs during the request.
+     */
     private static JsonObject getHttpMethod(String searchQuery, String searchMethod) throws Exception {
         searchQuery = searchQuery.replaceAll("\\s", "+");
         System.out.println(searchQuery);
@@ -51,15 +78,16 @@ public class GoogleAPI {
 
     /**
      * Constructs a URI for the Google Books API request.
-     * @param searchQuery the search query
-     * @param searchMethod the search method (e.g., by title, author, or ISBN)
-     * @return the URI for the API request
-     * @throws URISyntaxException if the URI syntax is incorrect
+     *
+     * @param searchQuery The search query.
+     * @param searchMethod The search method (e.g., by title, author, or ISBN).
+     * @return The URI for the API request.
+     * @throws URISyntaxException If the URI syntax is incorrect.
      */
     private static URI getUri(String searchQuery, String searchMethod) throws URISyntaxException {
         URI url;
         if (searchQuery.isEmpty()) {
-            throw new IllegalArgumentException("Search query cannot empty");
+            throw new IllegalArgumentException("Search query cannot be empty");
         }
         if (searchMethod.isEmpty()) {
             throw new IllegalArgumentException("Search method invalid");
@@ -76,14 +104,15 @@ public class GoogleAPI {
 
     /**
      * Searches for books using the Google Books API.
-     * @param searchQuery the search query
-     * @param searchMethod the search method (e.g., by title, author, or ISBN)
-     * @return a list of books matching the search criteria
-     * @throws Exception if an error occurs during the search
+     *
+     * @param searchQuery The search query.
+     * @param searchMethod The search method (e.g., by title, author, or ISBN).
+     * @return A list of books matching the search criteria.
+     * @throws Exception If an error occurs during the search.
      */
     public static ArrayList<Book> searchBook(String searchQuery, String searchMethod) throws Exception {
         JsonObject responseJson = getHttpMethod(searchQuery, searchMethod);
-        if (!responseJson.has("items")){
+        if (!responseJson.has("items")) {
             return null;
         }
         ArrayList<Book> searchResult = new ArrayList<>();
@@ -110,10 +139,11 @@ public class GoogleAPI {
 
     /**
      * Parses a book from a JSON element.
-     * @param bookElement the JSON element representing the book
-     * @return the parsed book
+     *
+     * @param bookElement The JSON element representing the book.
+     * @return The parsed book.
      */
-    private static Book parseBookFromJSON(JsonElement bookElement){
+    private static Book parseBookFromJSON(JsonElement bookElement) {
         JsonObject itemJson = bookElement.getAsJsonObject().getAsJsonObject("volumeInfo");
         String isbn10 = null;
         String isbn13 = null;

@@ -11,16 +11,29 @@ import javafx.scene.Node;
 import javafx.scene.layout.HBox;
 import logic.Book;
 
+/**
+ * Controller class for managing the recommendation view in a user interface.
+ * This class handles the initialization of book cards based on various criteria
+ * such as recently added books, most popular books, recommended books, and fiction books.
+ */
 public class RecomUserViewController extends UserViewController {
+
     @FXML
     private HBox cardLayout1;
+
     @FXML
     private HBox cardLayout2;
+
     @FXML
     private HBox cardLayout3;
+
     @FXML
     private HBox cardLayout4;
 
+    /**
+     * Initializes the recommendation view by populating the card layouts with books
+     * based on different criteria such as recently added, most popular, recommended, and fiction books.
+     */
     public void init() {
         try {
             List<Book> books = libraryService.getBooks();
@@ -32,26 +45,37 @@ public class RecomUserViewController extends UserViewController {
 
             List<Book> list_book1 = books.reversed();
 
-            initializeCardLayout(cardLayout1, list_book1.subList(0, Math.min(books.size(), 10)));                                            // Recently add
+            initializeCardLayout(cardLayout1, list_book1.subList(0, Math.min(books.size(), 10))); // Recently added
 
             books.sort(Comparator.comparingInt(Book::getBorrowedCopies).reversed());
-            initializeCardLayout(cardLayout2, books.subList(books.size() / 4, books.size() / 2));                                           // Most popular
+            initializeCardLayout(cardLayout2, books.subList(books.size() / 4, books.size() / 2)); // Most popular
 
-            List<Book> notBorrowedBooks = books.stream().filter(book -> !userBorrowedBooks.contains(book)).collect(Collectors.toList());
-//            notBorrowedBooks.sort(Comparator.comparingInt(Book::getBorrowedCopies).reversed());
+            List<Book> notBorrowedBooks = books.stream()
+                    .filter(book -> !userBorrowedBooks.contains(book))
+                    .collect(Collectors.toList());
             List<Book> recommendedBooks = notBorrowedBooks.subList(notBorrowedBooks.size() / 2, 3 * notBorrowedBooks.size() / 4);
 
-            initializeCardLayout(cardLayout3, recommendedBooks);                                                                            // Recommend for you
+            initializeCardLayout(cardLayout3, recommendedBooks); // Recommend for you
 
-            List<Book> fictionBooks = books.stream() .filter(book -> book.getGenresAsString().contains("Fiction")) .collect(Collectors.toList());
+            List<Book> fictionBooks = books.stream()
+                    .filter(book -> book.getGenresAsString().contains("Fiction"))
+                    .collect(Collectors.toList());
             fictionBooks.sort(Comparator.comparingInt(Book::getBorrowedCopies).reversed());
 
-            initializeCardLayout(cardLayout4, fictionBooks.subList(0, Math.min(fictionBooks.size(), 10)));                                  // Science
+            initializeCardLayout(cardLayout4, fictionBooks.subList(0, Math.min(fictionBooks.size(), 10))); // Science
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
+    /**
+     * Initializes a card layout with a list of books.
+     * This method loads the book card FXML, sets the book details, and adds the card to the layout.
+     *
+     * @param cardLayout The HBox layout to be populated with book cards.
+     * @param books The list of books to be displayed in the card layout.
+     * @throws IOException If there is an error loading the book card FXML.
+     */
     private void initializeCardLayout(HBox cardLayout, List<Book> books) throws IOException {
         for (Book book : books) {
             FXMLLoader cardLoader = new FXMLLoader(
@@ -63,6 +87,12 @@ public class RecomUserViewController extends UserViewController {
         }
     }
 
+    /**
+     * Launches the book view for a selected book.
+     * This method loads the book user view FXML, sets up the main view, and initializes the book view.
+     *
+     * @param book The book to be displayed in the book view.
+     */
     public void launchBookView(Book book) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/application/BookUserview.fxml"));

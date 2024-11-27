@@ -16,15 +16,36 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class AdminDashboardController implements Initializable{
+/**
+ * Controller class for the Admin Dashboard view.
+ * This class handles the initialization and event handling for the admin dashboard.
+ * It manages the switching of views based on user interactions and maintains the focus state of buttons.
+ */
+public class AdminDashboardController implements Initializable {
 
+    /**
+     * Service class that provides library-related functionalities.
+     */
     private LibraryService libraryService;
 
+    /**
+     * Button that is currently in focus.
+     */
     private Button currentlyFocusedButton;
 
+    /**
+     * AnchorPane that serves as the main view container.
+     */
     @FXML
     private AnchorPane mainView;
 
+    /**
+     * Event handler for launching the API view.
+     * Loads the API view and sets it as the content of the main view.
+     * Updates the focus state of the clicked button.
+     *
+     * @param event The ActionEvent triggered by the button click.
+     */
     @FXML
     void launchAPI(ActionEvent event) {
         Object source = event.getSource();
@@ -42,6 +63,13 @@ public class AdminDashboardController implements Initializable{
         }
     }
 
+    /**
+     * Event handler for launching the Add User view.
+     * Loads the Add User view and sets it as the content of the main view.
+     * Updates the focus state of the clicked button.
+     *
+     * @param event The ActionEvent triggered by the button click.
+     */
     @FXML
     void launchAddUser(ActionEvent event) {
         Object source = event.getSource();
@@ -59,6 +87,13 @@ public class AdminDashboardController implements Initializable{
         }
     }
 
+    /**
+     * Event handler for launching the Library View.
+     * Loads the Library View and sets it as the content of the main view.
+     * Updates the focus state of the clicked button.
+     *
+     * @param event The ActionEvent triggered by the button click.
+     */
     @FXML
     void launchLibView(ActionEvent event) {
         Object source = event.getSource();
@@ -78,6 +113,13 @@ public class AdminDashboardController implements Initializable{
         }
     }
 
+    /**
+     * Event handler for launching the User Information view.
+     * Loads the User Information view and sets it as the content of the main view.
+     * Updates the focus state of the clicked button.
+     *
+     * @param event The ActionEvent triggered by the button click.
+     */
     @FXML
     void launchUserInfo(ActionEvent event) {
         Object source = event.getSource();
@@ -95,12 +137,25 @@ public class AdminDashboardController implements Initializable{
         }
     }
 
-
+    /**
+     * Initializes the controller class.
+     * This method is automatically called after the FXML file has been loaded.
+     * It initializes the LibraryService instance.
+     *
+     * @param url The location used to resolve relative paths for the root object, or null if the location is not known.
+     * @param resourceBundle The resources used to localize the root object, or null if the root object was not localized.
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         libraryService = new LibraryService();
     }
 
+    /**
+     * Updates the focus state of the buttons.
+     * Removes the focus style from the previously focused button and applies it to the newly clicked button.
+     *
+     * @param clickedButton The button that was clicked and should receive focus.
+     */
     private void updateFocus(Button clickedButton) {
         if (currentlyFocusedButton != null) {
             currentlyFocusedButton.getStyleClass().remove("focused-button");
@@ -112,6 +167,12 @@ public class AdminDashboardController implements Initializable{
         currentlyFocusedButton = clickedButton;
     }
 
+    /**
+     * Event handler for navigating back to the login view.
+     * Loads the login view and sets it as the content of the current stage.
+     *
+     * @param actionEvent The ActionEvent triggered by the button click.
+     */
     public void backToLogin(ActionEvent actionEvent) {
         try {
             // Load the login FXML

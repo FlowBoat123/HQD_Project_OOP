@@ -12,20 +12,32 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
+/**
+ * Data Access Object (DAO) class for managing BookLoan entities in the database.
+ * This class provides methods to add, delete, update, and retrieve BookLoan records.
+ */
 public class BookLoanDAO implements DAO<BookLoan> {
 
     private DataSource dataSource;
 
+    /**
+     * Constructor for the BookLoanDAO class.
+     * Initializes the data source for database connections.
+     */
     public BookLoanDAO() {
         this.dataSource = DataSourceFactory.getDataSource();
     }
 
+    /**
+     * Adds a new BookLoan record to the database.
+     *
+     * @param bookLoan The BookLoan object to be added.
+     */
     @Override
     public void add(BookLoan bookLoan) {
-        // Add bookLoan to database
-        String query = "INSERT INTO loans (book_isbn_13, userID, loanDate , returnDate) VALUES (?, ?, ?, ?)";
+        String query = "INSERT INTO loans (book_isbn_13, userID, loanDate, returnDate) VALUES (?, ?, ?, ?)";
         try (Connection connection = dataSource.getConnection();
-             PreparedStatement statement = connection.prepareStatement(query)) {
+             PreparedStatement statement = connection.prepareStatement(query, PreparedStatement.RETURN_GENERATED_KEYS)) {
             statement.setString(1, bookLoan.getBook().getIsbn_13());
             statement.setInt(2, bookLoan.getUserID());
             SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
@@ -49,13 +61,17 @@ public class BookLoanDAO implements DAO<BookLoan> {
         }
     }
 
+    /**
+     * Deletes a BookLoan record from the database.
+     * This method updates the return date of the loan.
+     *
+     * @param bookLoan The BookLoan object to be deleted.
+     */
     @Override
     public void delete(BookLoan bookLoan) {
-        // Delete bookLoan from database
         String query = "UPDATE loans SET returnDate = ? WHERE loanID = ?";
         try (Connection connection = dataSource.getConnection();
              PreparedStatement statement = connection.prepareStatement(query)) {
-
             SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
             statement.setString(1, dateFormat.format(bookLoan.getReturnDate()));
             statement.setInt(2, bookLoan.getLoanID());
@@ -65,9 +81,14 @@ public class BookLoanDAO implements DAO<BookLoan> {
         }
     }
 
+    /**
+     * Updates a BookLoan record in the database.
+     * This method updates the loan date of the loan.
+     *
+     * @param bookLoan The BookLoan object to be updated.
+     */
     @Override
     public void update(BookLoan bookLoan) {
-        // Update bookLoan in database
         String query = "UPDATE loans SET loanDate = ? WHERE loanID = ?";
         try (Connection connection = dataSource.getConnection();
              PreparedStatement statement = connection.prepareStatement(query)) {
@@ -80,9 +101,13 @@ public class BookLoanDAO implements DAO<BookLoan> {
         }
     }
 
+    /**
+     * Retrieves all BookLoan records from the database.
+     *
+     * @return An ArrayList of all BookLoan objects.
+     */
     @Override
     public ArrayList<BookLoan> getAll() {
-        // Get all bookLoans from database
         String query = "SELECT * FROM loans JOIN library ON loans.book_isbn_13 = library.isbn_13";
         ArrayList<BookLoan> bookLoans = new ArrayList<>();
         try (Connection connection = dataSource.getConnection();
@@ -117,14 +142,18 @@ public class BookLoanDAO implements DAO<BookLoan> {
                 }
                 bookLoans.add(loan);
             }
-        } catch (SQLException e) {
+        } catch (SQLException | ParseException e) {
             e.printStackTrace();
-        } catch (ParseException e) {
-            throw new RuntimeException(e);
         }
         return bookLoans;
     }
 
+    /**
+     * Retrieves all BookLoan records for a specific user from the database.
+     *
+     * @param userID The ID of the user whose loans are to be retrieved.
+     * @return An ArrayList of BookLoan objects for the specified user.
+     */
     public ArrayList<BookLoan> getUserLoan(int userID) {
         String query = "SELECT * FROM loans JOIN library ON loans.book_isbn_13 = library.isbn_13 WHERE userID = ?";
         ArrayList<BookLoan> bookLoans = new ArrayList<>();
@@ -166,6 +195,4 @@ public class BookLoanDAO implements DAO<BookLoan> {
         }
         return bookLoans;
     }
-
-
 }
