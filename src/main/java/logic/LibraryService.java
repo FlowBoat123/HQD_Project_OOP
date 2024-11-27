@@ -9,6 +9,11 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Service class for managing library operations.
+ * This class provides methods to add, remove, and update books, manage book loans,
+ * and handle comments and requests.
+ */
 public class LibraryService {
 
     private LibraryDAO libraryDAO;
@@ -19,6 +24,10 @@ public class LibraryService {
     private BookLoanDAO bookLoanDAO;
     private CommentDAO commentDAO;
 
+    /**
+     * Constructs a new LibraryService instance.
+     * Initializes the DAOs, user session, and loads the initial data.
+     */
     public LibraryService() {
         this.libraryDAO = new LibraryDAO();
         this.bookLoanDAO = new BookLoanDAO();
@@ -36,10 +45,22 @@ public class LibraryService {
         }
     }
 
+    /**
+     * Checks if a book is in the library.
+     *
+     * @param book The book to check.
+     * @return True if the book is in the library, false otherwise.
+     */
     public boolean checkIfBookIsInLibrary(Book book) {
         return books.contains(book);
     }
 
+    /**
+     * Adds copies of a book to the library.
+     *
+     * @param book            The book to add copies of.
+     * @param numberOfCopies  The number of copies to add.
+     */
     public void addCopiesToLibrary(Book book, int numberOfCopies) {
         if (!checkIfBookIsInLibrary(book)) {
             book.setQuantity(numberOfCopies);
@@ -61,6 +82,11 @@ public class LibraryService {
         printBooks();
     }
 
+    /**
+     * Removes all copies of a book from the library.
+     *
+     * @param book The book to remove.
+     */
     public void removeCopiesFromLibrary(Book book) {
         if (checkIfBookIsInLibrary(book)) {
             Book existingBook = books.get(books.indexOf(book));
@@ -70,20 +96,39 @@ public class LibraryService {
         printBooks();
     }
 
+    /**
+     * Prints all books in the library.
+     */
     public void printBooks() {
         for (Book book : books) {
             System.out.println(book);
         }
     }
 
+    /**
+     * Gets all books in the library.
+     *
+     * @return An ArrayList of all books.
+     */
     public ArrayList<Book> getBooks() {
         return books;
     }
 
+    /**
+     * Gets all book loans.
+     *
+     * @return An ArrayList of all book loans.
+     */
     public ArrayList<BookLoan> getBookLoans() {
         return bookLoans;
     }
 
+    /**
+     * Borrows a book.
+     *
+     * @param book The book to borrow.
+     * @return True if the book was borrowed successfully, false if added to the waiting list.
+     */
     public boolean borrowBook(Book book) {
         BookLoan bookLoan = new BookLoan();
         if (book.getBorrowedCopies() < book.getQuantity()) {
@@ -110,9 +155,13 @@ public class LibraryService {
             this.printBookLoan();
             return false;
         }
-
     }
 
+    /**
+     * Returns a borrowed book.
+     *
+     * @param book The book to return.
+     */
     public void returnBook(Book book) {
         for (BookLoan bookLoan : bookLoans) {
             if (bookLoan.getBook().equals(book)) {
@@ -127,6 +176,12 @@ public class LibraryService {
         this.printBookLoan();
     }
 
+    /**
+     * Gets the loan status of a book.
+     *
+     * @param book The book to check.
+     * @return The loan status of the book.
+     */
     public int getLoanStatus(Book book) {
         for (BookLoan bookLoan : bookLoans) {
             if (bookLoan.getBook().equals(book)) {
@@ -136,12 +191,22 @@ public class LibraryService {
         return BookLoan.NOT_BORROWED;
     }
 
+    /**
+     * Prints all book loans.
+     */
     public void printBookLoan() {
         for (BookLoan bookLoan : bookLoans) {
             System.out.println(bookLoan.getLoanID() + bookLoan.getBook().toString() + ' ' + bookLoan.getLoanStatus());
         }
     }
 
+    /**
+     * Gets books by loan status for a specific user.
+     *
+     * @param loanStatus The loan status to filter by.
+     * @param userID     The ID of the user.
+     * @return An ArrayList of books with the specified loan status.
+     */
     public ArrayList<Book> getBooksByLoanStatus(int loanStatus, int userID) {
         ArrayList<Book> booksByLoanStatus = new ArrayList<>();
         for (BookLoan bookLoan : bookLoans) {
@@ -152,7 +217,11 @@ public class LibraryService {
         return booksByLoanStatus;
     }
 
-
+    /**
+     * Gets all books that have been loaned.
+     *
+     * @return An ArrayList of all books that have been loaned.
+     */
     public ArrayList<Book> getAllBooksHasLoan() {
         ArrayList<Book> booksHasLoan = new ArrayList<>();
         for (BookLoan bookLoan : bookLoans) {
@@ -161,6 +230,11 @@ public class LibraryService {
         return booksHasLoan;
     }
 
+    /**
+     * Updates a waiting book to a loaned book.
+     *
+     * @param book The book to update.
+     */
     public void updateWaitingBookToLoan(Book book) {
         for (BookLoan bookLoan : bookLoans) {
             if (bookLoan.getBook().equals(book)) {
@@ -174,11 +248,22 @@ public class LibraryService {
         this.printBookLoan();
     }
 
+    /**
+     * Adds a comment to the library.
+     *
+     * @param comment The comment to add.
+     */
     public void addComment(Comment comment) {
         commentDAO.add(comment);
         comments.add(comment);
     }
 
+    /**
+     * Gets all comments for a specific book.
+     *
+     * @param book The book to get comments for.
+     * @return An ArrayList of comments for the specified book.
+     */
     public ArrayList<Comment> getBookComments(Book book) {
         ArrayList<Comment> bookCmt = new ArrayList<>();
         for (Comment comment : comments) {
@@ -190,6 +275,11 @@ public class LibraryService {
         return bookCmt;
     }
 
+    /**
+     * Gets the number of requests for each book.
+     *
+     * @return A map of book ISBNs to the number of requests.
+     */
     public Map<String, Integer> getBooksRequestNumber() {
         Map<String, Integer> requestCounts = new HashMap<>();
         for (BookLoan bookLoan : bookLoans) {
@@ -201,6 +291,9 @@ public class LibraryService {
         return requestCounts;
     }
 
+    /**
+     * Updates the number of requested copies for each book.
+     */
     public void updateBooksRequestNumber() {
         Map<String, Integer> requestCounts = getBooksRequestNumber();
         for (Book book : books) {

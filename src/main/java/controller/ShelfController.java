@@ -17,22 +17,46 @@ import logic.UserSession;
 import java.io.IOException;
 import java.util.List;
 
+/**
+ * Controller class for the Shelf View.
+ * Handles the initialization and event handling for the shelf view in the user interface.
+ * Manages the display of books on the shelf based on loan status and user interactions.
+ */
 public class ShelfController extends UserViewController {
 
+    /**
+     * Flag to indicate if the view is in user profile mode.
+     */
     private boolean userProfileView;
 
+    /**
+     * GridPane to display the books.
+     */
     @FXML
     private GridPane bookGridPane;
 
+    /**
+     * HBox for the shelf header.
+     */
     @FXML
     private HBox shelfHeader;
 
+    /**
+     * Label to display the shelf title.
+     */
     @FXML
     private Label shelfTitle;
 
+    /**
+     * User ID for the current user.
+     */
     @FXML
     private int userID;
 
+    /**
+     * Initializes the shelf view.
+     * Loads books to the shelf based on the current user and shelf title.
+     */
     @Override
     public void init() {
         try {
@@ -42,11 +66,20 @@ public class ShelfController extends UserViewController {
         }
     }
 
+    /**
+     * Initializes the controller.
+     */
     @FXML
     private void initialize() {
 
     }
 
+    /**
+     * Launches the book view for the selected book.
+     * Loads the book view FXML and initializes it with the selected book's details.
+     *
+     * @param book The Book object to be displayed.
+     */
     @Override
     public void launchBookView(Book book) {
         try {
@@ -66,10 +99,19 @@ public class ShelfController extends UserViewController {
         }
     }
 
+    /**
+     * Sets the shelf title.
+     *
+     * @param title The title to be set.
+     */
     public void setShelfTitle(String title) {
         shelfTitle.setText(title);
     }
 
+    /**
+     * Refreshes the shelf view.
+     * Clears the current books and reloads them based on the current user and shelf title.
+     */
     public void refreshView() {
         Task<Void> task = new Task<>() {
             @Override
@@ -94,6 +136,11 @@ public class ShelfController extends UserViewController {
         new Thread(task).start();
     }
 
+    /**
+     * Loads books to the shelf based on the current user and shelf title.
+     *
+     * @throws IOException If there is an error loading the book card FXML.
+     */
     private void loadBooksToShelf() throws IOException {
         List<Book> books;
         String shelfName = shelfTitle.getText();
@@ -136,15 +183,23 @@ public class ShelfController extends UserViewController {
         }
     }
 
+    /**
+     * Hides the shelf header.
+     */
     public void hideShelfHeader() {
         shelfHeader.setVisible(false);
         shelfHeader.setManaged(false);
     }
 
+    /**
+     * Sets up the shelf view for the user profile.
+     * Hides the shelf header and sets the user ID.
+     *
+     * @param userID The user ID to be set.
+     */
     public void setUpShelfViewForUserProfile(int userID) {
         this.userProfileView = true;
         this.userID = userID;
         hideShelfHeader();
-
     }
 }

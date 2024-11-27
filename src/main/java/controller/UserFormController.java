@@ -36,6 +36,11 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
+/**
+ * Controller class for managing the user form in a JavaFX application.
+ * This class handles the display of user data in a table, loading user profiles,
+ * and deleting user records.
+ */
 public class UserFormController {
 
     @FXML
@@ -67,14 +72,25 @@ public class UserFormController {
 
     @FXML
     private Button masterTrashButton;
+
     private DataSource dataSource;
     private ObservableList<User> userData = FXCollections.observableArrayList();
     private final ExecutorService executorService = Executors.newFixedThreadPool(5);
     private boolean showTrashIcons = false;
     private LibraryService libraryService;
+
+    /**
+     * Constructor for the UserFormController class.
+     * Initializes the data source for database connections.
+     */
     public UserFormController() {
         this.dataSource = DataSourceFactory.getDataSource();
     }
+
+    /**
+     * Initializes the controller class. This method sets up the table columns,
+     * loads user data, and configures the table row and delete button behavior.
+     */
     @FXML
     private void initialize() {
         usernameColumn.setCellValueFactory(new PropertyValueFactory<>("username"));
@@ -83,6 +99,7 @@ public class UserFormController {
         bioColumn.setCellValueFactory(new PropertyValueFactory<>("bio"));
         emailColumn.setCellValueFactory(new PropertyValueFactory<>("email"));
         websiteColumn.setCellValueFactory(new PropertyValueFactory<>("website"));
+        // Custom cell factory for creation time column
         creationTimeColumn.setCellFactory(column -> new TableCell<User, Date>() {
             private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
@@ -99,12 +116,13 @@ public class UserFormController {
 
         loadUserData();
 
+        // Set row factory to handle row click events
         userTable.setRowFactory(tv -> {
             TableRow<User> row = new TableRow<>();
             row.setOnMouseClicked(event -> {
                 if (!row.isEmpty() && event.getClickCount() == 1 && !(event.getTarget() instanceof Button)) {
                     User clickedRow = row.getItem();
-                    if(!clickedRow.getUsername().equals("admin")) {
+                    if (!clickedRow.getUsername().equals("admin")) {
                         loadUserProfile(clickedRow);
                     }
                 }
@@ -119,11 +137,25 @@ public class UserFormController {
         masterTrashButton.setOnAction(event -> toggleTrashIcons());
     }
 
+    /**
+     * Toggles the visibility of the delete icons in the table.
+     */
     private void toggleTrashIcons() {
         showTrashIcons = !showTrashIcons;
+        if(showTrashIcons) {
+            masterTrashButton.setText("Stop");
+        }
+        else {
+            masterTrashButton.setText("Delete user");
+        }
         userTable.refresh();
     }
 
+    /**
+     * Creates a custom cell factory for the delete button column.
+     *
+     * @return The custom cell factory for the delete button column.
+     */
     private Callback<TableColumn<User, Void>, TableCell<User, Void>> createDeleteButtonCellFactory() {
         return new Callback<>() {
             @Override
@@ -159,6 +191,11 @@ public class UserFormController {
         };
     }
 
+    /**
+     * Deletes a user from the table and the database.
+     *
+     * @param user The user to be deleted.
+     */
     private void deleteUser(User user) {
         System.out.println("Deleting user: " + user.getUsername());
         boolean removed = userData.remove(user);
@@ -192,6 +229,9 @@ public class UserFormController {
         });
     }
 
+    /**
+     * Loads user data from the database and populates the table.
+     */
     private void loadUserData() {
         Task<ObservableList<User>> task = new Task<>() {
             @Override
@@ -229,10 +269,18 @@ public class UserFormController {
         new Thread(task).start();
     }
 
+    /**
+     * Refreshes the user table by reloading the user data.
+     */
     public void refreshTable() {
         loadUserData();
     }
 
+    /**
+     * Loads the user profile view for a selected user.
+     *
+     * @param user The user whose profile is to be displayed.
+     */
     private void loadUserProfile(User user) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/application/user_profile.fxml"));
@@ -252,6 +300,9 @@ public class UserFormController {
         }
     }
 
+    /**
+     * Stops the executor service and shuts down the thread pool.
+     */
     @FXML
     public void stop() {
         executorService.shutdown();
@@ -264,6 +315,11 @@ public class UserFormController {
         }
     }
 
+    /**
+     * Sets the library service for this controller.
+     *
+     * @param libraryService The library service instance.
+     */
     public void setLibraryService(LibraryService libraryService) {
         this.libraryService = libraryService;
     }

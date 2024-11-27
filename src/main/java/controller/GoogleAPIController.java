@@ -21,6 +21,11 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
+/**
+ * Controller class for handling Google API searches in a JavaFX application.
+ * This class manages the search functionality, displaying search results,
+ * and launching the book view or library view based on the search method.
+ */
 public class GoogleAPIController implements Initializable {
 
     @FXML
@@ -42,11 +47,23 @@ public class GoogleAPIController implements Initializable {
 
     private LibraryService libraryService;
 
-
+    /**
+     * Sets the main view for this controller.
+     *
+     * @param mainView The main view where the search results will be displayed.
+     */
     public void setMainView(AnchorPane mainView) {
         this.mainView = mainView;
     }
 
+    /**
+     * Handles the search action triggered by a mouse event.
+     * This method retrieves the search text, determines the search method,
+     * and initiates the search using the Google API.
+     *
+     * @param mouseEvent The mouse event that triggered the search.
+     * @throws Exception If there is an error during the search process.
+     */
     public void handleSearch(MouseEvent mouseEvent) throws Exception {
         String search = searchField.getText();
         System.out.println("Search: " + search);
@@ -92,10 +109,22 @@ public class GoogleAPIController implements Initializable {
         new Thread(task).start();
     }
 
+    /**
+     * Sets the library service for this controller.
+     *
+     * @param libraryService The library service instance.
+     */
     public void setLibraryService(LibraryService libraryService) {
         this.libraryService = libraryService;
     }
 
+    /**
+     * Initializes the controller class. This method sets up the toggle group
+     * for the search method radio buttons.
+     *
+     * @param url The location used to resolve relative paths for the root object, or null if the location is not known.
+     * @param resourceBundle The resources used to localize the root object, or null if the root object was not localized.
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         searchMethodGroup = new ToggleGroup();
@@ -103,27 +132,22 @@ public class GoogleAPIController implements Initializable {
         searchMethodTitle.setToggleGroup(searchMethodGroup);
     }
 
+    /**
+     * Launches the book view for a given book.
+     * This method loads the book view FXML, initializes the book view controller,
+     * and sets the main view to display the book details.
+     *
+     * @param book The book to be displayed in the book view.
+     * @throws Exception If there is an error loading the book view FXML.
+     */
     private void launchBookView(Book book) throws Exception {
-
-
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/application/book-view.fxml"));
         Node content = loader.load();
 
-
-
         BookController bookController = loader.getController();
-
         bookController.initializeBookViewForAdmin(book);
-
         bookController.setLibraryService(libraryService);
-//        Scene scene = new Scene((AnchorPane) content);
-//        scene.getStylesheets().add(getClass().getResource("/application/bookview.css").toExternalForm());
-//        Stage bookStage = new Stage();
-//        bookStage.setScene(scene);
-//        bookStage.setTitle("Book View");
-//        bookStage.setResizable(false);
-//        bookStage.initModality(Modality.APPLICATION_MODAL);  // window can't resize
-//        bookStage.show();
+
         if (mainView != null) {
             bookController.setMainView(mainView, mainView.getChildren().getFirst());
             mainView.getChildren().setAll(content);
