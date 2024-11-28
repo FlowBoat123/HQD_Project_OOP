@@ -14,6 +14,7 @@
 1. **Hiển thị thư viện:**
    - Hiển thị các tủ sách như:
      - **Tủ gợi ý đọc**: Dựa trên thói quen và đánh giá sách của người dùng.
+     - ![image](/src/main/resources/images/UserRecommendationView.png)
      - **Tủ toàn bộ sách**: Liệt kê tất cả sách trong thư viện.
    - Tìm kiếm sách bằng: 
      - Tên sách hoặc ISBN.
