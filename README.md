@@ -14,37 +14,57 @@
 1. **Hiển thị thư viện:**
    - Hiển thị các tủ sách như:
      - **Tủ gợi ý đọc**: Dựa trên thói quen và đánh giá sách của người dùng.
-     - ![image](/src/main/resources/images/UserRecommendationView.png)
+     ![image](/src/main/resources/images/UserRecommendationView.png)
      - **Tủ toàn bộ sách**: Liệt kê tất cả sách trong thư viện.
+     ![image](/src/main/resources/images/UserDashBoardView.png)
    - Tìm kiếm sách bằng: 
      - Tên sách hoặc ISBN.
    - Giao diện trực quan, thân thiện và dễ sử dụng.
+     ![image](/src/main/resources/images/UserBookView.png)
 
 2. **Chức năng mượn/trả sách:**
    - Người dùng có thể:
      - **Borrow** bạn có thể mượn sách.
+     ![image](/src/main/resources/images/BorrowSuccess.png)
      - **Waiting** nếu số lượng sách đã hết, bạn trong danh sách chờ. Hệ thống sẽ thông báo nếu sách yêu cầu được admin thêm vào thư viện.
+     ![image](/src/main/resources/images/WaitingState.png)
+     ![image](/src/main/resources/images/WaitingState2.png)
      - **Return** đánh dấu đã đọc xong và trả sách.
+     ![image](/src/main/resources/images/ReturnSuccess.png)
      - **Completed** sách đã đọc xong.
+     ![image](/src/main/resources/images/Completed.png)
 
 3. **Tích hợp mã QR:**
    - Quét mã QR để đọc preview của sách.
+     ![image](/src/main/resources/images/BookQRCode.png)
      
 4. **Comment:**
    - Hãy để lại comment của bạn về điều bạn ấn tượng nhất với mỗi cuốn sách bạn đọc và mọi người đều có thể thấy cảm nhận của bạn về cuốn sách đó.
+   ![image](/src/main/resources/images/AddComment.png)
+5. **Profile**
+    - Chỉnh sửa profile ca nhân dễ dàng
+   ![image](/src/main/resources/images/UserProfileChange02.png)
 ---
 
 ### **Giao diện Người quản lý (Admin):**
 1. **Quản lý tài liệu:**
    - Thêm, sửa, hoặc xóa tài liệu khỏi thư viện.
+     ![image](/src/main/resources/images/AdminFindBook.png)
+     ![image](/src/main/resources/images/AdminAddSucess.png)
+     ![image](/src/main/resources/images/AddAPI.png)
    - Theo dõi lượng tài liệu hiện tại trong thư viện.
 
 2. **Quản lý người dùng:**
    - Thêm hoặc xóa người dùng trong hệ thống.
+     ![image](/src/main/resources/images/AddUser.png)
    - Theo dõi hoạt động mượn sách của người dùng.
+     ![image](/src/main/resources/images/RemoveUser.png)
+     ![image](/src/main/resources/images/AddSucces.jpg)
+     ![image](/src/main/resources/images/AddError.png)
      
 3. **Xử lý trường hợp lỗi:**
    - Thông báo lỗi.
+     ![image](/src/main/resources/images/RemoveError.png)
    - Kiểm tra điều kiện khi mượn tài liệu.
 
 ---
