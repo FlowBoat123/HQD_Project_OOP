@@ -73,7 +73,7 @@
 
 1. **Ngôn ngữ lập trình chính:**  
    - Java  
-   - Sử dụng các tính năng lập trình hướng đối tượng (*OOP*) như trừu tượng hóa, kế thừa, đa hình, trừu tượng hóa.  
+   - Sử dụng các tính năng lập trình hướng đối tượng (*OOP*) như trừu tượng hóa, kế thừa, đa hình.  
    - Tích hợp **Design Pattern: Singleton, Data Access Object** để tối ưu hóa và quản lý tài nguyên.
 
 2. **Cơ sở dữ liệu:**  
